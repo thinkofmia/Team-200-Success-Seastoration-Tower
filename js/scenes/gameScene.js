@@ -37,8 +37,8 @@ gameScene.setupTower = function(){
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.floorNames.length;i++){
 
-    this.floorData[i] = this.physics.add.sprite(180, 600 - i*75, this.floorNames[i]);
-    this.floorData[i].setScale(0.1);
+    this.floorData[i] = this.physics.add.sprite(380, 925 - i*150, this.floorNames[i]);
+    this.floorData[i].setScale(0.2);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
   }
@@ -48,9 +48,9 @@ gameScene.setupTower = function(){
   this.shopKeepersData = [];
 
   for (let i=0;i<this.shopKeeperNames.length;i++){
-    let shopkeeper = this.add.sprite(160 + Math.random()* 40, 620 - i*75, `sprite_${this.shopKeeperNames[i]}`);
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 950 - i*(150-10), `sprite_${this.shopKeeperNames[i]}`);
     this.physics.add.existing(shopkeeper);
-    shopkeeper.setScale(0.05);
+    shopkeeper.setScale(0.1);
     shopkeeper.body.allowGravity = false;
   
     //Constraint character

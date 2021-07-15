@@ -1,8 +1,8 @@
 // set the configuration of the game
 let config = {
   type: Phaser.AUTO, // Phaser will use WebGL if available, if not it will use Canvas
-  width: 360,
-  height: 640,
+  width: 720,
+  height: 1280,
   scene: [bootScene, loadingScene, homeScene, gameScene],
   title: 'Team 200 Success Presents\nEnv Tower',
   pixelArt: false,

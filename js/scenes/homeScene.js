@@ -18,8 +18,8 @@ homeScene.create = function(){
     });
 
     game1H = gameH/4*1;
-    game2H = gameH/4*2;
-    game3H = gameH/4*3;
+    game2H = gameH/4*1.5;
+    game3H = gameH/4*2;
     optionHeights = [game1H, game2H, game3H];
 
     let game1 = this.add.text(gameW/2, game1H, 'New Game', {
