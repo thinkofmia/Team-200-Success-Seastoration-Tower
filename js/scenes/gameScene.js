@@ -23,6 +23,10 @@ gameScene.create = function() {
 
   //Add all tower elements
   this.setupTower();
+
+  //Enable cursor keys
+  this.cursors = this.input.keyboard.createCursorKeys();
+
 };
 
 gameScene.setupTower = function(){
@@ -53,6 +57,10 @@ gameScene.setupTower = function(){
 //Executed on every frame
 gameScene.update = function(){
 
+  if (this.cursors.down.isDown){
+    this.scene.start('Home');
+    return;
+  }
   //Random Motion
   if (this.timeElapsed%5>3){
     this.mia.body.setVelocityX(-this.charactersSpeed);
