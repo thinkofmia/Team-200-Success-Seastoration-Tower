@@ -25,7 +25,7 @@ gameScene.create = function() {
 };
 
 gameScene.setupLevel = function(){
-  let baseFloor = this.physics.add.sprite(180, 200, 'floor_basic');
+  let baseFloor = this.physics.add.sprite(180, 600, 'floor_basic');
   baseFloor.setScale(0.1);
   this.physics.add.existing(baseFloor, true);
   baseFloor.body.allowGravity = false;
