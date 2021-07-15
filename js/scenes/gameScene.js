@@ -21,16 +21,23 @@ gameScene.create = function() {
   bg.setOrigin(0,0);
   bg.setScale(5);
 
-  //Add all level elements
-  this.setupLevel();
+  //Add all tower elements
+  this.setupTower();
 };
 
-gameScene.setupLevel = function(){
-  //Basic Floor
-  let baseFloor = this.physics.add.sprite(180, 600, 'floor_basic');
-  baseFloor.setScale(0.1);
-  this.physics.add.existing(baseFloor, true);
-  baseFloor.body.allowGravity = false;
+gameScene.setupTower = function(){
+
+  this.floorNames = ['floor_basic', 'floor_qualle'];
+  this.floorData = [];
+  //Create all floors
+  this.floors = this.physics.add.staticGroup();
+  for (let i=0;i<this.floorNames.length;i++){
+
+    this.floorData[i] = this.physics.add.sprite(180, 600 - i*75, this.floorNames[i]);
+    this.floorData[i].setScale(0.1);
+    this.physics.add.existing(this.floorData[i], true);
+    this.floorData[i].body.allowGravity = false;
+  }
 
   //Character
   this.mia = this.add.sprite(180, 620, 'sprite_mia');
@@ -41,8 +48,6 @@ gameScene.setupLevel = function(){
   //Constraint character
   this.mia.body.setCollideWorldBounds(true);
   
-  //Collision Detection
-  //this.physics.add.collider(this.mia, this.baseFloor);
 }
 
 //Executed on every frame

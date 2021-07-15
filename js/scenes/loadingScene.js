@@ -47,6 +47,7 @@ loadingScene.preload = function(){
 
     //Loading Floors
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
+    this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
     //Create loading demo
     for (let i=0;i<100;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');
