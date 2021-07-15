@@ -4,6 +4,7 @@ let gameScene = new Phaser.Scene('Game');
 // some parameters for our scene
 gameScene.init = function() {
   this.charactersSpeed = -10;
+  this.timeElapsed = 0;
 };
 
 // load asset files for our game
@@ -32,7 +33,7 @@ gameScene.setupLevel = function(){
   baseFloor.body.allowGravity = false;
 
   //Character
-  this.mia = this.add.sprite(180, 600, 'sprite_mia');
+  this.mia = this.add.sprite(180, 620, 'sprite_mia');
   this.physics.add.existing(this.mia);
   this.mia.setScale(0.05);
   this.mia.body.allowGravity = false;
@@ -47,20 +48,16 @@ gameScene.setupLevel = function(){
 //Executed on every frame
 gameScene.update = function(){
 
-  let randomMotion = Math.round(Math.random()*3);
-  this.mia.body.setVelocityX(-this.charactersSpeed);
-  this.mia.flipX = false;
-  if (!this.mia.anims.isPlaying) this.mia.anims.play('walking_mia');
-  //console.log(randomMotion);
-  /*if (randomMotion==2){
+  //Random Motion
+  if (this.timeElapsed%5>3){
     this.mia.body.setVelocityX(-this.charactersSpeed);
     this.mia.flipX = false;
 
     //Check
     if (!this.mia.anims.isPlaying) this.mia.anims.play('walking_mia');
   }
-  else if (randomMotion==1){
-    this.mia.body.setVelocityX(this.playerSpeed);
+  else if (this.timeElapsed%5>1){
+    this.mia.body.setVelocityX(this.charactersSpeed);
     this.mia.flipX = true;
     if (!this.mia.anims.isPlaying) this.mia.anims.play('walking_mia');
   }
@@ -70,6 +67,7 @@ gameScene.update = function(){
 
     //Set default frame
     this.mia.setFrame(0);
-  }*/
+  }
+  this.timeElapsed+=0.01;
   
 };
