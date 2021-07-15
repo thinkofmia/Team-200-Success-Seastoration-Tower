@@ -3,14 +3,14 @@ let loadingScene = new Phaser.Scene('Loading');
 
 loadingScene.preload = function(){
     //Show Logo
-    let logo = this.add.sprite(this.sys.game.config.width/2, this.sys.game.config.height/2 - 50, 'logo');
-    logo.setScale(0.1);
+    let logo = this.add.sprite(this.sys.game.config.width/2, this.sys.game.config.height/8*3, 'logo');
+    logo.setScale(0.4);
 
     //Progress bar background
     let bgBar = this.add.graphics();
 
-    let barW = 150;
-    let barH = 30;
+    let barW = 500;
+    let barH = 50;
 
     bgBar.setPosition(this.sys.game.config.width/2 - barW/2, this.sys.game.config.height/2 - barH/2);
     bgBar.fillStyle(0xF5F5F5, 1);
@@ -55,7 +55,7 @@ loadingScene.preload = function(){
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
     //Create loading demo
-    for (let i=0;i<100;i++){
+    for (let i=0;i<300;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');
     }
 };
