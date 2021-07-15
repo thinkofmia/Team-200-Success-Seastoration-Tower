@@ -57,7 +57,7 @@ loadingScene.create = function(){
     //Animations
     this.anims.create({
         key: 'walking_mia',
-        frames: this.anims.generateFrameNames('sprite_mia', {frames: [0,1,2,3,4]}),
+        frames: this.anims.generateFrameNames('sprite_mia', {frames: [1,2,3,4]}),
         frameRate: 7,
         yoyo: true,
         repeat: -1 //Repeat forever is -1
