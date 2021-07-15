@@ -6,7 +6,9 @@ gameScene.init = function() {};
 
 // load asset files for our game
 gameScene.preload = function() {
-};
+  // load images
+  this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
+}; 
 
 // executed once, after assets were loaded
 gameScene.create = function() {
@@ -14,7 +16,7 @@ gameScene.create = function() {
   let gameH = this.sys.game.config.height;
 
   //Game BG
-  let bg = this.add.sprite(0,0,'background').setInteractive();
+  let bg = this.add.sprite(0,0,'background_air').setInteractive();
   bg.setOrigin(0,0);
   bg.setScale(5);
 
@@ -31,7 +33,6 @@ gameScene.create = function() {
   textBg.fillStyle(0x000000, 0.7);
   textBg.fillRect(gameW/2 - text.width/2 - 10, gameH/2 - text.height/2 -10, text.width+20, text.height+ 20);
 
-  bg.on('pointerdown', function(){
-    this.scene.start('Home');
-}, this);
+  //Add all level elements
+  this.setupLevel();
 };

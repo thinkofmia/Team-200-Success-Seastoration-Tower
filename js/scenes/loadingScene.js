@@ -33,7 +33,8 @@ loadingScene.preload = function(){
     }, this);
 
     //Load assets
-    this.load.image('background', 'assets/images/grass.png');
+    this.load.image('background', 'assets/images/bg/grass.png');
+    this.load.image('background_air', 'assets/images/bg/sky.png');
 
     //Create loading demo
     for (let i=0;i<200;i++){
