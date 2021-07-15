@@ -20,19 +20,13 @@ gameScene.create = function() {
   bg.setOrigin(0,0);
   bg.setScale(5);
 
-  let text = this.add.text(gameW/2, gameH/2, 'Game Scene', {
-      font: '20px Arial',
-      fill: '#ffffff',
-  });
-
-  text.setOrigin(0.5, 0.5);
-  text.depth = 1;
-
-  //Text background
-  let textBg = this.add.graphics();
-  textBg.fillStyle(0x000000, 0.7);
-  textBg.fillRect(gameW/2 - text.width/2 - 10, gameH/2 - text.height/2 -10, text.width+20, text.height+ 20);
-
   //Add all level elements
   this.setupLevel();
 };
+
+gameScene.setupLevel = function(){
+  let baseFloor = this.physics.add.sprite(180, 200, 'floor_basic');
+  baseFloor.setScale(0.1);
+  this.physics.add.existing(baseFloor, true);
+  baseFloor.body.allowGravity = false;
+}
