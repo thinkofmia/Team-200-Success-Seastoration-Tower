@@ -55,7 +55,11 @@ homeScene.create = function(){
         gameOptions[i].setInteractive();
     };
 
-    bg.on('pointerdown', function(){
+    game1.on('pointerdown', function(){
+        this.scene.start('Game');
+    }, this);
+
+    game2.on('pointerdown', function(){
         this.scene.start('Game');
     }, this);
 
