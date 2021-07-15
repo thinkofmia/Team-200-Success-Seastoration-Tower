@@ -3,7 +3,7 @@ let gameScene = new Phaser.Scene('Game');
 
 // some parameters for our scene
 gameScene.init = function() {
-  this.charactersSpeed = -10;
+  this.charactersSpeed = -20;
   this.timeElapsed = 0;
 };
 
