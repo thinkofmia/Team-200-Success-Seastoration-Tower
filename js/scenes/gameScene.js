@@ -31,13 +31,13 @@ gameScene.create = function() {
 
 gameScene.setupTower = function(){
 
-  this.floorNames = ['floor_basic', 'floor_qualle'];
+  this.floorNames = ['floor_basic', 'floor_qualle', 'floor_basic', 'floor_basic', 'floor_basic'];
   this.floorData = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.floorNames.length;i++){
 
-    this.floorData[i] = this.physics.add.sprite(380, 925 - i*150, this.floorNames[i]);
+    this.floorData[i] = this.physics.add.sprite(380, 925 - i*130, this.floorNames[i]);
     this.floorData[i].setScale(0.2);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
@@ -48,7 +48,7 @@ gameScene.setupTower = function(){
   this.shopKeepersData = [];
 
   for (let i=0;i<this.shopKeeperNames.length;i++){
-    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 950 - i*(150-10), `sprite_${this.shopKeeperNames[i]}`);
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 950 - i*(120), `sprite_${this.shopKeeperNames[i]}`);
     this.physics.add.existing(shopkeeper);
     shopkeeper.setScale(0.1);
     shopkeeper.body.allowGravity = false;
