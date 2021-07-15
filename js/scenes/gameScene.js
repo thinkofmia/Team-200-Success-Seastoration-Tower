@@ -6,8 +6,6 @@ gameScene.init = function() {};
 
 // load asset files for our game
 gameScene.preload = function() {
-  // load images
-  this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
 }; 
 
 // executed once, after assets were loaded
@@ -25,8 +23,17 @@ gameScene.create = function() {
 };
 
 gameScene.setupLevel = function(){
+  //Basic Floor
   let baseFloor = this.physics.add.sprite(180, 600, 'floor_basic');
   baseFloor.setScale(0.1);
   this.physics.add.existing(baseFloor, true);
   baseFloor.body.allowGravity = false;
+
+  //Character
+  this.mia = this.add.sprite(180, 600, 'sprite_mia');
+  this.physics.add.existing(this.mia);
+  this.mia.setScale(0.05);
+  
+  //Constraint character
+  this.mia.body.setCollideWorldBounds(true);
 }

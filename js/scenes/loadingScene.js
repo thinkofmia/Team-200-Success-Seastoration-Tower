@@ -33,15 +33,35 @@ loadingScene.preload = function(){
     }, this);
 
     //Load assets
+    //Loading Background
     this.load.image('background', 'assets/images/bg/grass.png');
     this.load.image('background_air', 'assets/images/bg/sky.png');
 
+    //Loading Sprites
+    this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
+        frameWidth: 1000,
+        frameHeight: 1000,
+        margin: 0,
+        spacing: 0
+    });
+
+    //Loading Floors
+    this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
     //Create loading demo
-    for (let i=0;i<200;i++){
+    for (let i=0;i<100;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');
     }
 };
 
 loadingScene.create = function(){
+    //Animations
+    this.anims.create({
+        key: 'walking_mia',
+        frames: this.anims.generateFrameNames('sprite_mia', {frames: [0,1,2,3,4]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: -1 //Repeat forever is -1
+    });
+
     this.scene.start('Home');
 }
