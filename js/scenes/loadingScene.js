@@ -44,6 +44,12 @@ loadingScene.preload = function(){
         margin: 0,
         spacing: 0
     });
+    this.load.spritesheet('sprite_kj','assets/images/sprites/sprite_kj.png', {
+        frameWidth: 1000,
+        frameHeight: 1000,
+        margin: 0,
+        spacing: 0
+    });
 
     //Loading Floors
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
