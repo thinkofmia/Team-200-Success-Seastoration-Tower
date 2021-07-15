@@ -70,5 +70,13 @@ loadingScene.create = function(){
         repeat: -1 //Repeat forever is -1
     });
 
+    this.anims.create({
+        key: 'walking_kj',
+        frames: this.anims.generateFrameNames('sprite_kj', {frames: [1,2,3,2,4]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: -1 //Repeat forever is -1
+    });
+
     this.scene.start('Home');
 }

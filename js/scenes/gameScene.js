@@ -3,7 +3,7 @@ let gameScene = new Phaser.Scene('Game');
 
 // some parameters for our scene
 gameScene.init = function() {
-  this.charactersSpeed = -20;
+  this.charactersSpeed = [-20,-15];
   this.timeElapsed = 0;
 };
 
@@ -44,13 +44,20 @@ gameScene.setupTower = function(){
   }
 
   //Character
-  this.mia = this.add.sprite(180, 620, 'sprite_mia');
-  this.physics.add.existing(this.mia);
-  this.mia.setScale(0.05);
-  this.mia.body.allowGravity = false;
+  this.shopKeeperNames = ["mia","kj"];
+  this.shopKeepersData = [];
+
+  for (let i=0;i<this.shopKeeperNames.length;i++){
+    let shopkeeper = this.add.sprite(160 + Math.random()* 40, 620 - i*75, `sprite_${this.shopKeeperNames[i]}`);
+    this.physics.add.existing(shopkeeper);
+    shopkeeper.setScale(0.05);
+    shopkeeper.body.allowGravity = false;
   
-  //Constraint character
-  this.mia.body.setCollideWorldBounds(true);
+    //Constraint character
+    shopkeeper.body.setCollideWorldBounds(true);
+    //Add to data
+    this.shopKeepersData.push(shopkeeper);
+  }
   
 }
 
@@ -61,26 +68,30 @@ gameScene.update = function(){
     this.scene.start('Home');
     return;
   }
-  //Random Motion
-  if (this.timeElapsed%5>3){
-    this.mia.body.setVelocityX(-this.charactersSpeed);
-    this.mia.flipX = false;
 
-    //Check
-    if (!this.mia.anims.isPlaying) this.mia.anims.play('walking_mia');
-  }
-  else if (this.timeElapsed%5>1){
-    this.mia.body.setVelocityX(this.charactersSpeed);
-    this.mia.flipX = true;
-    if (!this.mia.anims.isPlaying) this.mia.anims.play('walking_mia');
-  }
-  else {
-    this.mia.body.setVelocityX(0);
-    this.mia.anims.stop('walking_mia');
+  for (let i=0;i<this.shopKeepersData.length;i++){
+    //Random Motion
+    if (this.timeElapsed%5>3){
+      this.shopKeepersData[i].body.setVelocityX(-this.charactersSpeed[i]);
+      this.shopKeepersData[i].flipX = false;
+      //Check
+      if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+    }
+    else if (this.timeElapsed%5>1){
+      this.shopKeepersData[i].body.setVelocityX(this.charactersSpeed[i]);
+      this.shopKeepersData[i].flipX = true;
+      if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+    }
+    else {
+      this.shopKeepersData[i].body.setVelocityX(0);
+      this.shopKeepersData[i].anims.stop(`walking_${this.shopKeeperNames[i]}`);
 
-    //Set default frame
-    this.mia.setFrame(0);
+      //Set default frame
+      this.shopKeepersData[i].setFrame(0);
+    }
+    
   }
+  
   this.timeElapsed+=0.01;
   
 };
