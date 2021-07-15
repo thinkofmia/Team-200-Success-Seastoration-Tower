@@ -1,6 +1,6 @@
 // set the configuration of the game
 let config = {
-  type: Phaser.AUTO, // Phaser will use WebGL if available, if not it will use Canvas
+  type: Phaser.CANVAS, // Phaser will use WebGL if available, if not it will use Canvas
   width: 720,
   height: 1280,
   scene: [bootScene, loadingScene, homeScene, gameScene],
