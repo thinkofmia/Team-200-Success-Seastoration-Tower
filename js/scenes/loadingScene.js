@@ -54,6 +54,12 @@ loadingScene.preload = function(){
     //Loading Floors
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
+
+    //Loading Items
+    this.load.image('door_basic','assets/images/basic floor/basic_door.png');
+    this.load.image('poster_basic','assets/images/basic floor/basic_poster.png');
+    this.load.image('table_basic','assets/images/basic floor/basic_table.png');
+    
     //Create loading demo
     for (let i=0;i<300;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');
