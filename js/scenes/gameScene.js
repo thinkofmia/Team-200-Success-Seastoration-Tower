@@ -33,6 +33,7 @@ gameScene.setupTower = function(){
 
   this.floorNames = ['floor_basic', 'floor_qualle', 'floor_basic', 'floor_basic', 'floor_basic'];
   this.floorData = [];
+  this.floorProps = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.floorNames.length;i++){
@@ -41,6 +42,19 @@ gameScene.setupTower = function(){
     this.floorData[i].setScale(0.2);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
+
+    this.floorProps[i] = {};
+    //Add Props
+    switch (this.floorNames[i]){
+      case "floor_basic":
+        this.floorProps[i]["Table"] = this.physics.add.sprite(100 + Math.random()* 300, 925 - i*130, "table_basic");
+        this.floorProps[i]["Table"].setScale(0.2);
+        this.physics.add.existing(this.floorProps[i]["Table"]);
+        this.floorProps[i]["Table"].body.allowGravity = false;
+        break;
+      case "floor_qualle":
+        break;
+    }
   }
 
   //Character
