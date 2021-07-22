@@ -45,7 +45,15 @@ gameScene.setupTower = function(){
 
     this.floorProps[i] = {};
     //Add Props
-    this.addProp("Table",this.floorNames[i], i);
+    switch (this.floorNames[i]){
+      case "floor_basic": 
+        this.addProp("Poster",this.floorNames[i], i);
+        this.addProp("Door",this.floorNames[i], i);
+        this.addProp("Table",this.floorNames[i], i);
+        break;
+      case "floor_qualle":
+        break;
+    }
   }
 
   //Character
@@ -70,7 +78,9 @@ gameScene.setupTower = function(){
 gameScene.addProp = function(objectKey, room, floor){
   switch (room){
     case "floor_basic":
-      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(100 + Math.random()* 300, 925 - floor*130, "table_basic");
+      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(200 +Math.random()*220, 925 - floor*130, "table_basic");
+      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*220, 925 - floor*130, "poster_basic");
+      if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 925 - floor*130, "door_basic");
       break;
     case "floor_qualle":
       break;
