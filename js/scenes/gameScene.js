@@ -45,16 +45,7 @@ gameScene.setupTower = function(){
 
     this.floorProps[i] = {};
     //Add Props
-    switch (this.floorNames[i]){
-      case "floor_basic":
-        this.floorProps[i]["Table"] = this.physics.add.sprite(100 + Math.random()* 300, 925 - i*130, "table_basic");
-        this.floorProps[i]["Table"].setScale(0.2);
-        this.physics.add.existing(this.floorProps[i]["Table"]);
-        this.floorProps[i]["Table"].body.allowGravity = false;
-        break;
-      case "floor_qualle":
-        break;
-    }
+    this.addProp("Table",this.floorNames[i], i);
   }
 
   //Character
@@ -71,6 +62,23 @@ gameScene.setupTower = function(){
     shopkeeper.body.setCollideWorldBounds(true);
     //Add to data
     this.shopKeepersData.push(shopkeeper);
+  }
+  
+}
+
+//Add Props
+gameScene.addProp = function(objectKey, room, floor){
+  switch (room){
+    case "floor_basic":
+      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(100 + Math.random()* 300, 925 - floor*130, "table_basic");
+      break;
+    case "floor_qualle":
+      break;
+  }
+  if (this.floorProps[floor][objectKey]){
+    this.floorProps[floor][objectKey].setScale(0.2);
+    this.physics.add.existing(this.floorProps[floor][objectKey]);
+    this.floorProps[floor][objectKey].body.allowGravity = false;  
   }
   
 }
