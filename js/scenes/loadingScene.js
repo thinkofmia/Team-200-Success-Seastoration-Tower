@@ -60,6 +60,9 @@ loadingScene.preload = function(){
     this.load.image('poster_basic','assets/images/basic floor/basic_poster.png');
     this.load.image('table_basic','assets/images/basic floor/basic_table.png');
     
+    this.load.image('beanbagL_qualle','assets/images/Qualle/beanbagL.png');
+    this.load.image('beanbagR_qualle','assets/images/Qualle/beanbagR.png');
+    
     //Create loading demo
     for (let i=0;i<300;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');

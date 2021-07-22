@@ -44,16 +44,20 @@ gameScene.setupTower = function(){
     this.floorData[i].body.allowGravity = false;
 
     this.floorProps[i] = {};
-    //Add Props
+    //Extra Props
     switch (this.floorNames[i]){
       case "floor_basic": 
         this.addProp("Poster",this.floorNames[i], i);
-        this.addProp("Door",this.floorNames[i], i);
-        this.addProp("Table",this.floorNames[i], i);
         break;
       case "floor_qualle":
+        this.addProp("Beanbag L",this.floorNames[i], i);
+        this.addProp("Beanbag R",this.floorNames[i], i);
         break;
     }
+        //Add Props
+        this.addProp("Door",this.floorNames[i], i);
+        this.addProp("Table",this.floorNames[i], i);
+    
   }
 
   //Character
@@ -78,13 +82,17 @@ gameScene.setupTower = function(){
 gameScene.addProp = function(objectKey, room, floor){
   switch (room){
     case "floor_basic":
-      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(200 +Math.random()*220, 925 - floor*130, "table_basic");
-      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*220, 925 - floor*130, "poster_basic");
-      if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 925 - floor*130, "door_basic");
+      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*50, 925 - floor*130, "poster_basic");
       break;
     case "floor_qualle":
+      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 925 - floor*130, "beanbagL_qualle");
+      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 925 - floor*130, "beanbagR_qualle");
       break;
   }
+  
+  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(400, 925 - floor*130, "table_basic");
+  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 925 - floor*130, "door_basic");
+  
   if (this.floorProps[floor][objectKey]){
     this.floorProps[floor][objectKey].setScale(0.2);
     this.physics.add.existing(this.floorProps[floor][objectKey]);
