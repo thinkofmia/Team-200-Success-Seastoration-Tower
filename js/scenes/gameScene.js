@@ -67,7 +67,8 @@ gameScene.setupTower = function(){
   for (let i=0;i<this.shopKeeperNames.length;i++){
     let shopkeeper = this.add.sprite(360 + Math.random()* 40, 950 - i*(120), `sprite_${this.shopKeeperNames[i]}`);
     this.physics.add.existing(shopkeeper);
-    shopkeeper.setScale(0.1);
+    shopkeeper.setScale(0.13);
+    if (this.shopKeeperNames[i]=="kj") shopkeeper.setScale(0.15);
     shopkeeper.body.allowGravity = false;
   
     //Constraint character
