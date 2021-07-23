@@ -35,15 +35,11 @@ gameScene.create = function() {
 gameScene.setUpCamera = function(){
   var cam = this.cameras.main; 
 
-  text = this.add.text(400, 300, '', { font: '16px monospace', fill: '#0ff', backgroundColor: '#000c', fixedWidth: 200, fixedHeight: 300 })
-    .setScale(1 / cam.zoom)
-    .setScrollFactor(0);
-
   this.input.on('pointermove', function (p) {
     if (!p.isDown) return;
-
+    console.log(p.prevPosition);
     //cam.scrollX -= (p.x - p.prevPosition.x) / cam.zoom;
-    if(p.prevPosition)cam.scrollY -= (p.y - p.prevPosition.y) / cam.zoom;
+    if(p.prevPosition)cam.scrollY -= (p.y - p.prevPosition.y);
   });
 }
 
@@ -56,8 +52,8 @@ gameScene.setupTower = function(){
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.floorNames.length;i++){
 
-    this.floorData[i] = this.physics.add.sprite(380, 150 + i*135, this.floorNames[i]);
-    this.floorData[i].setScale(0.2);
+    this.floorData[i] = this.physics.add.sprite(380, 100 + i*170, this.floorNames[i]);
+    this.floorData[i].setScale(0.25);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
 
@@ -83,13 +79,13 @@ gameScene.setupTower = function(){
   this.shopKeepersData = [];
 
   for (let i=0;i<this.shopKeeperNames.length;i++){
-    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 160 + i*(135), `sprite_${this.shopKeeperNames[i]}`);
-    this.physics.add.existing(shopkeeper);
-    shopkeeper.setScale(0.13);
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 140 + i*(170), `sprite_${this.shopKeeperNames[i]}`);
+    this.physics.add.existing(shopkeeper)
+    shopkeeper.setScale(0.1);
     switch(this.shopKeeperNames[i]){
       case "kj":
-        shopkeeper.setScale(0.15);
-        shopkeeper.y = 160 + i*(140);
+        shopkeeper.setScale(0.12);
+        //shopkeeper.y = 160 + i*(170);
         break;
     }
     shopkeeper.body.allowGravity = false;
@@ -106,19 +102,19 @@ gameScene.setupTower = function(){
 gameScene.addProp = function(objectKey, room, floor){
   switch (room){
     case "floor_basic":
-      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*50, 150 + floor*(135), "poster_basic");
+      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*50, 100 + floor*(170), "poster_basic");
       break;
     case "floor_qualle":
-      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 150 + floor*(135), "beanbagL_qualle");
-      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 150 + floor*(135), "beanbagR_qualle");
+      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 100 + floor*(170), "beanbagL_qualle");
+      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 100 + floor*(170), "beanbagR_qualle");
       break;
   }
   
-  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(400, 150 + floor*(135), "table_basic");
-  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 150 + floor*(135), "door_basic");
+  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(400, 100 + floor*(170), "table_basic");
+  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 100 + floor*(170), "door_basic");
   
   if (this.floorProps[floor][objectKey]){
-    this.floorProps[floor][objectKey].setScale(0.2);
+    this.floorProps[floor][objectKey].setScale(0.25);
     this.physics.add.existing(this.floorProps[floor][objectKey]);
     this.floorProps[floor][objectKey].body.allowGravity = false;  
   }
@@ -132,21 +128,6 @@ gameScene.update = function(){
     this.scene.start('Home');
     return;
   }
-
-  //Drag Camera
-  text.setText(
-    JSON.stringify(this.input.activePointer, [
-      'isDown',
-      'downX',
-      'downY',
-      'worldX',
-      'worldY',
-      'x',
-      'y',
-      'position',
-      'prevPosition'
-    ], 2)
-  );
 
   //Random movement
   for (let i=0;i<this.shopKeepersData.length;i++){
