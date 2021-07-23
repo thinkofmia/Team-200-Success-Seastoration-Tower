@@ -3,8 +3,8 @@ let loadingScene = new Phaser.Scene('Loading');
 
 loadingScene.preload = function(){
     //Show Logo
-    let logo = this.add.sprite(this.sys.game.config.width/2, this.sys.game.config.height/8*3, 'logo');
-    logo.setScale(0.4);
+    let logo = this.add.sprite(this.sys.game.config.width/2, this.sys.game.config.height/8*2, 'logo');
+    logo.setScale(0.2);
 
     //Progress bar background
     let bgBar = this.add.graphics();
