@@ -31,14 +31,14 @@ gameScene.create = function() {
 
 gameScene.setupTower = function(){
 
-  this.floorNames = ['floor_basic', 'floor_qualle', 'floor_basic', 'floor_basic', 'floor_basic'];
+  this.floorNames = ['floor_basic', 'floor_qualle'];
   this.floorData = [];
   this.floorProps = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.floorNames.length;i++){
 
-    this.floorData[i] = this.physics.add.sprite(380, 925 - i*130, this.floorNames[i]);
+    this.floorData[i] = this.physics.add.sprite(380, 150 + i*135, this.floorNames[i]);
     this.floorData[i].setScale(0.2);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
@@ -65,14 +65,19 @@ gameScene.setupTower = function(){
   this.shopKeepersData = [];
 
   for (let i=0;i<this.shopKeeperNames.length;i++){
-    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 950 - i*(120), `sprite_${this.shopKeeperNames[i]}`);
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 160 + i*(135), `sprite_${this.shopKeeperNames[i]}`);
     this.physics.add.existing(shopkeeper);
     shopkeeper.setScale(0.13);
-    if (this.shopKeeperNames[i]=="kj") shopkeeper.setScale(0.15);
+    switch(this.shopKeeperNames[i]){
+      case "kj":
+        shopkeeper.setScale(0.15);
+        shopkeeper.y = 160 + i*(140);
+        break;
+    }
     shopkeeper.body.allowGravity = false;
   
     //Constraint character
-    shopkeeper.body.setCollideWorldBounds(true);
+    //shopkeeper.body.setCollideWorldBounds(true);
     //Add to data
     this.shopKeepersData.push(shopkeeper);
   }
