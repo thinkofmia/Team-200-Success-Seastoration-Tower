@@ -17,7 +17,7 @@ gameScene.create = function() {
   let gameH = this.sys.game.config.height;
 
   //Game BG
-  let bg = this.add.sprite(0,0,'background_air').setInteractive();
+  let bg = this.add.sprite(0,0,'background_water').setInteractive();
   bg.setOrigin(0,0);
   bg.setScale(5);
 

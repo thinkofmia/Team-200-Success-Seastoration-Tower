@@ -36,6 +36,7 @@ loadingScene.preload = function(){
     //Loading Background
     this.load.image('background', 'assets/images/bg/grass.png');
     this.load.image('background_air', 'assets/images/bg/sky.png');
+    this.load.image('background_water', 'assets/images/bg/water.png');
 
     //Loading Sprites
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
