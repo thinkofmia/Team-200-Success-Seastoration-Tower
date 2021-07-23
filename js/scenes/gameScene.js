@@ -3,6 +3,7 @@ let gameScene = new Phaser.Scene('Game');
 
 // some parameters for our scene
 gameScene.init = function() {
+  //Variables
   this.charactersSpeed = [-20,-15];
   this.timeElapsed = 0;
 };
@@ -16,6 +17,8 @@ gameScene.create = function() {
   let gameW = this.sys.game.config.width;
   let gameH = this.sys.game.config.height;
 
+  this.setUpCamera();
+
   //Game BG
   let bg = this.add.sprite(0,0,'background_water').setInteractive();
   bg.setOrigin(0,0);
@@ -28,6 +31,21 @@ gameScene.create = function() {
   this.cursors = this.input.keyboard.createCursorKeys();
 
 };
+
+gameScene.setUpCamera = function(){
+  var cam = this.cameras.main; 
+
+  text = this.add.text(400, 300, '', { font: '16px monospace', fill: '#0ff', backgroundColor: '#000c', fixedWidth: 200, fixedHeight: 300 })
+    .setScale(1 / cam.zoom)
+    .setScrollFactor(0);
+
+  this.input.on('pointermove', function (p) {
+    if (!p.isDown) return;
+
+    //cam.scrollX -= (p.x - p.prevPosition.x) / cam.zoom;
+    if(p.prevPosition)cam.scrollY -= (p.y - p.prevPosition.y) / cam.zoom;
+  });
+}
 
 gameScene.setupTower = function(){
 
@@ -115,6 +133,22 @@ gameScene.update = function(){
     return;
   }
 
+  //Drag Camera
+  text.setText(
+    JSON.stringify(this.input.activePointer, [
+      'isDown',
+      'downX',
+      'downY',
+      'worldX',
+      'worldY',
+      'x',
+      'y',
+      'position',
+      'prevPosition'
+    ], 2)
+  );
+
+  //Random movement
   for (let i=0;i<this.shopKeepersData.length;i++){
     //Random Motion
     if (this.timeElapsed%5>3){
@@ -139,5 +173,6 @@ gameScene.update = function(){
   }
   
   this.timeElapsed+=0.01;
+  
   
 };
