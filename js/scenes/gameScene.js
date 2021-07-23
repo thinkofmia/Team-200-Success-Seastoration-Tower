@@ -88,16 +88,16 @@ gameScene.setupTower = function(){
 gameScene.addProp = function(objectKey, room, floor){
   switch (room){
     case "floor_basic":
-      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*50, 925 - floor*130, "poster_basic");
+      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*50, 150 + floor*(135), "poster_basic");
       break;
     case "floor_qualle":
-      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 925 - floor*130, "beanbagL_qualle");
-      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 925 - floor*130, "beanbagR_qualle");
+      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 150 + floor*(135), "beanbagL_qualle");
+      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 150 + floor*(135), "beanbagR_qualle");
       break;
   }
   
-  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(400, 925 - floor*130, "table_basic");
-  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 925 - floor*130, "door_basic");
+  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(400, 150 + floor*(135), "table_basic");
+  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 150 + floor*(135), "door_basic");
   
   if (this.floorProps[floor][objectKey]){
     this.floorProps[floor][objectKey].setScale(0.2);
