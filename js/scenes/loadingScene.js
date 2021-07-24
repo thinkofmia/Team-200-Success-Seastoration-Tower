@@ -65,6 +65,12 @@ loadingScene.preload = function(){
         margin: 0,
         spacing: 0
     });
+    this.load.spritesheet('sprite_sy','assets/images/sprites/sprite_sy.png', {
+        frameWidth: 1000,
+        frameHeight: 1000,
+        margin: 0,
+        spacing: 0
+    });
 
     //Loading Floors
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
@@ -105,6 +111,14 @@ loadingScene.create = function(){
     this.anims.create({
         key: 'walking_ky',
         frames: this.anims.generateFrameNames('sprite_ky', {frames: [1,2,1,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: -1 //Repeat forever is -1
+    });
+
+    this.anims.create({
+        key: 'walking_sy',
+        frames: this.anims.generateFrameNames('sprite_sy', {frames: [1,2,3,4]}),
         frameRate: 7,
         yoyo: true,
         repeat: -1 //Repeat forever is -1
