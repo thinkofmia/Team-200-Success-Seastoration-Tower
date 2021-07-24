@@ -40,7 +40,7 @@ gameScene.create = function() {
 
 //Show current value of stats
 gameScene.refreshHud = function(){
-  this.greenPointText.setText('Green Pts: '+ this.gameStats.greenpoints);
+  this.greenPointText.setText('Green Pts: '+ this.gameStats.greenpoints.toFixed(0));
   this.pollutionStatText.setText('Pollution: '+this.gameStats.pollution.toFixed(2)+'%');
 };
 
@@ -49,13 +49,15 @@ gameScene.setUpHUD = function(){
   //Money Stat
   this.greenPointText = this.add.text(20,10,'Green Pts: ',{
     font: '26px Arial',
-    fill: '#ffffff'
+    fill: '#ffffff',
+    backgroundColor: '#ff00ff'
   });
 
   //Pollution stat
   this.pollutionStatText = this.add.text(20,40,'Pollution Rate: ',{
     font: '26px Arial',
-    fill: '#ffffff'
+    fill: '#ffffff',
+    backgroundColor: '#ff00ff'
   });
 
   this.arrowUp = this.physics.add.sprite(70, 100, "sprite_arrow");
@@ -220,10 +222,10 @@ gameScene.update = function(){
   }
   
   //Simualte increasing pts
-  this.gameStats.pollution -= 0.01;
+  this.gameStats.pollution -= 0.0001;
   if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
 
-  this.gameStats.greenpoints += 1;
+  this.gameStats.greenpoints += 0.01;
 
 
   gameScene.refreshHud();
