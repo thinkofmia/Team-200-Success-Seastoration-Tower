@@ -37,6 +37,7 @@ loadingScene.preload = function(){
     this.load.image('background', 'assets/images/bg/grass.png');
     this.load.image('background_air', 'assets/images/bg/sky.png');
     this.load.image('background_water', 'assets/images/bg/water.png');
+    this.load.image('background_title', 'assets/images/start screen/background1.png');
 
     //Loading Sprites
     this.load.spritesheet('sprite_arrow','assets/images/sprites/sprite_arrow.png', {
