@@ -37,9 +37,11 @@ gameScene.setUpCamera = function(){
 
   this.input.on('pointermove', function (p) {
     if (!p.isDown) return;
-    console.log(p.prevPosition);
+    console.log(p.downY);
     //cam.scrollX -= (p.x - p.prevPosition.x) / cam.zoom;
-    if(p.prevPosition)cam.scrollY -= (p.y - p.prevPosition.y);
+    if(p.downY){
+      cam.scrollY -= (p.y - p.downY)/10;
+    }
   });
 }
 
