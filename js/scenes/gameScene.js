@@ -200,7 +200,13 @@ gameScene.scrollScreen = function(dir, dist = 10){
       callbackScope: this
     });
   }
+
   this.cameras.main.scrollY += travel;
+  if (this.cameras.main.scrollY<0){
+    diff = 0-this.cameras.main.scrollY;
+    this.cameras.main.scrollY = 0;
+    return;
+  }
   this.arrowUp.y += travel;
   this.arrowDown.y += travel;
   this.greenPointText.y += travel;
