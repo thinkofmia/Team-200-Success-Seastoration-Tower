@@ -84,9 +84,8 @@ gameScene.setUpCamera = function(){
   this.input.on('pointermove', function (p) {
     if (!p.isDown) return;
     if(p.downY){
-      cam.scrollY -= (p.y - p.downY)/10;
-      gameScene.arrowUp.y -= (p.y - p.downY)/10;
-      gameScene.arrowDown.y -= (p.y - p.downY)/10;
+      if (p.y-p.downY >0) gameScene.scrollScreen("Down", (p.y-p.downY)/10);
+      else if (p.y-p.downY<0) gameScene.scrollScreen("Up", -(p.y-p.downY)/10);
     }
   });
 }
