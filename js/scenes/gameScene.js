@@ -68,7 +68,7 @@ gameScene.setUpHUD = function(){
     this.scrollScreen("Up", 50);
   }, this);
 
-  this.arrowDown = this.physics.add.sprite(70, 300, "sprite_arrow");
+  this.arrowDown = this.physics.add.sprite(70, 250, "sprite_arrow");
   this.physics.add.existing(this.arrowDown, true);
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
@@ -205,6 +205,10 @@ gameScene.scrollScreen = function(dir, dist = 10){
   if (this.cameras.main.scrollY<0){
     diff = 0-this.cameras.main.scrollY;
     this.cameras.main.scrollY = 0;
+    this.greenPointText.y = 10;
+    this.pollutionStatText.y = 40;
+    this.arrowUp.y = 100;
+    this.arrowDown.y = 250;
     return;
   }
   this.arrowUp.y += travel;
