@@ -6,6 +6,10 @@ gameScene.init = function() {
   //Variables
   this.charactersSpeed = [-20,-15];
   this.timeElapsed = 0;
+  this.gameStats = {
+    greenpoints: 0,
+    pollution: 100
+  }
 };
 
 // load asset files for our game
@@ -22,19 +26,38 @@ gameScene.create = function() {
   bg.setOrigin(0,0);
   bg.setScale(5);
 
+  //Add all tower elements
+  this.setupTower();
+  
   //Set up HUD
   this.setUpHUD();
   this.setUpCamera();
-
-  //Add all tower elements
-  this.setupTower();
 
   //Enable cursor keys
   this.cursors = this.input.keyboard.createCursorKeys();
 
 };
 
+//Show current value of stats
+gameScene.refreshHud = function(){
+  this.greenPointText.setText('Green Pts: '+ this.gameStats.greenpoints);
+  this.pollutionStatText.setText('Pollution: '+this.gameStats.pollution.toFixed(2)+'%');
+};
+
 gameScene.setUpHUD = function(){
+  
+  //Money Stat
+  this.greenPointText = this.add.text(20,10,'Green Pts: ',{
+    font: '26px Arial',
+    fill: '#ffffff'
+  });
+
+  //Pollution stat
+  this.pollutionStatText = this.add.text(20,40,'Pollution Rate: ',{
+    font: '26px Arial',
+    fill: '#ffffff'
+  });
+
   this.arrowUp = this.physics.add.sprite(70, 100, "sprite_arrow");
   this.physics.add.existing(this.arrowUp, true);
   this.arrowUp.body.allowGravity = false;
@@ -154,6 +177,8 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.cameras.main.scrollY += travel;
   this.arrowUp.y += travel;
   this.arrowDown.y += travel;
+  this.greenPointText.y += travel;
+  this.pollutionStatText.y += travel;
 }
 
 //Executed on every frame
@@ -194,6 +219,14 @@ gameScene.update = function(){
     
   }
   
+  //Simualte increasing pts
+  this.gameStats.pollution -= 0.01;
+  if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
+
+  this.gameStats.greenpoints += 1;
+
+
+  gameScene.refreshHud();
   this.timeElapsed+=0.01;
   
   
