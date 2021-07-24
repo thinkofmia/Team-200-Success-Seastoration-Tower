@@ -171,15 +171,41 @@ gameScene.addProp = function(objectKey, room, floor){
 gameScene.scrollScreen = function(dir, dist = 10){
   if (dir=="Up"){
     travel = -dist;
+
+    //Change frame of arrow
+    this.arrowUp.setFrame(1);
+
+    //Keep game on for sometime
+    this.time.addEvent({
+      delay: 2000,
+      repeat: 0,
+      callback: function(){
+        this.arrowUp.setFrame(0);
+      },
+      callbackScope: this
+    });
   }
   else if (dir=="Down"){
     travel = dist;
+    //Change frame of arrow
+    this.arrowDown.setFrame(1);
+
+    //Keep game on for sometime
+    this.time.addEvent({
+      delay: 2000,
+      repeat: 0,
+      callback: function(){
+        this.arrowDown.setFrame(0);
+      },
+      callbackScope: this
+    });
   }
   this.cameras.main.scrollY += travel;
   this.arrowUp.y += travel;
   this.arrowDown.y += travel;
   this.greenPointText.y += travel;
   this.pollutionStatText.y += travel;
+  
 }
 
 //Executed on every frame
