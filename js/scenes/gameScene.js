@@ -127,14 +127,15 @@ gameScene.addProp = function(objectKey, room, floor){
 gameScene.update = function(){
 
   if (this.cursors.down.isDown){
-    //this.scene.start('Home');
     this.cameras.main.scrollY += 10;
-    //return;
   }
   else if (this.cursors.up.isDown){
-    //this.scene.start('Home');
+    
     this.cameras.main.scrollY -= 10;
-    //return;
+  }
+  else if (this.cursors.left.isDown){
+    this.scene.start('Home');
+    return;
   }
 
   //Random movement
