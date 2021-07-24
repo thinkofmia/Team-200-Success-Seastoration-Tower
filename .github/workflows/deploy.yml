@@ -19,7 +19,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
       with:
         source: "."
-        target: "/your/website/directory"
+        target: "/ggj"
 
     - name: Executing remote command
       uses: appleboy/ssh-action@master
