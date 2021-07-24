@@ -39,6 +39,13 @@ loadingScene.preload = function(){
     this.load.image('background_water', 'assets/images/bg/water.png');
 
     //Loading Sprites
+    this.load.spritesheet('sprite_arrow','assets/images/sprites/sprite_arrow.png', {
+        frameWidth: 100,
+        frameHeight: 100,
+        margin: 0,
+        spacing: 0
+    });
+
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
         frameWidth: 1000,
         frameHeight: 1000,

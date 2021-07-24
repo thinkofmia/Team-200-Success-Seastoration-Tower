@@ -17,12 +17,14 @@ gameScene.create = function() {
   let gameW = this.sys.game.config.width;
   let gameH = this.sys.game.config.height;
 
-  this.setUpCamera();
-
   //Game BG
   let bg = this.add.sprite(0,0,'background_water').setInteractive();
   bg.setOrigin(0,0);
   bg.setScale(5);
+
+  //Set up HUD
+  this.setUpHUD();
+  this.setUpCamera();
 
   //Add all tower elements
   this.setupTower();
@@ -32,6 +34,17 @@ gameScene.create = function() {
 
 };
 
+gameScene.setUpHUD = function(){
+  this.arrowUp = this.physics.add.sprite(70, 100, "sprite_arrow");
+  this.physics.add.existing(this.arrowUp, true);
+  this.arrowUp.body.allowGravity = false;
+
+  this.arrowDown = this.physics.add.sprite(70, 300, "sprite_arrow");
+  this.physics.add.existing(this.arrowDown, true);
+  this.arrowDown.flipY = true;
+  this.arrowDown.body.allowGravity = false;
+}
+
 gameScene.setUpCamera = function(){
   var cam = this.cameras.main; 
 
@@ -39,6 +52,8 @@ gameScene.setUpCamera = function(){
     if (!p.isDown) return;
     if(p.downY){
       cam.scrollY -= (p.y - p.downY)/10;
+      gameScene.arrowUp.y -= (p.y - p.downY)/10;
+      gameScene.arrowDown.y -= (p.y - p.downY)/10;
     }
   });
 }
@@ -126,10 +141,14 @@ gameScene.update = function(){
 
   if (this.cursors.down.isDown){
     this.cameras.main.scrollY += 10;
+    this.arrowUp.y += 10;
+    this.arrowDown.y += 10;
   }
   else if (this.cursors.up.isDown){
     
     this.cameras.main.scrollY -= 10;
+    this.arrowUp.y -= 10;
+    this.arrowDown.y -= 10;
   }
   else if (this.cursors.left.isDown){
     this.scene.start('Home');
