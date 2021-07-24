@@ -38,11 +38,19 @@ gameScene.setUpHUD = function(){
   this.arrowUp = this.physics.add.sprite(70, 100, "sprite_arrow");
   this.physics.add.existing(this.arrowUp, true);
   this.arrowUp.body.allowGravity = false;
+  this.arrowUp.setInteractive();
+  this.arrowUp.on('pointerdown', function(){
+    this.scrollScreen("Up", 50);
+  }, this);
 
   this.arrowDown = this.physics.add.sprite(70, 300, "sprite_arrow");
   this.physics.add.existing(this.arrowDown, true);
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
+  this.arrowDown.setInteractive();
+  this.arrowDown.on('pointerdown', function(){
+    this.scrollScreen("Down", 50);
+  }, this);
 }
 
 gameScene.setUpCamera = function(){
@@ -136,19 +144,26 @@ gameScene.addProp = function(objectKey, room, floor){
   
 }
 
+gameScene.scrollScreen = function(dir, dist = 10){
+  if (dir=="Up"){
+    travel = -dist;
+  }
+  else if (dir=="Down"){
+    travel = dist;
+  }
+  this.cameras.main.scrollY += travel;
+  this.arrowUp.y += travel;
+  this.arrowDown.y += travel;
+}
+
 //Executed on every frame
 gameScene.update = function(){
 
   if (this.cursors.down.isDown){
-    this.cameras.main.scrollY += 10;
-    this.arrowUp.y += 10;
-    this.arrowDown.y += 10;
+    this.scrollScreen("Down");
   }
   else if (this.cursors.up.isDown){
-    
-    this.cameras.main.scrollY -= 10;
-    this.arrowUp.y -= 10;
-    this.arrowDown.y -= 10;
+    this.scrollScreen("Up");
   }
   else if (this.cursors.left.isDown){
     this.scene.start('Home');
