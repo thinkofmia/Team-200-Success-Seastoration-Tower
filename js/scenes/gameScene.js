@@ -4,7 +4,7 @@ let gameScene = new Phaser.Scene('Game');
 // some parameters for our scene
 gameScene.init = function() {
   //Variables
-  this.charactersSpeed = [-20,-15];
+  this.charactersSpeed = [-20,-15, -25];
   this.timeElapsed = 0;
   this.gameStats = {
     greenpoints: 0,
@@ -122,7 +122,7 @@ gameScene.setupTower = function(){
   }
 
   //Character
-  this.shopKeeperNames = ["mia","kj"];
+  this.shopKeeperNames = ["mia","kj","ky"];
   this.shopKeepersData = [];
 
   for (let i=0;i<this.shopKeeperNames.length;i++){
