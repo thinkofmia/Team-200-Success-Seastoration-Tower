@@ -45,7 +45,7 @@ gameScene.setUpCamera = function(){
 
 gameScene.setupTower = function(){
 
-  this.floorNames = ['floor_basic', 'floor_qualle'];
+  this.floorNames = ['floor_basic', 'floor_qualle', 'floor_basic', 'floor_basic', 'floor_basic', ];
   this.floorData = [];
   this.floorProps = [];
   //Create all floors
@@ -125,8 +125,14 @@ gameScene.addProp = function(objectKey, room, floor){
 gameScene.update = function(){
 
   if (this.cursors.down.isDown){
-    this.scene.start('Home');
-    return;
+    //this.scene.start('Home');
+    this.cameras.main.scrollY += 10;
+    //return;
+  }
+  else if (this.cursors.up.isDown){
+    //this.scene.start('Home');
+    this.cameras.main.scrollY -= 10;
+    //return;
   }
 
   //Random movement
