@@ -46,7 +46,12 @@ gameScene.refreshHud = function(){
 };
 
 gameScene.setUpHUD = function(){
-  
+  //Profile
+  //Profile Pic
+  this.profilePicture = this.physics.add.sprite(50, 50, this.gameStats.profilePic);
+  this.profilePicture.setScale(0.5);
+  this.profilePicture.body.allowGravity = false;
+
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
     font: '26px Arial',
@@ -61,7 +66,7 @@ gameScene.setUpHUD = function(){
     backgroundColor: '#ff00ff'
   });
 
-  this.arrowUp = this.physics.add.sprite(70, 120, "sprite_arrow");
+  this.arrowUp = this.physics.add.sprite(70, 140, "sprite_arrow");
   this.physics.add.existing(this.arrowUp, true);
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
@@ -69,7 +74,7 @@ gameScene.setUpHUD = function(){
     this.scrollScreen("Up", 50);
   }, this);
 
-  this.arrowDown = this.physics.add.sprite(70, 270, "sprite_arrow");
+  this.arrowDown = this.physics.add.sprite(70, 290, "sprite_arrow");
   this.physics.add.existing(this.arrowDown, true);
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
@@ -208,8 +213,8 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.cameras.main.scrollY = 0;
     this.greenPointText.y = 10;
     this.pollutionStatText.y = 10;
-    this.arrowUp.y = 120;
-    this.arrowDown.y = 270;
+    this.arrowUp.y = 140;
+    this.arrowDown.y = 290;
     return;
   }
   this.arrowUp.y += travel;
