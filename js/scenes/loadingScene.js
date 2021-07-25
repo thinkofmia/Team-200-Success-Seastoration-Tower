@@ -108,6 +108,9 @@ loadingScene.preload = function(){
     this.load.image('beanbagL_qualle','assets/images/Qualle/beanbagL.png');
     this.load.image('beanbagR_qualle','assets/images/Qualle/beanbagR.png');
     
+    //Sample Profile Pic
+    this.load.image('profile_pic_sample','assets/images/profile/jache-dark.png');
+
     //Create loading demo
     for (let i=0;i<300;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');

@@ -8,7 +8,8 @@ gameScene.init = function() {
   this.timeElapsed = 0;
   this.gameStats = {
     greenpoints: 0,
-    pollution: 100
+    pollution: 100,
+    profilePic: "profile_pic_sample"
   }
 };
 
