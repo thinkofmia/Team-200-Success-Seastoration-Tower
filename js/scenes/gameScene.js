@@ -46,8 +46,10 @@ gameScene.create = function() {
 
 //Show current value of stats
 gameScene.refreshHud = function(){
-  this.greenPointText.setText('♻️: '+ this.gameStats.greenpoints.toFixed(0));
-  this.pollutionStatText.setText('💀: '+this.gameStats.pollution.toFixed(2)+'%');
+  //Update texts
+  this.levelText.setText(`Level: ${this.gameStats.profileLv}`);
+  this.greenPointText.setText(`♻️: ${this.gameStats.greenpoints.toFixed(0)}`);
+  this.pollutionStatText.setText(`💀: ${this.gameStats.pollution.toFixed(2)}%`);
 
   //Update Level Bar
   this.levelProgress.clear();
@@ -85,6 +87,13 @@ gameScene.setUpHUD = function(){
   //Level Bar
   this.levelProgress = this.add.graphics();
   this.levelProgress.setPosition(102.5, 22.5);
+
+  //Level Stat
+  this.levelText = this.add.text(100,50,'Level: ',{
+    font: '20px Arial',
+    fill: '#ffffff',
+    backgroundColor: '#ff00ff' 
+  });
 
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
@@ -255,6 +264,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.profilePicture.setPosition(50, 50);
     this.levelBg.setPosition(100, 20);
     this.levelProgress.setPosition(102.5, 22.5);
+    this.levelText.setPosition(100, 50);
     return;
   }
   this.arrowUp.y += travel;
@@ -266,6 +276,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.profilePicture.y += travel;
   this.levelBg.y +=travel;
   this.levelProgress.y +=travel;
+  this.levelText.y += travel;
 }
 
 //Executed on every frame
