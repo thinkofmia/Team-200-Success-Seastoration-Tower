@@ -109,21 +109,28 @@ gameScene.setUpHUD = function(){
     backgroundColor: '#ff00ff'
   });
 
-  this.arrowUp = this.physics.add.sprite(70, 140, "sprite_arrow");
-  this.physics.add.existing(this.arrowUp, true);
+  //Arrow Keys
+  this.arrowUp = this.physics.add.sprite(70, 140, "icon_arrow");
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
   this.arrowUp.on('pointerdown', function(){
     this.scrollScreen("Up", 50);
   }, this);
 
-  this.arrowDown = this.physics.add.sprite(70, 290, "sprite_arrow");
-  this.physics.add.existing(this.arrowDown, true);
+  this.arrowDown = this.physics.add.sprite(70, 290, "icon_arrow");
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
   this.arrowDown.setInteractive();
   this.arrowDown.on('pointerdown', function(){
     this.scrollScreen("Down", 50);
+  }, this);
+
+  //Back Button
+  this.backButton = this.physics.add.sprite(gameW- 70, 290, "icon_back");
+  this.backButton.body.allowGravity = false;
+  this.backButton.setInteractive();
+  this.backButton.on('pointerdown', function(){
+    //this.scene.start('Home');
   }, this);
 }
 
@@ -265,6 +272,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.levelBg.setPosition(100, 20);
     this.levelProgress.setPosition(102.5, 22.5);
     this.levelText.setPosition(100, 50);
+    this.backButton.y = 290;
     return;
   }
   this.arrowUp.y += travel;
@@ -277,6 +285,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.levelBg.y +=travel;
   this.levelProgress.y +=travel;
   this.levelText.y += travel;
+  this.backButton.y += travel;
 }
 
 gameScene.checkLevel = function(){

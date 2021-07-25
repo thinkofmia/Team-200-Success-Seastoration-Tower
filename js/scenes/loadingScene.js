@@ -63,14 +63,21 @@ loadingScene.preload = function(){
     this.load.image('background_water', 'assets/images/bg/water.png');
     this.load.image('background_title', 'assets/images/start screen/background1.png');
 
-    //Loading Sprites
-    this.load.spritesheet('sprite_arrow','assets/images/sprites/sprite_arrow.png', {
+    //Loading Icons
+    this.load.spritesheet('icon_arrow','assets/images/icons/icon_arrow.png', {
+        frameWidth: 100,
+        frameHeight: 100,
+        margin: 0,
+        spacing: 0
+    });
+    this.load.spritesheet('icon_back','assets/images/icons/icon_back.png', {
         frameWidth: 100,
         frameHeight: 100,
         margin: 0,
         spacing: 0
     });
 
+    //Loading Sprites
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
         frameWidth: 1000,
         frameHeight: 1000,
