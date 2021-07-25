@@ -6,7 +6,7 @@ homeScene.create = function(){
     //Game background, with active input
     let bg = this.add.sprite(0,0,'background_title').setInteractive();
     bg.setOrigin(0,0);
-    //bg.setScale(1);
+    bg.setScale(0.25);
 
     //Welcome Text
     let gameW = this.sys.game.config.width;
