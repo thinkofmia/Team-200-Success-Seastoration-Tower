@@ -14,7 +14,7 @@ gameScene.init = function() {
     maxExp: 100,
     profilePic: "profile_pic_sample"
   };
-  
+  this.isPlaying = true;
   this.barW = 100;
   this.barH = 10;
 };
@@ -130,8 +130,23 @@ gameScene.setUpHUD = function(){
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
-    //this.scene.start('Home');
+    this.backButton.setFrame(1);
+    this.isPlaying = false;
+    //Keep game on for sometime
+    this.time.addEvent({
+      delay: 1000,
+      repeat: 0,
+      callback: function(){
+        this.backButton.setFrame(0);
+        this.goHome();
+      },
+      callbackScope: this
+    });
   }, this);
+}
+
+gameScene.goHome = function(){
+  this.scene.start('Home');
 }
 
 gameScene.setUpCamera = function(){
@@ -298,51 +313,51 @@ gameScene.checkLevel = function(){
 
 //Executed on every frame
 gameScene.update = function(){
-
-  if (this.cursors.down.isDown){
-    this.scrollScreen("Down");
-  }
-  else if (this.cursors.up.isDown){
-    this.scrollScreen("Up");
-  }
-  else if (this.cursors.left.isDown){
-    this.scene.start('Home');
-    return;
-  }
-
-  //Random movement
-  for (let i=0;i<this.shopKeepersData.length;i++){
-    //Random Motion
-    if (this.timeElapsed%5>3){
-      this.shopKeepersData[i].body.setVelocityX(-this.charactersSpeed[i]);
-      this.shopKeepersData[i].flipX = false;
-      //Check
-      if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+  if (this.isPlaying){
+    if (this.cursors.down.isDown){
+      this.scrollScreen("Down");
     }
-    else if (this.timeElapsed%5>1){
-      this.shopKeepersData[i].body.setVelocityX(this.charactersSpeed[i]);
-      this.shopKeepersData[i].flipX = true;
-      if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+    else if (this.cursors.up.isDown){
+      this.scrollScreen("Up");
     }
-    else {
-      this.shopKeepersData[i].body.setVelocityX(0);
-      this.shopKeepersData[i].anims.stop(`walking_${this.shopKeeperNames[i]}`);
-
-      //Set default frame
-      this.shopKeepersData[i].setFrame(0);
+    else if (this.cursors.left.isDown){
+      goHome();
+      return;
+    }
+  
+    //Random movement
+    for (let i=0;i<this.shopKeepersData.length;i++){
+      //Random Motion
+      if (this.timeElapsed%5>3){
+        this.shopKeepersData[i].body.setVelocityX(-this.charactersSpeed[i]);
+        this.shopKeepersData[i].flipX = false;
+        //Check
+        if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+      }
+      else if (this.timeElapsed%5>1){
+        this.shopKeepersData[i].body.setVelocityX(this.charactersSpeed[i]);
+        this.shopKeepersData[i].flipX = true;
+        if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+      }
+      else {
+        this.shopKeepersData[i].body.setVelocityX(0);
+        this.shopKeepersData[i].anims.stop(`walking_${this.shopKeeperNames[i]}`);
+  
+        //Set default frame
+        this.shopKeepersData[i].setFrame(0);
+      }
+      
     }
     
+    //Simualte increasing pts
+    this.gameStats.pollution -= 0.0001;
+    if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
+  
+    this.gameStats.greenpoints += 0.01;
+  
+    this.checkLevel();
+    gameScene.refreshHud();
+    this.timeElapsed+=0.01;
   }
-  
-  //Simualte increasing pts
-  this.gameStats.pollution -= 0.0001;
-  if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
-
-  this.gameStats.greenpoints += 0.01;
-
-  this.checkLevel();
-  gameScene.refreshHud();
-  this.timeElapsed+=0.01;
-  
   
 };
