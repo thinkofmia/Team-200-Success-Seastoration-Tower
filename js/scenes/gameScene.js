@@ -48,20 +48,20 @@ gameScene.refreshHud = function(){
 gameScene.setUpHUD = function(){
   
   //Money Stat
-  this.greenPointText = this.add.text(20,10,'♻️: ',{
+  this.greenPointText = this.add.text(500,10,'♻️: ',{
     font: '26px Arial',
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
 
   //Pollution stat
-  this.pollutionStatText = this.add.text(20,40,'💀: ',{
+  this.pollutionStatText = this.add.text(300,10,'💀: ',{
     font: '26px Arial',
     fill: '#ffffff',
     backgroundColor: '#ff00ff'
   });
 
-  this.arrowUp = this.physics.add.sprite(70, 100, "sprite_arrow");
+  this.arrowUp = this.physics.add.sprite(70, 120, "sprite_arrow");
   this.physics.add.existing(this.arrowUp, true);
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
@@ -69,7 +69,7 @@ gameScene.setUpHUD = function(){
     this.scrollScreen("Up", 50);
   }, this);
 
-  this.arrowDown = this.physics.add.sprite(70, 250, "sprite_arrow");
+  this.arrowDown = this.physics.add.sprite(70, 270, "sprite_arrow");
   this.physics.add.existing(this.arrowDown, true);
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
@@ -207,9 +207,9 @@ gameScene.scrollScreen = function(dir, dist = 10){
     diff = 0-this.cameras.main.scrollY;
     this.cameras.main.scrollY = 0;
     this.greenPointText.y = 10;
-    this.pollutionStatText.y = 40;
-    this.arrowUp.y = 100;
-    this.arrowDown.y = 250;
+    this.pollutionStatText.y = 10;
+    this.arrowUp.y = 120;
+    this.arrowDown.y = 270;
     return;
   }
   this.arrowUp.y += travel;
