@@ -134,7 +134,7 @@ gameScene.setUpHUD = function(){
     this.isPlaying = false;
     //Keep game on for sometime
     this.time.addEvent({
-      delay: 1000,
+      delay: 500,
       repeat: 0,
       callback: function(){
         this.backButton.setFrame(0);
@@ -319,10 +319,6 @@ gameScene.update = function(){
     }
     else if (this.cursors.up.isDown){
       this.scrollScreen("Up");
-    }
-    else if (this.cursors.left.isDown){
-      goHome();
-      return;
     }
   
     //Random movement
