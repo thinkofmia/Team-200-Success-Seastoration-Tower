@@ -9,8 +9,14 @@ gameScene.init = function() {
   this.gameStats = {
     greenpoints: 0,
     pollution: 100,
+    profileLv: 1,
+    profileExp: 20,
+    maxExp: 100,
     profilePic: "profile_pic_sample"
-  }
+  };
+  
+  this.barW = 100;
+  this.barH = 10;
 };
 
 // load asset files for our game
@@ -25,7 +31,6 @@ gameScene.create = function() {
   //Game BG
   let bg = this.add.sprite(0,0,'background_title').setInteractive();
   bg.setOrigin(0,0);
-  //bg.setScale(5);
 
   //Add all tower elements
   this.setupTower();
@@ -43,9 +48,19 @@ gameScene.create = function() {
 gameScene.refreshHud = function(){
   this.greenPointText.setText('♻️: '+ this.gameStats.greenpoints.toFixed(0));
   this.pollutionStatText.setText('💀: '+this.gameStats.pollution.toFixed(2)+'%');
+
+  //Update Level Bar
+  this.levelProgress.clear();
+  this.levelProgress.fillStyle(0x9AD98D,1);
+  this.levelProgress.fillRect(0,0, this.gameStats.profileExp/this.gameStats.maxExp * this.barW, this.barH);
+
 };
 
 gameScene.setUpHUD = function(){
+  
+  let gameW = this.sys.game.config.width;
+  let gameH = this.sys.game.config.height;
+
   //Profile
   //Back Frame
   this.backFramePP = this.physics.add.sprite(50, 50, "profile_pic_back");
@@ -59,6 +74,17 @@ gameScene.setUpHUD = function(){
   this.frontFramePP = this.physics.add.sprite(50, 50, "profile_pic_front");
   this.frontFramePP.setScale(0.5);
   this.frontFramePP.body.allowGravity = false;
+
+  //Level bar background
+  let levelBg = this.add.graphics();
+
+  levelBg.setPosition(100, 20);
+  levelBg.fillStyle(0x000000, 1);
+  levelBg.fillRect(0,0,this.barW+5, this.barH+5);
+
+  //Level Bar
+  this.levelProgress = this.add.graphics();
+  this.levelProgress.setPosition(102.5, 22.5);
 
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
@@ -276,7 +302,8 @@ gameScene.update = function(){
 
   this.gameStats.greenpoints += 0.01;
 
-
+  if(this.gameStats.profileExp<100) this.gameStats.profileExp += 0.1;
+  else this.gameStats.profileExp = 100;
   gameScene.refreshHud();
   this.timeElapsed+=0.01;
   
