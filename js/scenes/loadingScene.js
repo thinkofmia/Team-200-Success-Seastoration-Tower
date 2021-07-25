@@ -2,23 +2,39 @@
 let loadingScene = new Phaser.Scene('Loading');
 
 loadingScene.preload = function(){
+
+    //Get gameW and gameH
+    let gameW = this.sys.game.config.width;
+    let gameH = this.sys.game.config.height;
+
     //Show Logo
-    let logo = this.add.sprite(this.sys.game.config.width/2, this.sys.game.config.height/8*2, 'logo');
+    let logo = this.add.sprite(gameW/2, gameH/8*2, 'logo');
     logo.setScale(0.2);
 
     //Progress bar background
     let bgBar = this.add.graphics();
 
     let barW = 500;
-    let barH = 50;
+    let barH = 25;
 
-    bgBar.setPosition(this.sys.game.config.width/2 - barW/2, this.sys.game.config.height/2 - barH/2);
+    bgBar.setPosition(gameW/2 - barW/2, gameH/4*3 - barH/2);
     bgBar.fillStyle(0xF5F5F5, 1);
     bgBar.fillRect(0,0,barW, barH);
 
     //Progress Bar
     let progressBar = this.add.graphics();
-    progressBar.setPosition(this.sys.game.config.width/2 - barW/2, this.sys.game.config.height/2 - barH/2);
+    progressBar.setPosition(gameW/2 - barW/2, gameH/4*3 - barH/2);
+
+    //Boot Text Description
+    let text = this.add.text(gameW/8, gameH/2, 'Do you know the oceans provide 99% of the living space \non the planet containing 50-80% of all life?', {
+        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+        fontSize: '20px',
+        fill: '#ffffff',
+        align: 'center',
+        fontWeight: 'bold',
+    });
+
+    text.setShadow(0, 0, 'rgba(0, 0, 0, 1)', 0);
 
     //Listen to progress event
     this.load.on('progress', function(value){

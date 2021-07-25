@@ -6,7 +6,7 @@ let config = {
   scene: [bootScene, loadingScene, homeScene, gameScene],
   title: 'Team 200 Success Presents\nEnv Tower',
   pixelArt: false,
-  backgroundColor: 'ffffff',
+  backgroundColor: '90d0f4',
   physics: {
     default: 'arcade',
     arcade: {
