@@ -76,11 +76,11 @@ gameScene.setUpHUD = function(){
   this.frontFramePP.body.allowGravity = false;
 
   //Level bar background
-  let levelBg = this.add.graphics();
+  this.levelBg = this.add.graphics();
 
-  levelBg.setPosition(100, 20);
-  levelBg.fillStyle(0x000000, 1);
-  levelBg.fillRect(0,0,this.barW+5, this.barH+5);
+  this.levelBg.setPosition(100, 20);
+  this.levelBg.fillStyle(0x000000, 1);
+  this.levelBg.fillRect(0,0,this.barW+5, this.barH+5);
 
   //Level Bar
   this.levelProgress = this.add.graphics();
@@ -242,20 +242,30 @@ gameScene.scrollScreen = function(dir, dist = 10){
   }
 
   this.cameras.main.scrollY += travel;
+  //If reach top, reset positions of HUD
   if (this.cameras.main.scrollY<0){
     diff = 0-this.cameras.main.scrollY;
     this.cameras.main.scrollY = 0;
     this.greenPointText.y = 10;
     this.pollutionStatText.y = 10;
     this.arrowUp.y = 140;
-    this.arrowDown.y = 290;
+    this.arrowDown.y = 290;   
+    this.backFramePP.setPosition(50, 50);
+    this.frontFramePP.setPosition(50, 50);
+    this.profilePicture.setPosition(50, 50);
+    this.levelBg.setPosition(100, 20);
+    this.levelProgress.setPosition(102.5, 22.5);
     return;
   }
   this.arrowUp.y += travel;
   this.arrowDown.y += travel;
   this.greenPointText.y += travel;
   this.pollutionStatText.y += travel;
-  
+  this.backFramePP.y += travel;
+  this.frontFramePP.y += travel;
+  this.profilePicture.y += travel;
+  this.levelBg.y +=travel;
+  this.levelProgress.y +=travel;
 }
 
 //Executed on every frame
