@@ -279,6 +279,14 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.levelText.y += travel;
 }
 
+gameScene.checkLevel = function(){
+  if(this.gameStats.profileExp<100) this.gameStats.profileExp += 0.1;
+  else {
+    this.gameStats.profileLv += 1;
+    this.gameStats.profileExp = 0;
+  }
+}
+
 //Executed on every frame
 gameScene.update = function(){
 
@@ -323,8 +331,7 @@ gameScene.update = function(){
 
   this.gameStats.greenpoints += 0.01;
 
-  if(this.gameStats.profileExp<100) this.gameStats.profileExp += 0.1;
-  else this.gameStats.profileExp = 100;
+  this.checkLevel();
   gameScene.refreshHud();
   this.timeElapsed+=0.01;
   
