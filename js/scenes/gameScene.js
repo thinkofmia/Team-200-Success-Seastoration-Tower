@@ -47,10 +47,18 @@ gameScene.refreshHud = function(){
 
 gameScene.setUpHUD = function(){
   //Profile
+  //Back Frame
+  this.backFramePP = this.physics.add.sprite(50, 50, "profile_pic_back");
+  this.backFramePP.setScale(0.5);
+  this.backFramePP.body.allowGravity = false;
   //Profile Pic
   this.profilePicture = this.physics.add.sprite(50, 50, this.gameStats.profilePic);
   this.profilePicture.setScale(0.5);
   this.profilePicture.body.allowGravity = false;
+  //Front Frame
+  this.frontFramePP = this.physics.add.sprite(50, 50, "profile_pic_front");
+  this.frontFramePP.setScale(0.5);
+  this.frontFramePP.body.allowGravity = false;
 
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
