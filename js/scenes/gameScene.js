@@ -126,7 +126,7 @@ gameScene.setUpHUD = function(){
   }, this);
 
   //Back Button
-  this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
+  this.backButton = this.physics.add.sprite(gameW- 70, 190, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
@@ -287,7 +287,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.levelBg.setPosition(100, 20);
     this.levelProgress.setPosition(102.5, 22.5);
     this.levelText.setPosition(100, 50);
-    this.backButton.y = 240;
+    this.backButton.y = 190;
     return;
   }
   this.arrowUp.y += travel;
