@@ -9,7 +9,7 @@ loadingScene.preload = function(){
 
     //Show Logo
     let logo = this.add.sprite(gameW/2, gameH/8*3, 'logo');
-    logo.setScale(0.2);
+    logo.setScale(0.15);
 
     //Progress bar background
     let bgBar = this.add.graphics();

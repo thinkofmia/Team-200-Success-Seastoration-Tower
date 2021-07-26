@@ -117,7 +117,7 @@ gameScene.setUpHUD = function(){
     this.scrollScreen("Up", 50);
   }, this);
 
-  this.arrowDown = this.physics.add.sprite(70, 290, "icon_arrow");
+  this.arrowDown = this.physics.add.sprite(70, 240, "icon_arrow");
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
   this.arrowDown.setInteractive();
@@ -126,7 +126,7 @@ gameScene.setUpHUD = function(){
   }, this);
 
   //Back Button
-  this.backButton = this.physics.add.sprite(gameW- 70, 290, "icon_back");
+  this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
@@ -280,14 +280,14 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.greenPointText.y = 10;
     this.pollutionStatText.y = 10;
     this.arrowUp.y = 140;
-    this.arrowDown.y = 290;   
+    this.arrowDown.y = 240;   
     this.backFramePP.setPosition(50, 50);
     this.frontFramePP.setPosition(50, 50);
     this.profilePicture.setPosition(50, 50);
     this.levelBg.setPosition(100, 20);
     this.levelProgress.setPosition(102.5, 22.5);
     this.levelText.setPosition(100, 50);
-    this.backButton.y = 290;
+    this.backButton.y = 240;
     return;
   }
   this.arrowUp.y += travel;
