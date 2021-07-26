@@ -17,6 +17,8 @@ gameScene.init = function() {
   this.isPlaying = true;
   this.barW = 100;
   this.barH = 10;
+  this.globalSpriteScale = 0.75;
+  this.globalSpriteTranslate = -50;
 };
 
 // load asset files for our game
@@ -170,8 +172,8 @@ gameScene.setupTower = function(){
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.floorNames.length;i++){
 
-    this.floorData[i] = this.physics.add.sprite(380, 100 + i*170, this.floorNames[i]);
-    this.floorData[i].setScale(0.25);
+    this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*170*this.globalSpriteScale, this.floorNames[i]);
+    this.floorData[i].setScale(0.25*this.globalSpriteScale);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
 
@@ -197,19 +199,16 @@ gameScene.setupTower = function(){
   this.shopKeepersData = [];
 
   for (let i=0;i<this.shopKeeperNames.length;i++){
-    let shopkeeper = this.add.sprite(360 + Math.random()* 40, 140 + i*(170), `sprite_${this.shopKeeperNames[i]}`);
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale), `sprite_${this.shopKeeperNames[i]}`);
     this.physics.add.existing(shopkeeper)
-    shopkeeper.setScale(0.1);
+    shopkeeper.setScale(0.1*this.globalSpriteScale);
     switch(this.shopKeeperNames[i]){
       case "kj":
-        shopkeeper.setScale(0.12);
-        //shopkeeper.y = 160 + i*(170);
+        shopkeeper.setScale(0.12*this.globalSpriteScale);
         break;
     }
     shopkeeper.body.allowGravity = false;
   
-    //Constraint character
-    //shopkeeper.body.setCollideWorldBounds(true);
     //Add to data
     this.shopKeepersData.push(shopkeeper);
   }
@@ -218,21 +217,23 @@ gameScene.setupTower = function(){
 
 //Add Props
 gameScene.addProp = function(objectKey, room, floor){
+  propHeight = 100 + floor*(170*this.globalSpriteScale);
+  propDist = 300 + this.globalSpriteTranslate;
   switch (room){
     case "floor_basic":
-      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(350 + Math.random()*50, 100 + floor*(170), "poster_basic");
+      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist + 50 + Math.random()*50, propHeight, "poster_basic");
       break;
     case "floor_qualle":
-      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 100 + floor*(170), "beanbagL_qualle");
-      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(300, 100 + floor*(170), "beanbagR_qualle");
+      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagL_qualle");
+      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagR_qualle");
       break;
   }
   
-  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(400, 100 + floor*(170), "table_basic");
-  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(350, 100 + floor*(170), "door_basic");
+  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
+  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+50, propHeight, "door_basic");
   
   if (this.floorProps[floor][objectKey]){
-    this.floorProps[floor][objectKey].setScale(0.25);
+    this.floorProps[floor][objectKey].setScale(0.25*this.globalSpriteScale);
     this.physics.add.existing(this.floorProps[floor][objectKey]);
     this.floorProps[floor][objectKey].body.allowGravity = false;  
   }
