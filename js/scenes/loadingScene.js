@@ -120,7 +120,7 @@ loadingScene.preload = function(){
     this.load.image('profile_pic_back','assets/images/profile/BackFrame.png');
 
     //Sample Profile Pic
-    this.load.image('profile_pic_sample','assets/images/profile/jache-dark.png');
+    this.load.image('profile_pic_sample','assets/images/profile/KingFish.png');
 
     //Create loading demo
     for (let i=0;i<300;i++){
