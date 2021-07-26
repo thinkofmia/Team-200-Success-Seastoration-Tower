@@ -19,6 +19,9 @@ gameScene.init = function() {
   this.barH = 10;
   this.globalSpriteScale = 0.75;
   this.globalSpriteTranslate = -50;
+
+  this.floorStatsBarW = 350;
+  this.floorStatsBarH = 30;
 };
 
 // load asset files for our game
@@ -168,11 +171,12 @@ gameScene.setupTower = function(){
   this.floorNames = ['floor_basic', 'floor_qualle', 'floor_basic', 'floor_basic', 'floor_basic', ];
   this.floorData = [];
   this.floorProps = [];
+  this.floorStatsData = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.floorNames.length;i++){
 
-    this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*170*this.globalSpriteScale, this.floorNames[i]);
+    this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), this.floorNames[i]);
     this.floorData[i].setScale(0.25*this.globalSpriteScale);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
@@ -192,6 +196,13 @@ gameScene.setupTower = function(){
         this.addProp("Door",this.floorNames[i], i);
         this.addProp("Table",this.floorNames[i], i);
     
+    //Add Data
+    this.floorStatsData[i] = this.add.graphics();
+
+    this.floorStatsData[i].setPosition(145, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+    this.floorStatsData[i].fillStyle(0x000000, 1);
+    this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
+    
   }
 
   //Character
@@ -199,7 +210,7 @@ gameScene.setupTower = function(){
   this.shopKeepersData = [];
 
   for (let i=0;i<this.shopKeeperNames.length;i++){
-    let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale), `sprite_${this.shopKeeperNames[i]}`);
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${this.shopKeeperNames[i]}`);
     this.physics.add.existing(shopkeeper)
     shopkeeper.setScale(0.1*this.globalSpriteScale);
     switch(this.shopKeeperNames[i]){
@@ -212,12 +223,13 @@ gameScene.setupTower = function(){
     //Add to data
     this.shopKeepersData.push(shopkeeper);
   }
-  
+
+
 }
 
 //Add Props
 gameScene.addProp = function(objectKey, room, floor){
-  propHeight = 100 + floor*(170*this.globalSpriteScale);
+  propHeight = 100 + floor*(170*this.globalSpriteScale+this.floorStatsBarH);
   propDist = 300 + this.globalSpriteTranslate;
   switch (room){
     case "floor_basic":
