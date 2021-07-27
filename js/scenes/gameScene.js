@@ -12,6 +12,17 @@ gameScene.init = function() {
   // fonts
   this.titleFont = 'Grandstander';
   this.bodyFont = 'Averia Libre';
+  //UIs
+  this.popupW = 600;
+  this.popupH = 300;
+  
+  this.barW = 100;
+  this.barH = 10;
+  this.globalSpriteScale = 0.75;
+  this.globalSpriteTranslate = -50;
+
+  this.floorStatsBarW = 350;
+  this.floorStatsBarH = 50;
   //Variables
   this.charactersSpeed = [-20,-15, -22, -17];
   this.timeElapsed = 0;
@@ -68,13 +79,6 @@ gameScene.init = function() {
     ]
   };
   this.isPlaying = true;
-  this.barW = 100;
-  this.barH = 10;
-  this.globalSpriteScale = 0.75;
-  this.globalSpriteTranslate = -50;
-
-  this.floorStatsBarW = 350;
-  this.floorStatsBarH = 50;
 };
 
 // load asset files for our game
@@ -236,6 +240,33 @@ gameScene.setUpHUD = function(){
   }, this);
 
   this.backButton.depth = 90;
+
+  //Create Popup Modal
+  this.popup = this.add.graphics();
+
+  this.popup.setPosition(20, 20);
+  this.popup.fillStyle(0xcddbf5, 1);
+  this.popup.fillRect(0,0,this.popupW, this.popupH);
+  this.popup.depth = 100;
+  this.popup.setVisible(false);
+/*
+  this.closePopup = this.physics.add.sprite(570, 80, "icon_cross");
+  this.closePopup.body.allowGravity = false;
+  this.closePopup.setInteractive();
+  this.closePopup.setScale(0.15);
+  this.closePopup.on('pointerdown', function(){
+    
+  }, this);
+  this.closePopup.depth = 101;
+*/
+  //Pollution stat
+  this.popupText = this.add.text(50,150,'This is a fake modal. Please close me! :3 ',{
+    font: '26px '+this.titleFont,
+    fill: '#000000',
+    align: 'center'
+  });
+  this.popupText.depth = 101;
+  this.popupText.setVisible(false);
 }
 
 gameScene.goHome = function(){
@@ -251,6 +282,25 @@ gameScene.setUpCamera = function(){
       if (p.y-p.downY >0) gameScene.scrollScreen("Down", (p.y-p.downY)/10);
       else if (p.y-p.downY<0) gameScene.scrollScreen("Up", -(p.y-p.downY)/10);
     }
+  });
+}
+
+//Display modal for 1s
+gameScene.displayModal = function(modalMsg){
+  //Update modal text
+  this.popupText.setText(modalMsg);
+  
+  this.popup.setVisible(true);
+  this.popupText.setVisible(true);
+  //Time 2s
+  this.time.addEvent({
+    delay: 1000,
+    repeat: 0,
+    callback: function(){
+      this.popup.setVisible(false);
+      this.popupText.setVisible(false);
+    },
+    callbackScope: this
   });
 }
 
@@ -379,7 +429,8 @@ gameScene.upgradeShop = function(shopNo){
     shop.level +=1;
     this.gameStats.greenpoints -= amt;
   }
-  else alert(`Not enough green points! You need ${amt}`);
+  else this.displayModal(`Not enough green points! You need ${amt}!`);
+  //else alert(`Not enough green points! You need ${amt}!`);
 }
 
 gameScene.earnGreenPoints = function(){
@@ -399,7 +450,8 @@ gameScene.earnGreenPoints = function(){
 
 gameScene.unlockShop = function(){
   if (this.gameStats.greenpoints<this.gameStats.unlockCost){
-    alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
+    this.displayModal(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
+    //alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
     return;
   } 
   this.gameStats.greenpoints -= this.gameStats.unlockCost;
