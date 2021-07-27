@@ -281,10 +281,40 @@ gameScene.setupTower = function(){
 
 gameScene.unlockShop = function(){
   var shop = this.gameStats.nextShopToBuy;
+  var shopKeeperName = this.gameStats.shopsData[shop].shopkeeper;
+  var shopName = this.gameStats.shopsData[shop].room;
   if (shop<this.gameStats.shopsData.length){
     //Reveal room
     this.floorData[shop].setTexture(this.gameStats.shopsData[shop].room);
 
+    //Unlock Props
+    this.floorProps[shop] = {};
+    //Extra Props
+    switch (shopName){
+      case "floor_basic": 
+        this.addProp("Poster",shopName, shop);
+        break;
+      case "floor_qualle":
+        this.addProp("Beanbag L",shopName, shop);
+        this.addProp("Beanbag R",shopName, shop);
+        break;
+    }
+        //Add Props
+        this.addProp("Door",shopName, shop);
+        this.addProp("Table",shopName, shop);
+
+    //Unlock Shopkeeper
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
+          this.physics.add.existing(shopkeeper)
+          shopkeeper.setScale(0.1*this.globalSpriteScale);
+          switch(shopKeeperName){
+            case "kj":
+              shopkeeper.setScale(0.12*this.globalSpriteScale);
+              break;
+          }
+    shopkeeper.body.allowGravity = false;
+    this.shopKeepersData.push(shopkeeper);
+    
     //Update Unlock icon position and next shop to buy
     this.gameStats.nextShopToBuy +=1;
     this.unlockIcon.y = 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
