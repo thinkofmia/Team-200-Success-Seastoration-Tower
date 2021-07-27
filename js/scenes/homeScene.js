@@ -34,7 +34,7 @@ homeScene.create = function(){
         fill: '#ffffff',
     });
 
-    let game3 = this.add.text(gameW/2, game3H, 'Overcooked Nonsense', {
+    let game3 = this.add.text(gameW/2, game3H, 'Mini Games', {
         font: '20px Arial',
         fill: '#ffffff',
     });
