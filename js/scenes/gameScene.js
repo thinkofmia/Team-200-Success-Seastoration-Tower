@@ -14,30 +14,42 @@ gameScene.init = function() {
     maxExp: 100,
     profilePic: "profile_pic_sample",
     nextShopToBuy: 1,
+    earningBase: 125,
+    earningIncrement: 25,
+    unlockCost: 175,
     shopsData: [
       //Shop 1
       {
         room: 'floor_basic',
         locked: false,
         shopkeeper: 'mia',
+        level: 1,
+        currentRate: 0,
+        completionRate: 100
       },
       //Shop 2
       {
         room: 'floor_qualle',
         locked: true,
-        shopkeeper: 'kj'
+        shopkeeper: 'kj',
+        currentRate: 0,
+        completionRate: 500
       },
       //Shop 3
       {
         room: 'floor_basic',
         locked: true,
-        shopkeeper: 'ky'
+        shopkeeper: 'ky',
+        currentRate: 0,
+        completionRate: 1000
       },
       //Shop 4
       {
         room: 'floor_basic',
         locked: true,
-        shopkeeper: 'sy'
+        shopkeeper: 'sy',
+        currentRate: 0,
+        completionRate: 5000
       }
     ]
   };
@@ -279,6 +291,21 @@ gameScene.setupTower = function(){
 
 }
 
+gameScene.earnGreenPoints = function(){
+  for (var i=0;i<this.gameStats.shopsData.length;i++){
+    var shop = this.gameStats.shopsData[i];
+    if (!shop.locked){
+      if(shop.currentRate>=shop.completionRate){
+        this.gameStats.greenpoints += shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase;
+        shop.currentRate = 0;
+      }
+      else {
+        shop.currentRate += 1;
+      }
+    }
+  }
+}
+
 gameScene.unlockShop = function(){
   var shop = this.gameStats.nextShopToBuy;
   var shopKeeperName = this.gameStats.shopsData[shop].shopkeeper;
@@ -315,6 +342,8 @@ gameScene.unlockShop = function(){
     shopkeeper.body.allowGravity = false;
     this.shopKeepersData.push(shopkeeper);
     
+    //Update status of shop
+    this.gameStats.shopsData[shop].locked = false;
     //Update Unlock icon position and next shop to buy
     this.gameStats.nextShopToBuy +=1;
     this.unlockIcon.y = 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
@@ -464,7 +493,8 @@ gameScene.update = function(){
     this.gameStats.pollution -= 0.0001;
     if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
   
-    this.gameStats.greenpoints += 0.01;
+    //Earn Some MONEUH
+    this.earnGreenPoints();
   
     this.checkLevel();
     gameScene.refreshHud();
