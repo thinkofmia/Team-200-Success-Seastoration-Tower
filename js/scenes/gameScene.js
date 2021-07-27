@@ -63,7 +63,7 @@ gameScene.init = function() {
   this.globalSpriteTranslate = -50;
 
   this.floorStatsBarW = 350;
-  this.floorStatsBarH = 30;
+  this.floorStatsBarH = 50;
 };
 
 // load asset files for our game
@@ -97,6 +97,15 @@ gameScene.refreshHud = function(){
   this.levelText.setText(`Level: ${this.gameStats.profileLv}`);
   this.greenPointText.setText(`♻️: ${this.gameStats.greenpoints.toFixed(0)}`);
   this.pollutionStatText.setText(`💀: ${this.gameStats.pollution.toFixed(2)}%`);
+
+  //Update shop
+  for (var i=0;i<this.gameStats.shopsData.length;i++){
+    shop = this.gameStats.shopsData[i];
+    if (shop.locked){
+      this.floorLevelTexts[i].setText('');
+    }
+    else this.floorLevelTexts[i].setText(`Lv: ${shop.level}`);
+  }
 
   //Update Level Bar
   this.levelProgress.clear();
@@ -223,6 +232,8 @@ gameScene.setupTower = function(){
   this.floorData = [];
   this.floorProps = [];
   this.floorStatsData = [];
+  this.floorLevelTexts = [];
+  this.floorIncomeTexts = [];
   this.floorProgressBar = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
@@ -270,7 +281,13 @@ gameScene.setupTower = function(){
     this.floorProgressBar[i].setPosition(200, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
     this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
     this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-90)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
-    
+  
+    this.floorLevelTexts[i] = this.add.text(150, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `Lv: ${shop.level}`, {
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      fontSize: '15px',
+      fill: '#ffffff',
+      fontWeight: 'bold',
+  });
   }
 
   if (this.gameStats.nextShopToBuy>0){
