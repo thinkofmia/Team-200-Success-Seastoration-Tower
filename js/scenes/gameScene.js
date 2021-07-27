@@ -548,6 +548,16 @@ gameScene.checkLevel = function(){
   }
 }
 
+gameScene.countUnlockedShops = function(){
+  var count = 0;
+  for (var i=0;i<this.gameStats.shopsData.length;i++){
+    var shop = this.gameStats.shopsData[i];
+    if (!shop.locked) count += 1;
+  }
+
+  return count;
+}
+
 //Executed on every frame
 gameScene.update = function(){
   if (this.isPlaying){
@@ -584,7 +594,7 @@ gameScene.update = function(){
     }
     
     //Simualte increasing pts
-    this.gameStats.pollution -= 0.0001;
+    this.gameStats.pollution -= 0.0001*this.countUnlockedShops();
     if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
   
     //Earn Some MONEUH
