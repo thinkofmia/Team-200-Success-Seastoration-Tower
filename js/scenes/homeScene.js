@@ -4,6 +4,7 @@ let homeScene = new Phaser.Scene('Home');
 homeScene.init = function() {
     this.timeElapsed = 0;
     this.floatingSpeed = 5;
+    this.isAnimating = true;
 }
 
 //Create
@@ -63,10 +64,12 @@ homeScene.create = function(){
     };
 
     game1.on('pointerdown', function(){
+        homeScene.isAnimating = false;
         this.scene.start('Game');
     }, this);
 
     game2.on('pointerdown', function(){
+        homeScene.isAnimating = false;
         this.scene.start('Game');
     }, this);
 
@@ -74,8 +77,7 @@ homeScene.create = function(){
     let textBg = this.add.graphics();
     textBg.fillStyle(0x000000, 0.7);
     textBg.fillRect(gameW/2 - text.width/2 - 10, gameH/8 - text.height/2 -10, text.width+20, text.height+ 20);
-
-    
+  
 };
 
 homeScene.setupSprites = function(){
@@ -171,7 +173,7 @@ homeScene.animateSprites = function(){
 
 homeScene.update = function(){
     //Animate sprites
-    this.animateSprites();
+    if(this.isAnimating) this.animateSprites();
 
     //Elasped time
     this.timeElapsed += 0.1;
