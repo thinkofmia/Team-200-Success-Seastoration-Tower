@@ -32,6 +32,7 @@ gameScene.init = function() {
         room: 'floor_qualle',
         locked: true,
         shopkeeper: 'kj',
+        level: 1,
         currentRate: 0,
         completionRate: 500
       },
@@ -40,6 +41,7 @@ gameScene.init = function() {
         room: 'floor_basic',
         locked: true,
         shopkeeper: 'ky',
+        level: 1,
         currentRate: 0,
         completionRate: 1000
       },
@@ -48,6 +50,7 @@ gameScene.init = function() {
         room: 'floor_basic',
         locked: true,
         shopkeeper: 'sy',
+        level: 1,
         currentRate: 0,
         completionRate: 5000
       }
