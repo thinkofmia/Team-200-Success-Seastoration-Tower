@@ -173,7 +173,7 @@ gameScene.setUpHUD = function(){
   this.headerBar = this.add.graphics();
   this.headerBar.setPosition(0, 0);
   this.headerBar.fillStyle(0x459eda, 1);
-  this.headerBar.fillRect(0, 0, 1000, 40);
+  this.headerBar.fillRect(0, 0, 1000, 50);
   this.headerBar.depth = 50;
 
   //Level bar background
