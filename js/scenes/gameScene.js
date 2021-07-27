@@ -155,18 +155,18 @@ gameScene.setUpHUD = function(){
 
   //Profile
   //Back Frame
-  this.backFramePP = this.physics.add.sprite(50, 50, "profile_pic_back");
-  this.backFramePP.setScale(0.5);
+  this.backFramePP = this.physics.add.sprite(25, 25, "profile_pic_back");
+  this.backFramePP.setScale(0.25);
   this.backFramePP.body.allowGravity = false;
   this.backFramePP.depth = 90;
   //Profile Pic
-  this.profilePicture = this.physics.add.sprite(50, 50, this.gameStats.profilePic);
-  this.profilePicture.setScale(0.5);
+  this.profilePicture = this.physics.add.sprite(25, 25, this.gameStats.profilePic);
+  this.profilePicture.setScale(0.25);
   this.profilePicture.body.allowGravity = false;
   this.profilePicture.depth = 90;
   //Front Frame
-  this.frontFramePP = this.physics.add.sprite(50, 50, "profile_pic_front");
-  this.frontFramePP.setScale(0.5);
+  this.frontFramePP = this.physics.add.sprite(25, 25, "profile_pic_front");
+  this.frontFramePP.setScale(0.25);
   this.frontFramePP.body.allowGravity = false;
   this.frontFramePP.depth = 90;
 
@@ -179,19 +179,19 @@ gameScene.setUpHUD = function(){
   //Level bar background
   this.levelBg = this.add.graphics();
 
-  this.levelBg.setPosition(100, 20);
+  this.levelBg.setPosition(50, 25);
   this.levelBg.fillStyle(0x000000, 1);
   this.levelBg.fillRect(0,0,this.barW+5, this.barH+5);
   this.levelBg.depth = 89;
 
   //Level Bar
   this.levelProgress = this.add.graphics();
-  this.levelProgress.setPosition(102.5, 22.5);
+  this.levelProgress.setPosition(52.5, 27.5);
   this.levelProgress.depth = 90;
 
   //Level Stat
-  this.levelText = this.add.text(100,50,'Level: ',{
-    font: '20px '+this.titleFont,
+  this.levelText = this.add.text(50,5,'Level: ',{
+    font: '15px '+this.titleFont,
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
@@ -609,12 +609,12 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.pollutionStatText.y = 10;
     this.arrowUp.y = 140;
     this.arrowDown.y = 240;   
-    this.backFramePP.setPosition(50, 50);
-    this.frontFramePP.setPosition(50, 50);
-    this.profilePicture.setPosition(50, 50);
-    this.levelBg.setPosition(100, 20);
-    this.levelProgress.setPosition(102.5, 22.5);
-    this.levelText.setPosition(100, 50);
+    this.backFramePP.setPosition(25, 25);
+    this.frontFramePP.setPosition(25, 25);
+    this.profilePicture.setPosition(25, 25);
+    this.levelBg.y = 25;
+    this.levelProgress.y = 27.5;
+    this.levelText.y = 5;
     this.backButton.y = 240;
     this.popup.y = 20;
     this.popupText.y = 150;
