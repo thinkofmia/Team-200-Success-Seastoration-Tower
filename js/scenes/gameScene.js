@@ -192,24 +192,21 @@ gameScene.setUpHUD = function(){
   //Level Stat
   this.levelText = this.add.text(50,5,'Level: ',{
     font: '15px '+this.titleFont,
-    fill: '#ffffff',
-    backgroundColor: '#ff00ff' 
+    fill: '#ffffff'
   });
   this.levelText.depth = 90;
 
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
     font: '26px '+this.titleFont,
-    fill: '#ffffff',
-    backgroundColor: '#ff00ff' 
+    fill: '#ffffff'
   });
   this.greenPointText.depth = 90;
 
   //Pollution stat
   this.pollutionStatText = this.add.text(300,10,'💀: ',{
     font: '26px '+this.titleFont,
-    fill: '#ffffff',
-    backgroundColor: '#ff00ff'
+    fill: '#ffffff'
   });
   this.pollutionStatText.depth = 90;
 
