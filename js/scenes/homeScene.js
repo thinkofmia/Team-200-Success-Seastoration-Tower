@@ -1,6 +1,17 @@
 // create a new scene
 let homeScene = new Phaser.Scene('Home');
 
+WebFont.load({
+    google: {
+      families: ['Grandstander', 'Averia Libre']
+    }
+  });
+
+homeScene.init = function() {
+    this.titleFont = 'Grandstander';
+    this.bodyFont = 'Averia Libre';
+}
+
 //Create
 homeScene.create = function(){
     //Game background, with active input
@@ -13,7 +24,7 @@ homeScene.create = function(){
     let gameH = this.sys.game.config.height;
 
     let text = this.add.text(gameW/2, gameH/8, '😍 Welcome Agent to \nTeam 200 Success', {
-        font: '20px Arial',
+        font: "1em "+this.titleFont,
         fill: '#ffffff',
     });
 
