@@ -12,7 +12,33 @@ gameScene.init = function() {
     profileLv: 1,
     profileExp: 20,
     maxExp: 100,
-    profilePic: "profile_pic_sample"
+    profilePic: "profile_pic_sample",
+    shopsData: [
+      //Shop 1
+      {
+        room: 'floor_basic',
+        locked: false,
+        shopkeeper: 'mia',
+      },
+      //Shop 2
+      {
+        room: 'floor_qualle',
+        locked: true,
+        shopkeeper: 'kj'
+      },
+      //Shop 3
+      {
+        room: 'floor_basic',
+        locked: true,
+        shopkeeper: 'ky'
+      },
+      //Shop 4
+      {
+        room: 'floor_basic',
+        locked: true,
+        shopkeeper: 'sy'
+      }
+    ]
   };
   this.isPlaying = true;
   this.barW = 100;
@@ -166,35 +192,35 @@ gameScene.setUpCamera = function(){
   });
 }
 
+//Create and setup base tower
 gameScene.setupTower = function(){
-
-  this.floorNames = ['floor_basic', 'floor_qualle', 'floor_basic', 'floor_basic', 'floor_basic', ];
   this.floorData = [];
   this.floorProps = [];
   this.floorStatsData = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
-  for (let i=0;i<this.floorNames.length;i++){
+  for (let i=0;i<this.gameStats.shopsData.length;i++){
 
-    this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), this.floorNames[i]);
+    shop = this.gameStats.shopsData[i];
+    this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), shop.room);
     this.floorData[i].setScale(0.25*this.globalSpriteScale);
     this.physics.add.existing(this.floorData[i], true);
     this.floorData[i].body.allowGravity = false;
 
     this.floorProps[i] = {};
     //Extra Props
-    switch (this.floorNames[i]){
+    switch (shop.room){
       case "floor_basic": 
-        this.addProp("Poster",this.floorNames[i], i);
+        this.addProp("Poster",shop.room, i);
         break;
       case "floor_qualle":
-        this.addProp("Beanbag L",this.floorNames[i], i);
-        this.addProp("Beanbag R",this.floorNames[i], i);
+        this.addProp("Beanbag L",shop.room, i);
+        this.addProp("Beanbag R",shop.room, i);
         break;
     }
         //Add Props
-        this.addProp("Door",this.floorNames[i], i);
-        this.addProp("Table",this.floorNames[i], i);
+        this.addProp("Door",shop.room, i);
+        this.addProp("Table",shop.room, i);
     
     //Add Data
     this.floorStatsData[i] = this.add.graphics();
@@ -206,14 +232,14 @@ gameScene.setupTower = function(){
   }
 
   //Character
-  this.shopKeeperNames = ["mia","kj","ky", "sy"];
   this.shopKeepersData = [];
 
-  for (let i=0;i<this.shopKeeperNames.length;i++){
-    let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${this.shopKeeperNames[i]}`);
+  for (let i=0;i<this.gameStats.shopsData.length;i++){
+    shopKeeperName = this.gameStats.shopsData[i].shopkeeper;
+    let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
     this.physics.add.existing(shopkeeper)
     shopkeeper.setScale(0.1*this.globalSpriteScale);
-    switch(this.shopKeeperNames[i]){
+    switch(shopKeeperName){
       case "kj":
         shopkeeper.setScale(0.12*this.globalSpriteScale);
         break;
@@ -336,21 +362,22 @@ gameScene.update = function(){
   
     //Random movement
     for (let i=0;i<this.shopKeepersData.length;i++){
+      shopKeeperName = this.gameStats.shopsData[i].shopkeeper;
       //Random Motion
       if (this.timeElapsed%5>3){
         this.shopKeepersData[i].body.setVelocityX(-this.charactersSpeed[i]);
         this.shopKeepersData[i].flipX = false;
         //Check
-        if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+        if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
       else if (this.timeElapsed%5>1){
         this.shopKeepersData[i].body.setVelocityX(this.charactersSpeed[i]);
         this.shopKeepersData[i].flipX = true;
-        if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${this.shopKeeperNames[i]}`);
+        if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
       else {
         this.shopKeepersData[i].body.setVelocityX(0);
-        this.shopKeepersData[i].anims.stop(`walking_${this.shopKeeperNames[i]}`);
+        this.shopKeepersData[i].anims.stop(`walking_${shopKeeperName}`);
   
         //Set default frame
         this.shopKeepersData[i].setFrame(0);
