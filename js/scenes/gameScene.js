@@ -173,8 +173,8 @@ gameScene.setUpHUD = function(){
   this.headerBar = this.add.graphics();
   this.headerBar.setPosition(0, 0);
   this.headerBar.fillStyle(0x459eda, 1);
-  this.headerBar.fillRect(0, 0, 1000, 30);
-  this.headerBar.depth = 100;
+  this.headerBar.fillRect(0, 0, 1000, 40);
+  this.headerBar.depth = 50;
 
   //Level bar background
   this.levelBg = this.add.graphics();
@@ -619,6 +619,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.popup.y = 20;
     this.popupText.y = 150;
     this.healButton.y = 140;
+    this.headerBar.y = 0;
     return;
   }
   this.arrowUp.y += travel;
@@ -635,6 +636,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.popupText.y += travel;
   this.popup.y += travel;
   this.healButton.y += travel;
+  this.headerBar.y += travel;
 }
 
 gameScene.checkLevel = function(){
