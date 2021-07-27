@@ -655,12 +655,15 @@ gameScene.checkPollution = function(){
 
   if (this.gameStats.pollution<33){
     this.bg.setTexture('background_clean');
+    this.cameras.main.setBackgroundColor('#467698');
   }
   else if (this.gameStats.pollution<66){
     this.bg.setTexture('background_unclean');
+    this.cameras.main.setBackgroundColor('#707e51');
   }
   else {
     this.bg.setTexture('background_dirty');
+    this.cameras.main.setBackgroundColor('#562c37');
   }
 }
 
