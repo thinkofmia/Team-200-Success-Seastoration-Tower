@@ -248,6 +248,9 @@ gameScene.setupTower = function(){
     this.physics.add.existing(this.unlockIcon, true);
     this.unlockIcon.body.allowGravity = false;
     this.unlockIcon.setInteractive();
+    this.unlockIcon.on('pointerdown', function(){
+      gameScene.unlockShop();
+    }, this);
   }
   
 
@@ -274,6 +277,21 @@ gameScene.setupTower = function(){
   }
 
 
+}
+
+gameScene.unlockShop = function(){
+  if (this.gameStats.nextShopToBuy<this.gameStats.shopsData.length){
+    
+    //Update Unlock icon position and next shop to buy
+    this.unlockIcon.y = 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
+    this.gameStats.nextShopToBuy +=1;
+  }
+  else if (this.gameStats.nextShopToBuy>=this.gameStats.shopsData.length){
+    //Else destroy icon
+    this.gameStats.nextShopToBuy = -1;
+    this.unlockIcon.destroy();
+  }
+  
 }
 
 //Add Props
