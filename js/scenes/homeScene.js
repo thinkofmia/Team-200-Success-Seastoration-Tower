@@ -14,7 +14,7 @@ homeScene.create = function(){
     let gameW = this.sys.game.config.width;
     let gameH = this.sys.game.config.height;
 
-    let text = this.add.text(gameW/2, gameH/8, '😍 Welcome Agent to \nTeam 200 Success', {
+    let text = this.add.text(gameW/2, gameH/8, 'Seastoration Tower', {
         font: '20px Arial',
         fill: '#ffffff',
     });
