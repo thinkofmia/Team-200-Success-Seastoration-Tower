@@ -159,8 +159,8 @@ loadingScene.preload = function(){
     //Sample Profile Pic
     this.load.image('profile_pic_sample','assets/images/profile/KingFish.png');
 
-    //Create loading demo
-    for (let i=0;i<300;i++){
+    //Run loading bar
+    for (let i=0;i<100;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');
     }
 };
