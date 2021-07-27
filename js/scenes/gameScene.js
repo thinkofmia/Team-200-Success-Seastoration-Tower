@@ -91,8 +91,8 @@ gameScene.create = function() {
   let gameH = this.sys.game.config.height;
 
   //Game BG
-  let bg = this.add.sprite(0,0,'background_dirty').setInteractive();
-  bg.setOrigin(0,0);
+  this.bg = this.add.sprite(0,0,'background_unclean').setInteractive();
+  this.bg.setOrigin(0,0);
 
   //Add all tower elements
   this.setupTower();
@@ -626,6 +626,24 @@ gameScene.countUnlockedShops = function(){
   return count;
 }
 
+//Run in update to monitor pollution level
+gameScene.checkPollution = function(){
+  //Simualte increasing pts
+  this.gameStats.pollution += 0.001;
+  if (this.gameStats.pollution<0) this.gameStats.pollution = 0;
+  else if (this.gameStats.pollution>100) this.gameStats.pollution = 100;
+
+  if (this.gameStats.pollution<33){
+    this.bg.setTexture('background_clean');
+  }
+  else if (this.gameStats.pollution<66){
+    this.bg.setTexture('background_unclean');
+  }
+  else {
+    this.bg.setTexture('background_dirty');
+  }
+}
+
 //Executed on every frame
 gameScene.update = function(){
   if (this.isPlaying){
@@ -661,10 +679,9 @@ gameScene.update = function(){
       
     }
     
-    //Simualte increasing pts
-    this.gameStats.pollution -= 0.0001*this.countUnlockedShops();
-    if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
-  
+    //Check pollution
+    this.checkPollution();
+    
     //Earn Some MONEUH
     this.earnGreenPoints();
   
