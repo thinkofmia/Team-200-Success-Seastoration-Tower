@@ -386,6 +386,11 @@ gameScene.earnGreenPoints = function(){
 }
 
 gameScene.unlockShop = function(){
+  if (this.gameStats.greenpoints<this.gameStats.unlockCost){
+    alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
+    return;
+  } 
+  this.gameStats.greenpoints -= this.gameStats.unlockCost;
   var shop = this.gameStats.nextShopToBuy;
   var shopKeeperName = this.gameStats.shopsData[shop].shopkeeper;
   var shopName = this.gameStats.shopsData[shop].room;
