@@ -128,6 +128,8 @@ loadingScene.preload = function(){
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
 
+    this.load.image('floor_locked', 'assets/images/basic floor/darkroom.png');
+
     //Loading Room Props
     this.load.image('door_basic','assets/images/basic floor/basic_door.png');
     this.load.image('poster_basic','assets/images/basic floor/basic_poster.png');

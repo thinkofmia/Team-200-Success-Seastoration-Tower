@@ -202,25 +202,34 @@ gameScene.setupTower = function(){
   for (let i=0;i<this.gameStats.shopsData.length;i++){
 
     shop = this.gameStats.shopsData[i];
-    this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), shop.room);
-    this.floorData[i].setScale(0.25*this.globalSpriteScale);
-    this.physics.add.existing(this.floorData[i], true);
-    this.floorData[i].body.allowGravity = false;
-
-    this.floorProps[i] = {};
-    //Extra Props
-    switch (shop.room){
-      case "floor_basic": 
-        this.addProp("Poster",shop.room, i);
-        break;
-      case "floor_qualle":
-        this.addProp("Beanbag L",shop.room, i);
-        this.addProp("Beanbag R",shop.room, i);
-        break;
+    if (shop.locked){
+      this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'floor_locked');
+      this.floorData[i].setScale(0.25*this.globalSpriteScale);
+      this.physics.add.existing(this.floorData[i], true);
+      this.floorData[i].body.allowGravity = false;
     }
-        //Add Props
-        this.addProp("Door",shop.room, i);
-        this.addProp("Table",shop.room, i);
+    else {
+      this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), shop.room);
+      this.floorData[i].setScale(0.25*this.globalSpriteScale);
+      this.physics.add.existing(this.floorData[i], true);
+      this.floorData[i].body.allowGravity = false;
+  
+      this.floorProps[i] = {};
+      //Extra Props
+      switch (shop.room){
+        case "floor_basic": 
+          this.addProp("Poster",shop.room, i);
+          break;
+        case "floor_qualle":
+          this.addProp("Beanbag L",shop.room, i);
+          this.addProp("Beanbag R",shop.room, i);
+          break;
+      }
+          //Add Props
+          this.addProp("Door",shop.room, i);
+          this.addProp("Table",shop.room, i);
+      
+    }
     
     //Add Data
     this.floorStatsData[i] = this.add.graphics();
@@ -235,19 +244,22 @@ gameScene.setupTower = function(){
   this.shopKeepersData = [];
 
   for (let i=0;i<this.gameStats.shopsData.length;i++){
-    shopKeeperName = this.gameStats.shopsData[i].shopkeeper;
-    let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
-    this.physics.add.existing(shopkeeper)
-    shopkeeper.setScale(0.1*this.globalSpriteScale);
-    switch(shopKeeperName){
-      case "kj":
-        shopkeeper.setScale(0.12*this.globalSpriteScale);
-        break;
+    shop = this.gameStats.shopsData[i];
+    shopKeeperName = shop.shopkeeper;
+    if (!shop.locked){
+      let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
+      this.physics.add.existing(shopkeeper)
+      shopkeeper.setScale(0.1*this.globalSpriteScale);
+      switch(shopKeeperName){
+        case "kj":
+          shopkeeper.setScale(0.12*this.globalSpriteScale);
+          break;
+      }
+      shopkeeper.body.allowGravity = false;
+    
+      //Add to data
+      this.shopKeepersData.push(shopkeeper);
     }
-    shopkeeper.body.allowGravity = false;
-  
-    //Add to data
-    this.shopKeepersData.push(shopkeeper);
   }
 
 
