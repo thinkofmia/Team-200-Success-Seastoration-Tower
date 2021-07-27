@@ -280,13 +280,16 @@ gameScene.setupTower = function(){
 }
 
 gameScene.unlockShop = function(){
-  if (this.gameStats.nextShopToBuy<this.gameStats.shopsData.length){
-    
+  var shop = this.gameStats.nextShopToBuy;
+  if (shop<this.gameStats.shopsData.length){
+    //Reveal room
+    this.floorData[shop].setTexture(this.gameStats.shopsData[shop].room);
+
     //Update Unlock icon position and next shop to buy
-    this.unlockIcon.y = 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
     this.gameStats.nextShopToBuy +=1;
+    this.unlockIcon.y = 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
   }
-  else if (this.gameStats.nextShopToBuy>=this.gameStats.shopsData.length){
+  else if (shop>=this.gameStats.shopsData.length){
     //Else destroy icon
     this.gameStats.nextShopToBuy = -1;
     this.unlockIcon.destroy();
