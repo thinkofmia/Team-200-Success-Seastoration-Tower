@@ -1,8 +1,17 @@
 // create a new scene
 let gameScene = new Phaser.Scene('Game');
 
+WebFont.load({
+  google: {
+    families: ['Grandstander', 'Averia Libre']
+  }
+});
+
 // some parameters for our scene
 gameScene.init = function() {
+  // fonts
+  this.titleFont = 'Grandstander';
+  this.bodyFont = 'Averia Libre';
   //Variables
   this.charactersSpeed = [-20,-15, -22, -17];
   this.timeElapsed = 0;
@@ -147,21 +156,21 @@ gameScene.setUpHUD = function(){
 
   //Level Stat
   this.levelText = this.add.text(100,50,'Level: ',{
-    font: '20px Arial',
+    font: '20px '+this.titleFont,
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
 
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
-    font: '26px Arial',
+    font: '26px '+this.titleFont,
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
 
   //Pollution stat
   this.pollutionStatText = this.add.text(300,10,'💀: ',{
-    font: '26px Arial',
+    font: '26px '+this.titleFont,
     fill: '#ffffff',
     backgroundColor: '#ff00ff'
   });

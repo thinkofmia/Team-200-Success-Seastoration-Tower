@@ -29,7 +29,7 @@ homeScene.create = function(){
     let gameH = this.sys.game.config.height;
 
     let text = this.add.text(gameW/2, gameH/8, 'Seastoration Tower', {
-        font: "1em "+this.titleFont,
+        font: "20px "+this.titleFont,
         fill: '#ffffff',
     });
 
@@ -39,17 +39,17 @@ homeScene.create = function(){
     optionHeights = [game1H, game2H, game3H];
 
     let game1 = this.add.text(gameW/2, game1H, 'New Game', {
-        font: '20px Arial',
+        font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
 
     let game2 = this.add.text(gameW/2, game2H, 'Continue', {
-        font: '20px Arial',
+        font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
 
     let game3 = this.add.text(gameW/2, game3H, 'Mini Games', {
-        font: '20px Arial',
+        font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
 

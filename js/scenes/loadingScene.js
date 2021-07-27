@@ -1,6 +1,17 @@
 // create a new scene
 let loadingScene = new Phaser.Scene('Loading');
 
+WebFont.load({
+    google: {
+      families: ['Grandstander', 'Averia Libre']
+    }
+  });
+
+loadingScene.init = function() {
+    this.titleFont = 'Grandstander';
+    this.bodyFont = 'Averia Libre';
+}
+
 loadingScene.preload = function(){
 
     //Get gameW and gameH
@@ -27,7 +38,7 @@ loadingScene.preload = function(){
 
     //Boot Text Description
     let loadingText = this.add.text(gameW/8*2.5, gameH/12, 'Loading your Tower', {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+        fontFamily: this.titleFont,
         fontSize: '30px',
         fill: '#ffffff',
         align: 'center',
@@ -35,7 +46,7 @@ loadingScene.preload = function(){
     });
 
     let infoText = this.add.text(gameW/8, gameH/8*5, 'Do you know the oceans provide 99% of the living space \non the planet containing 50-80% of all life?', {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+        fontFamily: this.titleFont,
         fontSize: '20px',
         fill: '#ffffff',
         align: 'center',
