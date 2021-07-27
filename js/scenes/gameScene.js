@@ -589,6 +589,8 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.levelProgress.setPosition(102.5, 22.5);
     this.levelText.setPosition(100, 50);
     this.backButton.y = 190;
+    this.popup.y = 20;
+    this.popupText.y = 150;
     return;
   }
   this.arrowUp.y += travel;
@@ -602,6 +604,8 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.levelProgress.y +=travel;
   this.levelText.y += travel;
   this.backButton.y += travel;
+  this.popupText.y += travel;
+  this.popup.y += travel;
 }
 
 gameScene.checkLevel = function(){
