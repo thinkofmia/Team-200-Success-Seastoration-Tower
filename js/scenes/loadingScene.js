@@ -73,6 +73,9 @@ loadingScene.preload = function(){
     this.load.image('background_air', 'assets/images/bg/sky.png');
     this.load.image('background_water', 'assets/images/bg/water.png');
     this.load.image('background_title', 'assets/images/start screen/background1.png');
+    this.load.image('background_clean', 'assets/images/bg/water_clean.png');
+    this.load.image('background_unclean', 'assets/images/bg/water_unclean.png');
+    this.load.image('background_dirty', 'assets/images/bg/water_dirty.png');
 
     //Loading Icons
     this.load.spritesheet('icon_arrow','assets/images/icons/icon_arrow.png', {

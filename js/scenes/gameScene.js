@@ -28,7 +28,7 @@ gameScene.init = function() {
   this.timeElapsed = 0;
   this.gameStats = {
     greenpoints: 0,
-    pollution: 100,
+    pollution: 50,
     profileLv: 1,
     profileExp: 20,
     maxExp: 100,
@@ -91,7 +91,7 @@ gameScene.create = function() {
   let gameH = this.sys.game.config.height;
 
   //Game BG
-  let bg = this.add.sprite(0,0,'background_title').setInteractive();
+  let bg = this.add.sprite(0,0,'background_dirty').setInteractive();
   bg.setOrigin(0,0);
 
   //Add all tower elements
