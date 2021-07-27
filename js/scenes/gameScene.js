@@ -164,6 +164,11 @@ gameScene.setUpHUD = function(){
   this.profilePicture.setScale(0.25);
   this.profilePicture.body.allowGravity = false;
   this.profilePicture.depth = 90;
+  this.profilePicture.setInteractive();
+  this.profilePicture.on('pointerdown', function(){
+    this.isPlaying = false;
+    this.scene.start('Goal', this.gameStats);
+  }, this);
   //Front Frame
   this.frontFramePP = this.physics.add.sprite(25, 25, "profile_pic_front");
   this.frontFramePP.setScale(0.25);
