@@ -8,7 +8,7 @@ WebFont.load({
 });
 
 // some parameters for our scene
-gameScene.init = function() {
+gameScene.init = function(data) {
   // fonts
   this.titleFont = 'Grandstander';
   this.bodyFont = 'Averia Libre';
@@ -26,7 +26,10 @@ gameScene.init = function() {
   //Variables
   this.charactersSpeed = [-20,-15, -22, -17];
   this.timeElapsed = 0;
-  this.gameStats = {
+  if(Object.keys(data).length != 0){
+    this.gameStats = data;
+  }
+  else this.gameStats = {
     greenpoints: 0,
     pollution: 50,
     profileLv: 1,
@@ -288,7 +291,7 @@ gameScene.setUpHUD = function(){
 }
 
 gameScene.goHome = function(){
-  this.scene.start('Home');
+  this.scene.start('Home', this.gameStats);
 }
 
 gameScene.setUpCamera = function(){

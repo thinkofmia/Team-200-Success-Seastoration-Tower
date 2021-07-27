@@ -7,12 +7,16 @@ WebFont.load({
     }
   });
 
-homeScene.init = function() {
+homeScene.init = function(data) {
     this.titleFont = 'Grandstander';
     this.bodyFont = 'Averia Libre';
     this.timeElapsed = 0;
     this.floatingSpeed = 5;
     this.isAnimating = true;
+    if(Object.keys(data).length != 0){
+        this.gameStats = data;
+    }
+    else this.gameStats = {};
 }
 
 //Create
@@ -73,14 +77,23 @@ homeScene.create = function(){
 
     game1.on('pointerdown', function(){
         homeScene.isAnimating = false;
-        this.scene.start('Game');
+        this.scene.start('Game', {});
     }, this);
 
     game2.on('pointerdown', function(){
         homeScene.isAnimating = false;
-        this.scene.start('Game');
+        this.scene.start('Game', this.gameStats);
     }, this);
 
+    if(Object.keys(this.gameStats).length === 0){
+        game2.setVisible(false);
+        optionBg[1].setVisible(false);
+    }
+    else {
+        game2.setVisible(true);
+        optionBg[1].setVisible(true);
+    }
+    
     game3.on('pointerdown', function(){
         homeScene.isAnimating = false;
         this.scene.start('MGSelection');
