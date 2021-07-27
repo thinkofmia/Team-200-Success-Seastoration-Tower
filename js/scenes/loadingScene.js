@@ -178,5 +178,7 @@ loadingScene.create = function(){
         repeat: -1 //Repeat forever is -1
     });
 
+    //Rubbish
+
     this.scene.start('Home');
 }
