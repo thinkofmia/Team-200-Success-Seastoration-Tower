@@ -672,7 +672,7 @@ gameScene.countUnlockedShops = function(){
 //Run in update to monitor pollution level
 gameScene.checkPollution = function(){
   //Simualte increasing pts
-  this.gameStats.pollution += 0.001;
+  this.gameStats.pollution += 0.001*this.gameStats.profileLv;
   if (this.gameStats.pollution<0) this.gameStats.pollution = 0;
   else if (this.gameStats.pollution>100) this.gameStats.pollution = 100;
 
