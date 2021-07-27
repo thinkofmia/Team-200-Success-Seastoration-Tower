@@ -1,5 +1,7 @@
 <?php
-
+if(!isset($_SESSION)) {
+    session_start();
+}
 // secrets.php contains database login credentials: 
 // $db_host = 'localhost';
 // $db_user = 'username';
