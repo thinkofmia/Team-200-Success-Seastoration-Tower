@@ -26,6 +26,8 @@ gameScene.init = function() {
     earningBase: 125,
     earningIncrement: 25,
     unlockCost: 175,
+    upgradeBase: 200,
+    upgradeIncrement: 50,
     shopsData: [
       //Shop 1
       {
@@ -147,14 +149,17 @@ gameScene.setUpHUD = function(){
   this.backFramePP = this.physics.add.sprite(50, 50, "profile_pic_back");
   this.backFramePP.setScale(0.5);
   this.backFramePP.body.allowGravity = false;
+  this.backFramePP.depth = 90;
   //Profile Pic
   this.profilePicture = this.physics.add.sprite(50, 50, this.gameStats.profilePic);
   this.profilePicture.setScale(0.5);
   this.profilePicture.body.allowGravity = false;
+  this.profilePicture.depth = 90;
   //Front Frame
   this.frontFramePP = this.physics.add.sprite(50, 50, "profile_pic_front");
   this.frontFramePP.setScale(0.5);
   this.frontFramePP.body.allowGravity = false;
+  this.frontFramePP.depth = 90;
 
   //Level bar background
   this.levelBg = this.add.graphics();
@@ -162,10 +167,12 @@ gameScene.setUpHUD = function(){
   this.levelBg.setPosition(100, 20);
   this.levelBg.fillStyle(0x000000, 1);
   this.levelBg.fillRect(0,0,this.barW+5, this.barH+5);
+  this.levelBg.depth = 89;
 
   //Level Bar
   this.levelProgress = this.add.graphics();
   this.levelProgress.setPosition(102.5, 22.5);
+  this.levelProgress.depth = 90;
 
   //Level Stat
   this.levelText = this.add.text(100,50,'Level: ',{
@@ -173,6 +180,7 @@ gameScene.setUpHUD = function(){
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
+  this.levelText.depth = 90;
 
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
@@ -180,6 +188,7 @@ gameScene.setUpHUD = function(){
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
+  this.greenPointText.depth = 90;
 
   //Pollution stat
   this.pollutionStatText = this.add.text(300,10,'💀: ',{
@@ -187,6 +196,7 @@ gameScene.setUpHUD = function(){
     fill: '#ffffff',
     backgroundColor: '#ff00ff'
   });
+  this.pollutionStatText.depth = 90;
 
   //Arrow Keys
   this.arrowUp = this.physics.add.sprite(70, 140, "icon_arrow");
@@ -195,6 +205,7 @@ gameScene.setUpHUD = function(){
   this.arrowUp.on('pointerdown', function(){
     this.scrollScreen("Up", 50);
   }, this);
+  this.arrowUp.depth = 90;
 
   this.arrowDown = this.physics.add.sprite(70, 240, "icon_arrow");
   this.arrowDown.flipY = true;
@@ -203,6 +214,7 @@ gameScene.setUpHUD = function(){
   this.arrowDown.on('pointerdown', function(){
     this.scrollScreen("Down", 50);
   }, this);
+  this.arrowDown.depth = 90;
 
   //Back Button
   this.backButton = this.physics.add.sprite(gameW- 70, 190, "icon_back");
@@ -222,6 +234,8 @@ gameScene.setUpHUD = function(){
       callbackScope: this
     });
   }, this);
+
+  this.backButton.depth = 90;
 }
 
 gameScene.goHome = function(){
@@ -248,6 +262,7 @@ gameScene.setupTower = function(){
   this.floorLevelTexts = [];
   this.floorIncomeTexts = [];
   this.floorProgressBar = [];
+  this.floorUpgradeButtons = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.gameStats.shopsData.length;i++){
@@ -279,13 +294,12 @@ gameScene.setupTower = function(){
           //Add Props
           this.addProp("Door",shop.room, i);
           this.addProp("Table",shop.room, i);
-      
     }
     
     //Add Data
     this.floorStatsData[i] = this.add.graphics();
 
-    this.floorStatsData[i].setPosition(145, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+    this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
     this.floorStatsData[i].fillStyle(0x000000, 1);
     this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
     
@@ -301,12 +315,23 @@ gameScene.setupTower = function(){
       fill: '#ffffff',
       fontWeight: 'bold',
     });
-    this.floorIncomeTexts[i] = this.add.text(145, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
+    this.floorIncomeTexts[i] = this.add.text(147, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: '15px',
       fill: '#ffffff',
       fontWeight: 'bold',
     });
+    //Add Upgrade Icon
+    if (!shop.locked){
+      this.floorUpgradeButtons[i] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
+      this.floorUpgradeButtons[i].setScale(0.15*this.globalSpriteScale);
+      this.physics.add.existing(this.floorUpgradeButtons[i], true);
+      this.floorUpgradeButtons[i].body.allowGravity = false;
+      this.floorUpgradeButtons[i].setInteractive();
+      this.floorUpgradeButtons[i].on('pointerdown', function(){
+        gameScene.upgradeShop(i);
+      }, this);
+    }
   }
 
   if (this.gameStats.nextShopToBuy>0){
@@ -347,6 +372,16 @@ gameScene.setupTower = function(){
 
 }
 
+gameScene.upgradeShop = function(shopNo){
+  shop = this.gameStats.shopsData[shopNo];
+  amt = this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level;
+  if (this.gameStats.greenpoints>=amt){
+    shop.level +=1;
+    this.gameStats.greenpoints -= amt;
+  }
+  else alert(`Not enough green points! You need ${amt}`);
+}
+
 gameScene.earnGreenPoints = function(){
   for (var i=0;i<this.gameStats.shopsData.length;i++){
     var shop = this.gameStats.shopsData[i];
@@ -363,6 +398,11 @@ gameScene.earnGreenPoints = function(){
 }
 
 gameScene.unlockShop = function(){
+  if (this.gameStats.greenpoints<this.gameStats.unlockCost){
+    alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
+    return;
+  } 
+  this.gameStats.greenpoints -= this.gameStats.unlockCost;
   var shop = this.gameStats.nextShopToBuy;
   var shopKeeperName = this.gameStats.shopsData[shop].shopkeeper;
   var shopName = this.gameStats.shopsData[shop].room;
@@ -398,6 +438,16 @@ gameScene.unlockShop = function(){
     shopkeeper.body.allowGravity = false;
     this.shopKeepersData.push(shopkeeper);
     
+    //Add Upgrade button
+      this.floorUpgradeButtons[shop] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
+      this.floorUpgradeButtons[shop].setScale(0.15*this.globalSpriteScale);
+      this.physics.add.existing(this.floorUpgradeButtons[shop], true);
+      this.floorUpgradeButtons[shop].body.allowGravity = false;
+      this.floorUpgradeButtons[shop].setInteractive();
+      this.floorUpgradeButtons[shop].on('pointerdown', function(){
+        gameScene.upgradeShop(shop);
+      }, this);
+
     //Update status of shop
     this.gameStats.shopsData[shop].locked = false;
     //Update Unlock icon position and next shop to buy
@@ -510,6 +560,16 @@ gameScene.checkLevel = function(){
   }
 }
 
+gameScene.countUnlockedShops = function(){
+  var count = 0;
+  for (var i=0;i<this.gameStats.shopsData.length;i++){
+    var shop = this.gameStats.shopsData[i];
+    if (!shop.locked) count += 1;
+  }
+
+  return count;
+}
+
 //Executed on every frame
 gameScene.update = function(){
   if (this.isPlaying){
@@ -546,7 +606,7 @@ gameScene.update = function(){
     }
     
     //Simualte increasing pts
-    this.gameStats.pollution -= 0.0001;
+    this.gameStats.pollution -= 0.0001*this.countUnlockedShops();
     if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
   
     //Earn Some MONEUH

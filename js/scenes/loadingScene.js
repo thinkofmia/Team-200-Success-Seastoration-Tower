@@ -88,7 +88,8 @@ loadingScene.preload = function(){
         spacing: 0
     });
     this.load.image('icon_recycle', 'assets/images/icons/icon_recycle.png');
-    
+    this.load.image('icon_upgrade', 'assets/images/icons/icon_upgrade.png');
+
 
     //Loading Sprites
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
@@ -158,8 +159,8 @@ loadingScene.preload = function(){
     //Sample Profile Pic
     this.load.image('profile_pic_sample','assets/images/profile/KingFish.png');
 
-    //Create loading demo
-    for (let i=0;i<300;i++){
+    //Run loading bar
+    for (let i=0;i<100;i++){
         this.load.image('test'+ i, 'assets/images/pingvin.gif');
     }
 };
