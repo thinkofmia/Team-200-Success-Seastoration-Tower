@@ -18,6 +18,7 @@ goalScene.init = function(data) {
     this.profilePicSize = 0.75;
     this.barW = 300;
     this.barH = 20;
+    this.goalDist = 30;
 }
 
 // load asset files for our game
@@ -72,9 +73,10 @@ goalScene.create = function(){
   this.levelProgress.fillRect(0,0, this.gameStats.profileExp/this.gameStats.maxExp * this.barW, this.barH);
 
     //Level Stat
-    this.levelText = this.add.text(180,100,`Level ${this.gameStats.profileLv}: ${this.gameStats.profileExp.toFixed(0)}/${this.gameStats.maxExp.toFixed(0)}`,{
+    this.levelText = this.add.text(180,110,`Level ${this.gameStats.profileLv}: ${this.gameStats.profileExp.toFixed(0)}/${this.gameStats.maxExp.toFixed(0)}`,{
     font: '30px '+this.titleFont,
-    fill: '#000000'
+    fill: '#ffffff',
+    fontWeight: 'bold',
     });
     this.levelText.depth = 90;
 
@@ -82,6 +84,24 @@ goalScene.create = function(){
         font: "25px "+this.titleFont,
         fill: '#000000',
     });
+
+    this.goals = [];
+    this.goals[0] = this.add.text(gameW/3, gameH, '• Unlock 4 Shopkeepers', {
+        font: "20px "+this.titleFont,
+        fill: '#000000',
+    });
+    this.goals[1] = this.add.text(gameW/3, gameH, '• Get more than 50000♻️', {
+        font: "20px "+this.titleFont,
+        fill: '#000000',
+    });
+    this.goals[2] = this.add.text(gameW/3, gameH, '• Get to level 10 in a shop', {
+        font: "20px "+this.titleFont,
+        fill: '#000000',
+    });
+
+    for (var i=0;i<this.goals.length;i++){
+        this.goals[i].y = gameH/2 + this.goalDist*(i+1);
+    }
 
     //Back Button
   this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
