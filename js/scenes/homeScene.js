@@ -96,7 +96,7 @@ homeScene.create = function(){
     
     game3.on('pointerdown', function(){
         homeScene.isAnimating = false;
-        this.scene.start('MGSelection');
+        this.scene.start('MGSelection', this.gameStats);
     }, this);
 
     //Text background
