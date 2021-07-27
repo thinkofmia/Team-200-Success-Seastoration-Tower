@@ -377,7 +377,7 @@ gameScene.setupTower = function(){
     this.floorStatsData[i] = this.add.graphics();
 
     this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
-    this.floorStatsData[i].fillStyle(0x000000, 1);
+    this.floorStatsData[i].fillStyle(0x817a93, 1);
     this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
     
     this.floorProgressBar[i] = this.add.graphics();
