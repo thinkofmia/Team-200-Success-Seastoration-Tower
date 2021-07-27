@@ -103,6 +103,16 @@ gameScene.refreshHud = function(){
   this.levelProgress.fillStyle(0x9AD98D,1);
   this.levelProgress.fillRect(0,0, this.gameStats.profileExp/this.gameStats.maxExp * this.barW, this.barH);
 
+  //Update shop Progress bar
+  for (var i=0;i<this.floorProgressBar.length;i++){
+    var shop = this.gameStats.shopsData[i];
+    progressBar = this.floorProgressBar[i];
+    progressBar.clear();
+    progressBar.fillStyle(0x50d9c8, 1);
+    progressBar.fillRect(0,0,(this.floorStatsBarW-90)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+  }
+  
+  
 };
 
 gameScene.setUpHUD = function(){
@@ -213,6 +223,7 @@ gameScene.setupTower = function(){
   this.floorData = [];
   this.floorProps = [];
   this.floorStatsData = [];
+  this.floorProgressBar = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.gameStats.shopsData.length;i++){
@@ -253,6 +264,12 @@ gameScene.setupTower = function(){
     this.floorStatsData[i].setPosition(145, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
     this.floorStatsData[i].fillStyle(0x000000, 1);
     this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
+    
+    this.floorProgressBar[i] = this.add.graphics();
+
+    this.floorProgressBar[i].setPosition(200, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+    this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
+    this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-90)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
     
   }
 
