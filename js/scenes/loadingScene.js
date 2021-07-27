@@ -93,6 +93,8 @@ loadingScene.preload = function(){
     this.load.image('icon_recycle', 'assets/images/icons/icon_recycle.png');
     this.load.image('icon_upgrade', 'assets/images/icons/icon_upgrade.png');
     this.load.image('icon_cross', 'assets/images/icons/icon_cross.png');
+    this.load.image('icon_earth', 'assets/images/icons/icon_earth.png');
+
 
     //Loading Sprites
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {

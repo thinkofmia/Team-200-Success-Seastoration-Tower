@@ -39,6 +39,8 @@ gameScene.init = function() {
     unlockCost: 175,
     upgradeBase: 200,
     upgradeIncrement: 50,
+    restorationCost: 500,
+    pollutionDrop: 5,
     shopsData: [
       //Shop 1
       {
@@ -220,8 +222,24 @@ gameScene.setUpHUD = function(){
   }, this);
   this.arrowDown.depth = 90;
 
+  //Earth Button
+  this.healButton = this.physics.add.sprite(gameW - 70, 140, "icon_earth");
+  this.healButton.body.allowGravity = false;
+  this.healButton.setScale(0.2);
+  this.healButton.setInteractive();
+  this.healButton.on('pointerdown', function(){
+    if (this.gameStats.greenpoints>= this.gameStats.restorationCost){
+      this.gameStats.pollution -= this.gameStats.pollutionDrop;
+      this.gameStats.greenpoints -= this.gameStats.restorationCost;
+    } 
+    else {
+      this.displayModal(`Insufficient points. You need ${this.gameStats.restorationCost}♻️!`)
+    }
+  }, this);
+  this.healButton.depth = 90;
+
   //Back Button
-  this.backButton = this.physics.add.sprite(gameW- 70, 190, "icon_back");
+  this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
@@ -429,7 +447,7 @@ gameScene.upgradeShop = function(shopNo){
     shop.level +=1;
     this.gameStats.greenpoints -= amt;
   }
-  else this.displayModal(`Not enough green points! You need ${amt}!`);
+  else this.displayModal(`Not enough green points! You need ${amt}♻️!`);
   //else alert(`Not enough green points! You need ${amt}!`);
 }
 
@@ -450,7 +468,7 @@ gameScene.earnGreenPoints = function(){
 
 gameScene.unlockShop = function(){
   if (this.gameStats.greenpoints<this.gameStats.unlockCost){
-    this.displayModal(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
+    this.displayModal(`Insufficent Green Points! You need ${this.gameStats.unlockCost}♻️!`);
     //alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
     return;
   } 
@@ -588,9 +606,10 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.levelBg.setPosition(100, 20);
     this.levelProgress.setPosition(102.5, 22.5);
     this.levelText.setPosition(100, 50);
-    this.backButton.y = 190;
+    this.backButton.y = 240;
     this.popup.y = 20;
     this.popupText.y = 150;
+    this.healButton.y = 140;
     return;
   }
   this.arrowUp.y += travel;
@@ -606,6 +625,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.backButton.y += travel;
   this.popupText.y += travel;
   this.popup.y += travel;
+  this.healButton.y += travel;
 }
 
 gameScene.checkLevel = function(){
