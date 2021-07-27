@@ -149,14 +149,17 @@ gameScene.setUpHUD = function(){
   this.backFramePP = this.physics.add.sprite(50, 50, "profile_pic_back");
   this.backFramePP.setScale(0.5);
   this.backFramePP.body.allowGravity = false;
+  this.backFramePP.depth = 90;
   //Profile Pic
   this.profilePicture = this.physics.add.sprite(50, 50, this.gameStats.profilePic);
   this.profilePicture.setScale(0.5);
   this.profilePicture.body.allowGravity = false;
+  this.profilePicture.depth = 90;
   //Front Frame
   this.frontFramePP = this.physics.add.sprite(50, 50, "profile_pic_front");
   this.frontFramePP.setScale(0.5);
   this.frontFramePP.body.allowGravity = false;
+  this.frontFramePP.depth = 90;
 
   //Level bar background
   this.levelBg = this.add.graphics();
@@ -164,10 +167,12 @@ gameScene.setUpHUD = function(){
   this.levelBg.setPosition(100, 20);
   this.levelBg.fillStyle(0x000000, 1);
   this.levelBg.fillRect(0,0,this.barW+5, this.barH+5);
+  this.levelBg.depth = 89;
 
   //Level Bar
   this.levelProgress = this.add.graphics();
   this.levelProgress.setPosition(102.5, 22.5);
+  this.levelProgress.depth = 90;
 
   //Level Stat
   this.levelText = this.add.text(100,50,'Level: ',{
@@ -175,6 +180,7 @@ gameScene.setUpHUD = function(){
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
+  this.levelText.depth = 90;
 
   //Money Stat
   this.greenPointText = this.add.text(500,10,'♻️: ',{
@@ -182,6 +188,7 @@ gameScene.setUpHUD = function(){
     fill: '#ffffff',
     backgroundColor: '#ff00ff' 
   });
+  this.greenPointText.depth = 90;
 
   //Pollution stat
   this.pollutionStatText = this.add.text(300,10,'💀: ',{
@@ -189,6 +196,7 @@ gameScene.setUpHUD = function(){
     fill: '#ffffff',
     backgroundColor: '#ff00ff'
   });
+  this.pollutionStatText.depth = 90;
 
   //Arrow Keys
   this.arrowUp = this.physics.add.sprite(70, 140, "icon_arrow");
@@ -197,6 +205,7 @@ gameScene.setUpHUD = function(){
   this.arrowUp.on('pointerdown', function(){
     this.scrollScreen("Up", 50);
   }, this);
+  this.arrowUp.depth = 90;
 
   this.arrowDown = this.physics.add.sprite(70, 240, "icon_arrow");
   this.arrowDown.flipY = true;
@@ -205,6 +214,7 @@ gameScene.setUpHUD = function(){
   this.arrowDown.on('pointerdown', function(){
     this.scrollScreen("Down", 50);
   }, this);
+  this.arrowDown.depth = 90;
 
   //Back Button
   this.backButton = this.physics.add.sprite(gameW- 70, 190, "icon_back");
@@ -224,6 +234,8 @@ gameScene.setUpHUD = function(){
       callbackScope: this
     });
   }, this);
+
+  this.backButton.depth = 90;
 }
 
 gameScene.goHome = function(){
