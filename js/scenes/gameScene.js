@@ -65,9 +65,9 @@ gameScene.init = function(data) {
       },
       //Shop 3
       {
-        room: 'floor_basic',
+        room: 'floor_camera',
         locked: true,
-        shopkeeper: 'ky',
+        shopkeeper: 'sy',
         level: 1,
         currentRate: 0,
         completionRate: 1000
@@ -76,11 +76,11 @@ gameScene.init = function(data) {
       {
         room: 'floor_basic',
         locked: true,
-        shopkeeper: 'sy',
+        shopkeeper: 'ky',
         level: 1,
         currentRate: 0,
         completionRate: 5000
-      }
+      },
     ]
   };
   this.isPlaying = true;
