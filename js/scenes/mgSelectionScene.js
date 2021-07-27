@@ -1,5 +1,5 @@
 // create a new scene
-let homeScene = new Phaser.Scene('Home');
+let mgSelectionScene = new Phaser.Scene('MGSelection');
 
 WebFont.load({
     google: {
@@ -7,16 +7,17 @@ WebFont.load({
     }
   });
 
-homeScene.init = function() {
+mgSelectionScene.init = function() {
     this.titleFont = 'Grandstander';
     this.bodyFont = 'Averia Libre';
     this.timeElapsed = 0;
     this.floatingSpeed = 5;
     this.isAnimating = true;
+    console.log('Opening mini games');
 }
 
 //Create
-homeScene.create = function(){
+mgSelectionScene.create = function(){
     //Game background, with active input
     let bg = this.add.sprite(0,0,'background_title').setInteractive();
     bg.setOrigin(0,0);
@@ -28,7 +29,7 @@ homeScene.create = function(){
     let gameW = this.sys.game.config.width;
     let gameH = this.sys.game.config.height;
 
-    let text = this.add.text(gameW/2, gameH/8, 'Seastoration Tower', {
+    let text = this.add.text(gameW/2, gameH/8, 'Select your mini games', {
         font: "20px "+this.titleFont,
         fill: '#ffffff',
     });
@@ -38,17 +39,17 @@ homeScene.create = function(){
     game3H = gameH/4*3.5;
     optionHeights = [game1H, game2H, game3H];
 
-    let game1 = this.add.text(gameW/2, game1H, 'New Game', {
+    let game1 = this.add.text(gameW/2, game1H, 'Minigame 1', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
 
-    let game2 = this.add.text(gameW/2, game2H, 'Continue', {
+    let game2 = this.add.text(gameW/2, game2H, 'Mini Game 2', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
 
-    let game3 = this.add.text(gameW/2, game3H, 'Mini Games', {
+    let game3 = this.add.text(gameW/2, game3H, 'Back', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
@@ -72,18 +73,18 @@ homeScene.create = function(){
     };
 
     game1.on('pointerdown', function(){
-        homeScene.isAnimating = false;
-        this.scene.start('Game');
+        mgSelectionScene.isAnimating = false;
+        this.scene.start('Minigame1');
     }, this);
 
     game2.on('pointerdown', function(){
-        homeScene.isAnimating = false;
-        this.scene.start('Game');
+        mgSelectionScene.isAnimating = false;
+        this.scene.start('Minigame2');
     }, this);
 
     game3.on('pointerdown', function(){
-        homeScene.isAnimating = false;
-        this.scene.start('MGSelection');
+        mgSelectionScene.isAnimating = false;
+        this.scene.start('Home');
     }, this);
 
     //Text background
@@ -93,7 +94,7 @@ homeScene.create = function(){
   
 };
 
-homeScene.setupSprites = function(){
+mgSelectionScene.setupSprites = function(){
     //add trashbag shark
     this.shark = this.add.sprite(60 + Math.random()* 40, Math.random()*200+100 , `sprite_shark`);
     this.physics.add.existing(this.shark)
@@ -155,7 +156,7 @@ homeScene.setupSprites = function(){
     }
 }
 
-homeScene.animateSprites = function(){
+mgSelectionScene.animateSprites = function(){
     if(this.shark.x >=690){
         this.shark.x = -50;
         this.shark.y = Math.random()*200+100;
@@ -184,7 +185,7 @@ homeScene.animateSprites = function(){
 
 }
 
-homeScene.update = function(){
+mgSelectionScene.update = function(){
     //Animate sprites
     if(this.isAnimating) this.animateSprites();
 
