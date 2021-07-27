@@ -299,7 +299,7 @@ gameScene.setupTower = function(){
     //Add Data
     this.floorStatsData[i] = this.add.graphics();
 
-    this.floorStatsData[i].setPosition(145, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+    this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
     this.floorStatsData[i].fillStyle(0x000000, 1);
     this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
     
@@ -315,7 +315,7 @@ gameScene.setupTower = function(){
       fill: '#ffffff',
       fontWeight: 'bold',
     });
-    this.floorIncomeTexts[i] = this.add.text(145, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
+    this.floorIncomeTexts[i] = this.add.text(147, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: '15px',
       fill: '#ffffff',
