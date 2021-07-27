@@ -73,6 +73,9 @@ loadingScene.preload = function(){
     this.load.image('background_air', 'assets/images/bg/sky.png');
     this.load.image('background_water', 'assets/images/bg/water.png');
     this.load.image('background_title', 'assets/images/start screen/background1.png');
+    this.load.image('background_clean', 'assets/images/bg/water_clean.png');
+    this.load.image('background_unclean', 'assets/images/bg/water_unclean.png');
+    this.load.image('background_dirty', 'assets/images/bg/water_dirty.png');
 
     //Loading Icons
     this.load.spritesheet('icon_arrow','assets/images/icons/icon_arrow.png', {
@@ -89,6 +92,8 @@ loadingScene.preload = function(){
     });
     this.load.image('icon_recycle', 'assets/images/icons/icon_recycle.png');
     this.load.image('icon_upgrade', 'assets/images/icons/icon_upgrade.png');
+    this.load.image('icon_cross', 'assets/images/icons/icon_cross.png');
+    this.load.image('icon_earth', 'assets/images/icons/icon_earth.png');
 
 
     //Loading Sprites
@@ -159,10 +164,6 @@ loadingScene.preload = function(){
     //Sample Profile Pic
     this.load.image('profile_pic_sample','assets/images/profile/KingFish.png');
 
-    //Run loading bar
-    for (let i=0;i<100;i++){
-        this.load.image('test'+ i, 'assets/images/pingvin.gif');
-    }
 };
 
 loadingScene.create = function(){

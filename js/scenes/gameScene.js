@@ -8,16 +8,30 @@ WebFont.load({
 });
 
 // some parameters for our scene
-gameScene.init = function() {
+gameScene.init = function(data) {
   // fonts
   this.titleFont = 'Grandstander';
   this.bodyFont = 'Averia Libre';
+  //UIs
+  this.popupW = 600;
+  this.popupH = 300;
+  
+  this.barW = 100;
+  this.barH = 10;
+  this.globalSpriteScale = 0.75;
+  this.globalSpriteTranslate = -50;
+
+  this.floorStatsBarW = 350;
+  this.floorStatsBarH = 50;
   //Variables
   this.charactersSpeed = [-20,-15, -22, -17];
   this.timeElapsed = 0;
-  this.gameStats = {
+  if(Object.keys(data).length != 0){
+    this.gameStats = data;
+  }
+  else this.gameStats = {
     greenpoints: 0,
-    pollution: 100,
+    pollution: 50,
     profileLv: 1,
     profileExp: 20,
     maxExp: 100,
@@ -28,6 +42,8 @@ gameScene.init = function() {
     unlockCost: 175,
     upgradeBase: 200,
     upgradeIncrement: 50,
+    restorationCost: 500,
+    pollutionDrop: 5,
     shopsData: [
       //Shop 1
       {
@@ -68,13 +84,6 @@ gameScene.init = function() {
     ]
   };
   this.isPlaying = true;
-  this.barW = 100;
-  this.barH = 10;
-  this.globalSpriteScale = 0.75;
-  this.globalSpriteTranslate = -50;
-
-  this.floorStatsBarW = 350;
-  this.floorStatsBarH = 50;
 };
 
 // load asset files for our game
@@ -87,8 +96,8 @@ gameScene.create = function() {
   let gameH = this.sys.game.config.height;
 
   //Game BG
-  let bg = this.add.sprite(0,0,'background_title').setInteractive();
-  bg.setOrigin(0,0);
+  this.bg = this.add.sprite(0,0,'background_unclean').setInteractive();
+  this.bg.setOrigin(0,0);
 
   //Add all tower elements
   this.setupTower();
@@ -222,8 +231,24 @@ gameScene.setUpHUD = function(){
   }, this);
   this.arrowDown.depth = 90;
 
+  //Earth Button
+  this.healButton = this.physics.add.sprite(gameW - 70, 140, "icon_earth");
+  this.healButton.body.allowGravity = false;
+  this.healButton.setScale(0.2);
+  this.healButton.setInteractive();
+  this.healButton.on('pointerdown', function(){
+    if (this.gameStats.greenpoints>= this.gameStats.restorationCost){
+      this.gameStats.pollution -= this.gameStats.pollutionDrop;
+      this.gameStats.greenpoints -= this.gameStats.restorationCost;
+    } 
+    else {
+      this.displayModal(`Insufficient points. You need ${this.gameStats.restorationCost}♻️!`)
+    }
+  }, this);
+  this.healButton.depth = 90;
+
   //Back Button
-  this.backButton = this.physics.add.sprite(gameW- 70, 190, "icon_back");
+  this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
@@ -242,10 +267,37 @@ gameScene.setUpHUD = function(){
   }, this);
 
   this.backButton.depth = 90;
+
+  //Create Popup Modal
+  this.popup = this.add.graphics();
+
+  this.popup.setPosition(20, 20);
+  this.popup.fillStyle(0xcddbf5, 1);
+  this.popup.fillRect(0,0,this.popupW, this.popupH);
+  this.popup.depth = 100;
+  this.popup.setVisible(false);
+/*
+  this.closePopup = this.physics.add.sprite(570, 80, "icon_cross");
+  this.closePopup.body.allowGravity = false;
+  this.closePopup.setInteractive();
+  this.closePopup.setScale(0.15);
+  this.closePopup.on('pointerdown', function(){
+    
+  }, this);
+  this.closePopup.depth = 101;
+*/
+  //Pollution stat
+  this.popupText = this.add.text(50,150,'This is a fake modal. Please close me! :3 ',{
+    font: '26px '+this.titleFont,
+    fill: '#000000',
+    align: 'center'
+  });
+  this.popupText.depth = 101;
+  this.popupText.setVisible(false);
 }
 
 gameScene.goHome = function(){
-  this.scene.start('Home');
+  this.scene.start('Home', this.gameStats);
 }
 
 gameScene.setUpCamera = function(){
@@ -257,6 +309,25 @@ gameScene.setUpCamera = function(){
       if (p.y-p.downY >0) gameScene.scrollScreen("Down", (p.y-p.downY)/10);
       else if (p.y-p.downY<0) gameScene.scrollScreen("Up", -(p.y-p.downY)/10);
     }
+  });
+}
+
+//Display modal for 1s
+gameScene.displayModal = function(modalMsg){
+  //Update modal text
+  this.popupText.setText(modalMsg);
+  
+  this.popup.setVisible(true);
+  this.popupText.setVisible(true);
+  //Time 2s
+  this.time.addEvent({
+    delay: 1000,
+    repeat: 0,
+    callback: function(){
+      this.popup.setVisible(false);
+      this.popupText.setVisible(false);
+    },
+    callbackScope: this
   });
 }
 
@@ -385,7 +456,8 @@ gameScene.upgradeShop = function(shopNo){
     shop.level +=1;
     this.gameStats.greenpoints -= amt;
   }
-  else alert(`Not enough green points! You need ${amt}`);
+  else this.displayModal(`Not enough green points! You need ${amt}♻️!`);
+  //else alert(`Not enough green points! You need ${amt}!`);
 }
 
 gameScene.earnGreenPoints = function(){
@@ -405,7 +477,8 @@ gameScene.earnGreenPoints = function(){
 
 gameScene.unlockShop = function(){
   if (this.gameStats.greenpoints<this.gameStats.unlockCost){
-    alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
+    this.displayModal(`Insufficent Green Points! You need ${this.gameStats.unlockCost}♻️!`);
+    //alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
     return;
   } 
   this.gameStats.greenpoints -= this.gameStats.unlockCost;
@@ -542,8 +615,10 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.levelBg.setPosition(100, 20);
     this.levelProgress.setPosition(102.5, 22.5);
     this.levelText.setPosition(100, 50);
-    this.backButton.y = 190;
-    this.headerBar.y = 0;
+    this.backButton.y = 240;
+    this.popup.y = 20;
+    this.popupText.y = 150;
+    this.healButton.y = 140;
     return;
   }
   this.arrowUp.y += travel;
@@ -557,7 +632,9 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.levelProgress.y +=travel;
   this.levelText.y += travel;
   this.backButton.y += travel;
-  this.headerBar.y += travel;
+  this.popupText.y += travel;
+  this.popup.y += travel;
+  this.healButton.y += travel;
 }
 
 gameScene.checkLevel = function(){
@@ -576,6 +653,27 @@ gameScene.countUnlockedShops = function(){
   }
 
   return count;
+}
+
+//Run in update to monitor pollution level
+gameScene.checkPollution = function(){
+  //Simualte increasing pts
+  this.gameStats.pollution += 0.001;
+  if (this.gameStats.pollution<0) this.gameStats.pollution = 0;
+  else if (this.gameStats.pollution>100) this.gameStats.pollution = 100;
+
+  if (this.gameStats.pollution<33){
+    this.bg.setTexture('background_clean');
+    this.cameras.main.setBackgroundColor('#467698');
+  }
+  else if (this.gameStats.pollution<66){
+    this.bg.setTexture('background_unclean');
+    this.cameras.main.setBackgroundColor('#707e51');
+  }
+  else {
+    this.bg.setTexture('background_dirty');
+    this.cameras.main.setBackgroundColor('#562c37');
+  }
 }
 
 //Executed on every frame
@@ -613,10 +711,9 @@ gameScene.update = function(){
       
     }
     
-    //Simualte increasing pts
-    this.gameStats.pollution -= 0.0001*this.countUnlockedShops();
-    if (this.gameStats.pollution<=0) this.gameStats.pollution = 0;
-  
+    //Check pollution
+    this.checkPollution();
+    
     //Earn Some MONEUH
     this.earnGreenPoints();
   
