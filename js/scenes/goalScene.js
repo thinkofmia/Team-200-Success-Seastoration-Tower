@@ -104,7 +104,7 @@ goalScene.create = function(){
     }
 
     //Back Button
-  this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
+  this.backButton = this.physics.add.sprite(gameW- 70, 280, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
