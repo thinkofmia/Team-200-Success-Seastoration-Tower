@@ -97,6 +97,33 @@ homeScene.setupSprites = function(){
     let bluecan_2 = this.add.sprite(500, 200 , `trash_bluecan_full`);
     this.floatingRubbishReverse.push(bluecan_2);
 
+    let brownbottle = this.add.sprite(460, 40 , `trash_brownbottle`);
+    this.floatingRubbishForward.push(brownbottle);
+
+    let facemask = this.add.sprite(200, 70 , `trash_facemask`);
+    this.floatingRubbishReverse.push(facemask);
+
+    let greenbottle = this.add.sprite(160, 40 , `trash_greenbottle`);
+    this.floatingRubbishForward.push(greenbottle);
+
+    let marooncan = this.add.sprite(530, 40 , `trash_marooncan`);
+    this.floatingRubbishReverse.push(marooncan);
+
+    let purpleshoe = this.add.sprite(120, 300 , `trash_purpleshoe`);
+    this.floatingRubbishForward.push(purpleshoe);
+
+    let redcan = this.add.sprite(30, 140 , `trash_redcan_full`);
+    this.floatingRubbishReverse.push(redcan);
+
+    let yellowboot = this.add.sprite(90, 40 , `trash_yellowboot`);
+    this.floatingRubbishForward.push(yellowboot);
+
+    let yellowcan = this.add.sprite(590, 40 , `trash_yellowcan`);
+    this.floatingRubbishReverse.push(yellowcan);
+
+    let yellowcan2 = this.add.sprite(600, 130 , `trash_yellowcan_full`);
+    this.floatingRubbishForward.push(yellowcan2);
+
     //Loop all rubbish
     for (var i=0; i<this.floatingRubbishForward.length;i++){
         rubbish = this.floatingRubbishForward[i];
