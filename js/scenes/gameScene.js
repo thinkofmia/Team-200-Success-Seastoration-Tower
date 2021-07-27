@@ -647,7 +647,7 @@ gameScene.gainExp = function(exp = 30){
   if (this.gameStats.profileExp>=this.gameStats.maxExp) {
     this.gameStats.profileLv += 1;
     this.gameStats.profileExp = 0;
-    this.gameStats.maxExp += 100;
+    this.gameStats.maxExp += 100*this.gameStats.profileLv;
   }
 }
 
