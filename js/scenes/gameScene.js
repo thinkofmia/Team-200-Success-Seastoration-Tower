@@ -422,7 +422,14 @@ gameScene.unlockShop = function(){
     this.shopKeepersData.push(shopkeeper);
     
     //Add Upgrade button
-    
+      this.floorUpgradeButtons[shop] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
+      this.floorUpgradeButtons[shop].setScale(0.15*this.globalSpriteScale);
+      this.physics.add.existing(this.floorUpgradeButtons[shop], true);
+      this.floorUpgradeButtons[shop].body.allowGravity = false;
+      this.floorUpgradeButtons[shop].setInteractive();
+      this.floorUpgradeButtons[shop].on('pointerdown', function(){
+        gameScene.upgradeShop(shop);
+      }, this);
 
     //Update status of shop
     this.gameStats.shopsData[shop].locked = false;
