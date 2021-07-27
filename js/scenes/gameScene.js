@@ -17,6 +17,8 @@ gameScene.init = function() {
     earningBase: 125,
     earningIncrement: 25,
     unlockCost: 175,
+    upgradeBase: 200,
+    upgradeIncrement: 50,
     shopsData: [
       //Shop 1
       {
@@ -239,6 +241,7 @@ gameScene.setupTower = function(){
   this.floorLevelTexts = [];
   this.floorIncomeTexts = [];
   this.floorProgressBar = [];
+  this.floorUpgradeButtons = [];
   //Create all floors
   this.floors = this.physics.add.staticGroup();
   for (let i=0;i<this.gameStats.shopsData.length;i++){
@@ -270,7 +273,6 @@ gameScene.setupTower = function(){
           //Add Props
           this.addProp("Door",shop.room, i);
           this.addProp("Table",shop.room, i);
-      
     }
     
     //Add Data
@@ -298,6 +300,17 @@ gameScene.setupTower = function(){
       fill: '#ffffff',
       fontWeight: 'bold',
     });
+    //Add Upgrade Icon
+    if (!shop.locked){
+      this.floorUpgradeButtons[i] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
+      this.floorUpgradeButtons[i].setScale(0.15*this.globalSpriteScale);
+      this.physics.add.existing(this.floorUpgradeButtons[i], true);
+      this.floorUpgradeButtons[i].body.allowGravity = false;
+      this.floorUpgradeButtons[i].setInteractive();
+      this.floorUpgradeButtons[i].on('pointerdown', function(){
+        gameScene.upgradeShop(i);
+      }, this);
+    }
   }
 
   if (this.gameStats.nextShopToBuy>0){
@@ -336,6 +349,16 @@ gameScene.setupTower = function(){
   }
 
 
+}
+
+gameScene.upgradeShop = function(shopNo){
+  shop = this.gameStats.shopsData[shopNo];
+  amt = this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level;
+  if (this.gameStats.greenpoints>=amt){
+    shop.level +=1;
+    this.gameStats.greenpoints -= amt;
+  }
+  else alert(`Not enough green points! You need ${amt}`);
 }
 
 gameScene.earnGreenPoints = function(){
@@ -389,6 +412,9 @@ gameScene.unlockShop = function(){
     shopkeeper.body.allowGravity = false;
     this.shopKeepersData.push(shopkeeper);
     
+    //Add Upgrade button
+    
+
     //Update status of shop
     this.gameStats.shopsData[shop].locked = false;
     //Update Unlock icon position and next shop to buy
