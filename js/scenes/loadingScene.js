@@ -76,6 +76,8 @@ loadingScene.preload = function(){
         margin: 0,
         spacing: 0
     });
+    this.load.image('icon_recycle', 'assets/images/icons/icon_recycle.png');
+    
 
     //Loading Sprites
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
