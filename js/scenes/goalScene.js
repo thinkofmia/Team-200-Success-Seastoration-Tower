@@ -16,6 +16,8 @@ goalScene.init = function(data) {
     else this.gameStats = {};
     this.profilePicPos = [100,100];
     this.profilePicSize = 0.75;
+    this.barW = 300;
+    this.barH = 20;
 }
 
 // load asset files for our game
@@ -51,6 +53,31 @@ goalScene.create = function(){
 
 
     //Add Texts
+
+    //Level bar background
+    this.levelBg = this.add.graphics();
+
+    this.levelBg.setPosition(180, 80);
+    this.levelBg.fillStyle(0x000000, 1);
+    this.levelBg.fillRect(0,0,this.barW+5, this.barH+5);
+    this.levelBg.depth = 89;
+
+    //Level Bar
+    this.levelProgress = this.add.graphics();
+    this.levelProgress.setPosition(182.5, 82.5);
+    this.levelProgress.depth = 90;
+
+    this.levelProgress.clear();
+  this.levelProgress.fillStyle(0x9AD98D,1);
+  this.levelProgress.fillRect(0,0, this.gameStats.profileExp/this.gameStats.maxExp * this.barW, this.barH);
+
+    //Level Stat
+    this.levelText = this.add.text(180,100,`Level ${this.gameStats.profileLv}: ${this.gameStats.profileExp.toFixed(0)}/${this.gameStats.maxExp.toFixed(0)}`,{
+    font: '30px '+this.titleFont,
+    fill: '#000000'
+    });
+    this.levelText.depth = 90;
+
     let text = this.add.text(gameW/4, gameH/2, 'Goals to level up!', {
         font: "25px "+this.titleFont,
         fill: '#000000',
