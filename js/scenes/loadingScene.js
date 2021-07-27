@@ -110,11 +110,25 @@ loadingScene.preload = function(){
         spacing: 0
     });
 
+    //Loading Trash
+    this.load.image('trash_bluecan', 'assets/images/start screen/bluecan.png');
+    this.load.image('trash_bluecan_full', 'assets/images/start screen/bluecan_whole.png');
+    this.load.image('trash_brownbottle', 'assets/images/start screen/brownbottle.png');
+    this.load.image('trash_facemask', 'assets/images/start screen/facemask.png');
+    this.load.image('trash_greenbottle', 'assets/images/start screen/greenbottle.png');
+    this.load.image('trash_marooncan', 'assets/images/start screen/marooncan.png');
+    this.load.image('trash_purpleshoe', 'assets/images/start screen/purpleshoe.png');
+    this.load.image('trash_redcan_full', 'assets/images/start screen/redcan_whole.png');
+    this.load.image('trash_yellowboot', 'assets/images/start screen/yellowboot.png');
+    this.load.image('trash_yellowcan', 'assets/images/start screen/yellowcan.png');
+    this.load.image('trash_yellowcan_full', 'assets/images/start screen/yellowcan_whole.png');
+
+
     //Loading Floors
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
 
-    //Loading Items
+    //Loading Room Props
     this.load.image('door_basic','assets/images/basic floor/basic_door.png');
     this.load.image('poster_basic','assets/images/basic floor/basic_poster.png');
     this.load.image('table_basic','assets/images/basic floor/basic_table.png');

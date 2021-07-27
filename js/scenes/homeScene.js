@@ -1,6 +1,11 @@
 // create a new scene
 let homeScene = new Phaser.Scene('Home');
 
+homeScene.init = function() {
+    this.timeElapsed = 0;
+    this.floatingSpeed = 5;
+}
+
 //Create
 homeScene.create = function(){
     //Game background, with active input
@@ -82,6 +87,30 @@ homeScene.setupSprites = function(){
     this.shark.body.setVelocityX(40);
     if (!this.shark.anims.isPlaying) this.shark.anims.play(`swimming_shark`);
 
+    //Add Floating Rubbish
+    this.floatingRubbishForward = [];
+    this.floatingRubbishReverse = [];
+
+    let bluecan = this.add.sprite(60, 40 , `trash_bluecan`);
+    this.floatingRubbishForward.push(bluecan);
+
+    let bluecan_2 = this.add.sprite(500, 200 , `trash_bluecan_full`);
+    this.floatingRubbishReverse.push(bluecan_2);
+
+    //Loop all rubbish
+    for (var i=0; i<this.floatingRubbishForward.length;i++){
+        rubbish = this.floatingRubbishForward[i];
+        this.physics.add.existing(rubbish);
+        rubbish.setScale(0.25);
+        rubbish.body.allowGravity = false;
+    }
+
+    for (var i=0; i<this.floatingRubbishReverse.length;i++){
+        rubbish = this.floatingRubbishReverse[i];
+        this.physics.add.existing(rubbish);
+        rubbish.setScale(0.25);
+        rubbish.body.allowGravity = false;
+    }
 }
 
 homeScene.animateSprites = function(){
@@ -90,9 +119,33 @@ homeScene.animateSprites = function(){
         this.shark.y = Math.random()*200+100;
     } 
 
+    for (let i=0;i<this.floatingRubbishReverse.length;i++){
+        //Random Floating Motion
+        if (this.timeElapsed%4>2){
+          this.floatingRubbishReverse[i].body.setVelocityY(-this.floatingSpeed);
+        }
+        else{
+          this.floatingRubbishReverse[i].body.setVelocityY(this.floatingSpeed);
+        }
+    }
+
+    for (let i=0;i<this.floatingRubbishForward.length;i++){
+        //Random Floating Motion
+        if (this.timeElapsed%4>2){
+          this.floatingRubbishForward[i].body.setVelocityY(this.floatingSpeed);
+        }
+        else{
+          this.floatingRubbishForward[i].body.setVelocityY(-this.floatingSpeed);
+        }
+    }
+
+
 }
 
 homeScene.update = function(){
     //Animate sprites
     this.animateSprites();
+
+    //Elasped time
+    this.timeElapsed += 0.1;
 }
