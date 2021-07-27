@@ -318,8 +318,9 @@ gameScene.unlockShop = function(){
     //Update Unlock icon position and next shop to buy
     this.gameStats.nextShopToBuy +=1;
     this.unlockIcon.y = 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
+
   }
-  else if (shop>=this.gameStats.shopsData.length){
+  if (this.gameStats.nextShopToBuy>=this.gameStats.shopsData.length){
     //Else destroy icon
     this.gameStats.nextShopToBuy = -1;
     this.unlockIcon.destroy();
