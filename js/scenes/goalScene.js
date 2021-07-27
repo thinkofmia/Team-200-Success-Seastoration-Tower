@@ -10,9 +10,6 @@ WebFont.load({
 goalScene.init = function(data) {
     this.titleFont = 'Grandstander';
     this.bodyFont = 'Averia Libre';
-    this.timeElapsed = 0;
-    this.floatingSpeed = 5;
-    this.isAnimating = true;
     if(Object.keys(data).length != 0){
         this.gameStats = data;
     }
