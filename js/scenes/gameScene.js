@@ -170,6 +170,12 @@ gameScene.setUpHUD = function(){
   this.frontFramePP.body.allowGravity = false;
   this.frontFramePP.depth = 90;
 
+  this.headerBar = this.add.graphics();
+  this.headerBar.setPosition(0, 0);
+  this.headerBar.fillStyle(0x459eda, 1);
+  this.headerBar.fillRect(0, 0, 1000, 30);
+  this.headerBar.depth = 100;
+
   //Level bar background
   this.levelBg = this.add.graphics();
 
@@ -381,13 +387,13 @@ gameScene.setupTower = function(){
     this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
   
     this.floorLevelTexts[i] = this.add.text(150, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `Lv. ${shop.level}`, {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      fontFamily: this.titleFont,
       fontSize: '15px',
       fill: '#ffffff',
       fontWeight: 'bold',
     });
     this.floorIncomeTexts[i] = this.add.text(147, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      fontFamily: this.titleFont,
       fontSize: '15px',
       fill: '#ffffff',
       fontWeight: 'bold',
