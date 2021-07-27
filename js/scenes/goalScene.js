@@ -43,11 +43,6 @@ goalScene.create = function(){
     this.profilePicture.setScale(this.profilePicSize);
     this.profilePicture.body.allowGravity = false;
     this.profilePicture.depth = 90;
-    this.profilePicture.setInteractive();
-    this.profilePicture.on('pointerdown', function(){
-        this.isPlaying = false;
-        this.scene.start('Goal', this.gameStats);
-    }, this);
     //Front Frame
     this.frontFramePP = this.physics.add.sprite(this.profilePicPos[0], this.profilePicPos[1], "profile_pic_front");
     this.frontFramePP.setScale(this.profilePicSize);
