@@ -103,8 +103,12 @@ gameScene.refreshHud = function(){
     shop = this.gameStats.shopsData[i];
     if (shop.locked){
       this.floorLevelTexts[i].setText('');
+      this.floorIncomeTexts[i].setText('');
     }
-    else this.floorLevelTexts[i].setText(`Lv: ${shop.level}`);
+    else{
+      this.floorLevelTexts[i].setText(`Lv. ${shop.level}`);
+      this.floorIncomeTexts[i].setText(`♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`);
+    } 
   }
 
   //Update Level Bar
@@ -118,7 +122,7 @@ gameScene.refreshHud = function(){
     progressBar = this.floorProgressBar[i];
     progressBar.clear();
     progressBar.fillStyle(0x50d9c8, 1);
-    progressBar.fillRect(0,0,(this.floorStatsBarW-90)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+    progressBar.fillRect(0,0,(this.floorStatsBarW-130)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
   }
   
   
@@ -278,16 +282,22 @@ gameScene.setupTower = function(){
     
     this.floorProgressBar[i] = this.add.graphics();
 
-    this.floorProgressBar[i].setPosition(200, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+    this.floorProgressBar[i].setPosition(220, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
     this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
-    this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-90)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+    this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
   
-    this.floorLevelTexts[i] = this.add.text(150, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `Lv: ${shop.level}`, {
+    this.floorLevelTexts[i] = this.add.text(150, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `Lv. ${shop.level}`, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: '15px',
       fill: '#ffffff',
       fontWeight: 'bold',
-  });
+    });
+    this.floorIncomeTexts[i] = this.add.text(145, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      fontSize: '15px',
+      fill: '#ffffff',
+      fontWeight: 'bold',
+    });
   }
 
   if (this.gameStats.nextShopToBuy>0){
