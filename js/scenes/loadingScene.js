@@ -103,6 +103,13 @@ loadingScene.preload = function(){
         spacing: 0
     });
 
+    this.load.spritesheet('sprite_shark','assets/images/animals/shark.png', {
+        frameWidth: 860,
+        frameHeight: 400,
+        margin: 0,
+        spacing: 0
+    });
+
     //Loading Floors
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');

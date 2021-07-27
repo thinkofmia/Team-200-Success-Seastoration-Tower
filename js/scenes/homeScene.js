@@ -8,6 +8,8 @@ homeScene.create = function(){
     bg.setOrigin(0,0);
     bg.setScale(0.25);
 
+    this.setupSprites();
+    
     //Welcome Text
     let gameW = this.sys.game.config.width;
     let gameH = this.sys.game.config.height;
@@ -70,3 +72,11 @@ homeScene.create = function(){
 
     
 };
+
+homeScene.setupSprites = function(){
+    //add trashbag shark
+    let shark = this.add.sprite(60 + Math.random()* 40, 130 , `sprite_shark`);
+    this.physics.add.existing(shark)
+    shark.setScale(0.1);
+    shark.body.allowGravity = false;
+}
