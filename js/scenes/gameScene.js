@@ -242,6 +242,7 @@ gameScene.setUpHUD = function(){
     if (this.gameStats.greenpoints>= this.gameStats.restorationCost){
       this.gameStats.pollution -= this.gameStats.pollutionDrop;
       this.gameStats.greenpoints -= this.gameStats.restorationCost;
+      this.gainExp();
     } 
     else {
       this.displayModal(`Insufficient points. You need ${this.gameStats.restorationCost}♻️!`)
@@ -641,6 +642,15 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.headerBar.y += travel;
 }
 
+gameScene.gainExp = function(exp = 30){
+  this.gameStats.profileExp += exp;
+  if (this.gameStats.profileExp>=this.gameStats.maxExp) {
+    this.gameStats.profileLv += 1;
+    this.gameStats.profileExp = 0;
+    this.gameStats.maxExp += 100;
+  }
+}
+
 gameScene.checkLevel = function(){
   if(this.gameStats.profileExp<100) this.gameStats.profileExp += 0.1;
   else {
@@ -720,8 +730,7 @@ gameScene.update = function(){
     
     //Earn Some MONEUH
     this.earnGreenPoints();
-  
-    this.checkLevel();
+
     gameScene.refreshHud();
     this.timeElapsed+=0.01;
   }
