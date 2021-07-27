@@ -216,7 +216,7 @@ gameScene.setUpHUD = function(){
   this.pollutionStatText.depth = 90;
 
   //Arrow Keys
-  this.arrowUp = this.physics.add.sprite(70, 140, "icon_arrow");
+  this.arrowUp = this.physics.add.sprite(70, 160, "icon_arrow");
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
   this.arrowUp.on('pointerdown', function(){
@@ -224,7 +224,7 @@ gameScene.setUpHUD = function(){
   }, this);
   this.arrowUp.depth = 90;
 
-  this.arrowDown = this.physics.add.sprite(70, 240, "icon_arrow");
+  this.arrowDown = this.physics.add.sprite(70, 280, "icon_arrow");
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
   this.arrowDown.setInteractive();
@@ -234,7 +234,7 @@ gameScene.setUpHUD = function(){
   this.arrowDown.depth = 90;
 
   //Earth Button
-  this.healButton = this.physics.add.sprite(gameW - 70, 140, "icon_earth");
+  this.healButton = this.physics.add.sprite(gameW - 70, 160, "icon_earth");
   this.healButton.body.allowGravity = false;
   this.healButton.setScale(0.2);
   this.healButton.setInteractive();
@@ -251,7 +251,7 @@ gameScene.setUpHUD = function(){
   this.healButton.depth = 90;
 
   //Back Button
-  this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
+  this.backButton = this.physics.add.sprite(gameW- 70, 280, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
@@ -610,18 +610,18 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.cameras.main.scrollY = 0;
     this.greenPointText.y = 10;
     this.pollutionStatText.y = 10;
-    this.arrowUp.y = 140;
-    this.arrowDown.y = 240;   
+    this.arrowUp.y = 160;
+    this.arrowDown.y = 280;   
     this.backFramePP.setPosition(25, 25);
     this.frontFramePP.setPosition(25, 25);
     this.profilePicture.setPosition(25, 25);
     this.levelBg.y = 25;
     this.levelProgress.y = 27.5;
     this.levelText.y = 5;
-    this.backButton.y = 240;
+    this.backButton.y = 280;
     this.popup.y = 20;
     this.popupText.y = 150;
-    this.healButton.y = 140;
+    this.healButton.y = 160;
     this.headerBar.y = 0;
     return;
   }
