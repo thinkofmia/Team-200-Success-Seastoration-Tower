@@ -13,6 +13,7 @@ gameScene.init = function() {
     profileExp: 20,
     maxExp: 100,
     profilePic: "profile_pic_sample",
+    nextShopToBuy: 1,
     shopsData: [
       //Shop 1
       {
@@ -246,7 +247,7 @@ gameScene.setupTower = function(){
   for (let i=0;i<this.gameStats.shopsData.length;i++){
     shop = this.gameStats.shopsData[i];
     shopKeeperName = shop.shopkeeper;
-    if (!shop.locked){
+    if (!shop.locked && shopKeeperName.length>0){
       let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
       this.physics.add.existing(shopkeeper)
       shopkeeper.setScale(0.1*this.globalSpriteScale);
