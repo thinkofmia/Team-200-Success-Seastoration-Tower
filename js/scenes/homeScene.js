@@ -75,8 +75,22 @@ homeScene.create = function(){
 
 homeScene.setupSprites = function(){
     //add trashbag shark
-    let shark = this.add.sprite(60 + Math.random()* 40, 130 , `sprite_shark`);
-    this.physics.add.existing(shark)
-    shark.setScale(0.1);
-    shark.body.allowGravity = false;
+    this.shark = this.add.sprite(60 + Math.random()* 40, Math.random()*300+100 , `sprite_shark`);
+    this.physics.add.existing(this.shark)
+    this.shark.setScale(0.1);
+    this.shark.body.allowGravity = false;
+}
+
+homeScene.animateSprites = function(){
+    if(this.shark.x <690) this.shark.x += 1;
+    else{
+        this.shark.x = -50;
+        this.shark.y = Math.random()*300+100;
+    } 
+
+}
+
+homeScene.update = function(){
+    //Animate sprites
+    this.animateSprites();
 }
