@@ -169,5 +169,14 @@ loadingScene.create = function(){
         repeat: -1 //Repeat forever is -1
     });
 
+    //Animals
+    this.anims.create({
+        key: 'swimming_shark',
+        frames: this.anims.generateFrameNames('sprite_shark', {frames: [0,1,2,1]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: -1 //Repeat forever is -1
+    });
+
     this.scene.start('Home');
 }
