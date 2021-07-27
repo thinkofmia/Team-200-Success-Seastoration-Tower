@@ -241,6 +241,16 @@ gameScene.setupTower = function(){
     
   }
 
+  if (this.gameStats.nextShopToBuy>0){
+    //Add Unlocking icon
+    this.unlockIcon = this.physics.add.sprite(370+this.globalSpriteTranslate, 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_recycle');
+    this.unlockIcon.setScale(0.25*this.globalSpriteScale);
+    this.physics.add.existing(this.unlockIcon, true);
+    this.unlockIcon.body.allowGravity = false;
+    this.unlockIcon.setInteractive();
+  }
+  
+
   //Character
   this.shopKeepersData = [];
 
