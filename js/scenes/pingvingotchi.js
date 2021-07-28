@@ -94,6 +94,17 @@ pingvingotchiScene.create = function(){
         this.createHud();
         this.refreshHud();
       
+        //Start Decay
+          //Decay of health and fun over time
+        this.timedEventStats = this.time.addEvent({
+            delay: 1000,
+            repeat: -1, //Repeat forever
+            callback: function(){
+            //Update stats
+            this.updateStats(this.decayRates);
+            },
+            callbackScope: this
+        });
 }
 
 pingvingotchiScene.returnToMGSelection = function(){
@@ -131,3 +142,50 @@ pingvingotchiScene.refreshHud = function(){
     this.healthText.setText(`Health: ${this.pingvinStats.health}`);
     this.funText.setText(`Fun: ${this.pingvinStats.fun}`);
   };
+
+//Ends Game
+pingvingotchiScene.gameOver = function(){
+    //Block UI
+    this.uiBlocked = true;
+
+    //Change frame of pet
+    this.pingvin.setFrame(5);
+
+    //Keep game on for sometime
+    this.time.addEvent({
+        delay: 2000,
+        repeat: 0,
+        callback: function(){
+            pingvingotchiScene.returnToMGSelection();
+        },
+        callbackScope: this
+    });
+};
+
+//Stats Updater
+pingvingotchiScene.updateStats = function(statDiff){
+    //Pet stats
+    //this.stats.health += this.selectedItem.customStats.health;
+    //this.stats.fun += this.selectedItem.customStats.fun;
+    
+    //Flag to see if game over
+    let isGameOver = false;
+
+    for (stat in statDiff){
+      if (statDiff.hasOwnProperty(stat)){
+        this.pingvinStats[stat] += statDiff[stat];
+
+        //Stats cant be negative
+        if (this.pingvinStats[stat]<=0){
+          isGameOver = true;
+          this.pingvinStats[stat] = 0;
+        } 
+
+        //Refresh HUD
+        this.refreshHud();
+
+        //Check Game Over
+        if(isGameOver) this.gameOver();
+      }
+    };
+};
