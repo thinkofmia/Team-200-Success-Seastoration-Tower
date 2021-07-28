@@ -32,7 +32,7 @@ mgSelectionScene.create = function(){
     let gameW = this.sys.game.config.width;
     let gameH = this.sys.game.config.height;
 
-    let text = this.add.text(gameW/2, gameH/8, 'Select your mini games', {
+    let text = this.add.text(gameW/2, gameH/8, 'Play mini games for extra rewards!', {
         font: "20px "+this.titleFont,
         fill: '#ffffff',
     });
