@@ -404,7 +404,7 @@ gameScene.setupTower = function(){
     }
     
     //Add Data
-    if (i<=this.gameStats.nextShopToBuy){
+    if (!shop.locked || i<=this.gameStats.nextShopToBuy){
       this.floorStatsData[i] = this.add.graphics();
 
       this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
