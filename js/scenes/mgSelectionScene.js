@@ -118,7 +118,7 @@ mgSelectionScene.create = function(){
 
     game3.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
-        this.scene.start('Home', this.gameStats);
+        this.scene.start('Game', this.gameStats);
     }, this);
 
     //Text background

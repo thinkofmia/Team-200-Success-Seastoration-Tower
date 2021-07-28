@@ -246,6 +246,17 @@ gameScene.setUpHUD = function(){
   }, this);
   this.arrowDown.depth = 90;
 
+//Minigame Button
+this.minigameButton = this.physics.add.sprite(gameW - 70, 90, "icon_minigame");
+this.minigameButton.body.allowGravity = false;
+this.minigameButton.setScale(0.2);
+this.minigameButton.setInteractive();
+this.minigameButton.on('pointerdown', function(){
+  gameScene.isPlaying = false;
+  this.scene.start('MGSelection', this.gameStats);
+}, this);
+this.minigameButton.depth = 90;
+
   //Earth Button
   this.healButton = this.physics.add.sprite(gameW - 70, 180, "icon_earth");
   this.healButton.body.allowGravity = false;

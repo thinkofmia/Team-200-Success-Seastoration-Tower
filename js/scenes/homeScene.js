@@ -52,7 +52,7 @@ homeScene.create = function(){
         fill: '#ffffff',
     });
 
-    let game3 = this.add.text(gameW/2, game3H, 'Mini Games', {
+    let game3 = this.add.text(gameW/2, game3H, 'Settings', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
@@ -96,7 +96,7 @@ homeScene.create = function(){
     
     game3.on('pointerdown', function(){
         homeScene.isAnimating = false;
-        this.scene.start('MGSelection', this.gameStats);
+        //Display Settin Screen
     }, this);
 
     //Text background
