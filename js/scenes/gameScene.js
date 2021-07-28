@@ -24,7 +24,7 @@ gameScene.init = function(data) {
   this.floorStatsBarW = 350;
   this.floorStatsBarH = 50;
   //Variables
-  this.charactersSpeed = [-20,-15, -22, -17];
+  this.charactersSpeed = [-20,-15, -22, -17,-20];
   this.timeElapsed = 0;
   if(Object.keys(data).length != 0){
     this.gameStats = data;
@@ -80,6 +80,15 @@ gameScene.init = function(data) {
         level: 1,
         currentRate: 0,
         completionRate: 5000
+      },
+      //Shop 5
+      {
+        room: 'floor_qualle',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 10000
       },
     ]
   };
