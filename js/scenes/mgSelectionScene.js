@@ -58,7 +58,7 @@ mgSelectionScene.create = function(){
         fill: '#ffffff',
     });
 
-    let game2 = this.add.text(gameW/4*3, game2H, 'Mini Game 2', {
+    let game2 = this.add.text(gameW/4*3, game2H, 'Flipping Memory', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
@@ -86,7 +86,7 @@ mgSelectionScene.create = function(){
         if (i==gameOptions.length-1){    
             optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
         }
-        else if(i==1) {
+        else if(i==0) {
             optionBg[i].fillRect(gameW/4 - gameOptions[i].width/2 - 10, optionHeights[1] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
         }
         else {
@@ -107,12 +107,12 @@ mgSelectionScene.create = function(){
 
     game2.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
-        this.scene.start('Minigame2', this.gameStats);
+        this.scene.start('Flipping Memory', this.gameStats);
     }, this);
 
     this.logo2.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
-        this.scene.start('Minigame2', this.gameStats);
+        this.scene.start('Flipping Memory', this.gameStats);
     }, this);
 
 

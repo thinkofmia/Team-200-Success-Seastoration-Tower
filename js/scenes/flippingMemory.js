@@ -1,14 +1,14 @@
 // create a new scene
-let minigame2Scene = new Phaser.Scene('Minigame2');
+let flippingMemoryScene = new Phaser.Scene('Flipping Memory');
 
-minigame2Scene.init = function(data){
+flippingMemoryScene.init = function(data){
     if(Object.keys(data).length != 0){
         this.gameStats = data;
       }
     else this.gameStats = {};
 }
 
-minigame2Scene.create = function(){
+flippingMemoryScene.create = function(){
     //Game background, with active input
     let bg = this.add.sprite(0,0,'background_title').setInteractive();
     bg.setOrigin(0,0);
@@ -18,7 +18,7 @@ minigame2Scene.create = function(){
     let gameW = this.sys.game.config.width;
     let gameH = this.sys.game.config.height;
 
-    let text = this.add.text(gameW/2, gameH/8, 'Mini Game 2', {
+    let text = this.add.text(gameW/2, gameH/8, 'Flipping Memory', {
         font: "20px "+this.titleFont,
         fill: '#ffffff',
     });
@@ -70,7 +70,7 @@ minigame2Scene.create = function(){
     }, this);
 
     game3.on('pointerdown', function(){
-        mgSelectionScene.isAnimating = false;
+        flippingMemoryScene.isAnimating = false;
         this.scene.start('MGSelection', this.gameStats);
     }, this);
 
