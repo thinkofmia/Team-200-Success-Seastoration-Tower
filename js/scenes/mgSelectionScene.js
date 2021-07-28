@@ -42,6 +42,15 @@ mgSelectionScene.create = function(){
     game3H = gameH/4*3.5;
     optionHeights = [game1H, game2H, game3H];
 
+    //Add Logo pics
+    this.logo1 = this.physics.add.sprite(gameW/4, game1H+10, "icon_earth");
+    this.logo1.body.allowGravity = false;
+    this.logo1.setScale(0.3);
+
+    this.logo2 = this.physics.add.sprite(gameW/4*3, game1H+10, "icon_earth");
+    this.logo2.body.allowGravity = false;
+    this.logo2.setScale(0.3);
+    //Add Texts
     let game1 = this.add.text(gameW/4, game2H, 'Minigame 1', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
