@@ -133,6 +133,8 @@ loadingScene.preload = function(){
         spacing: 0
     });
     this.load.image('sprite_sushi', 'assets/images/sprites/sprite_sushi.png');
+    this.load.image('sprite_pillow', 'assets/images/sprites/sprite_pillow.png');
+    this.load.image('sprite_chips', 'assets/images/sprites/sprite_chips.png');
 
     //Loading Trash
     this.load.image('trash_bluecan', 'assets/images/start screen/bluecan.png');
