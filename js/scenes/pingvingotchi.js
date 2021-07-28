@@ -31,19 +31,33 @@ pingvingotchiScene.init = function(data){
 }
 
 pingvingotchiScene.create = function(){
+        //Variables
+        let gameW = this.sys.game.config.width;
+        let gameH = this.sys.game.config.height;
+
         //Game background, with active input
         let bg = this.add.sprite(0,0,'background_title').setInteractive();
         bg.setOrigin(0,0);
         bg.setScale(0.25);
         bg.depth = 1;
 
-        //Event listener for the bg
-        bg.on('pointerdown', this.placeItem, this);
+        //Transparent bg for clicking
+        let clickable = this.add.graphics();
+        let rect = new Phaser.Geom.Rectangle(0, 0, gameW, gameH);
+        let pointer = this.input.activePointer; 
+        clickable.fillStyle(0x000000, 0.0);
+        clickable.fillRectShape(rect);
+        //clickable.fillRect(0, 0, gameW, gameH);
+        clickable.depth = 100;
+        clickable.setInteractive(rect, () => {
+            if(pointer.isDown) {
+              pingvingotchiScene.placeItem(pointer);
+            }
+          });
+
+        //clickable.on('pointerdown', this.placeItem, this);
         
         //Welcome Text
-        let gameW = this.sys.game.config.width;
-        let gameH = this.sys.game.config.height;
-    
         let text = this.add.text(gameW/8, gameH/14, 'Pingvingotchi', {
             font: "20px "+this.titleFont,
             fill: '#ffffff',
@@ -114,7 +128,7 @@ pingvingotchiScene.create = function(){
         });
 }
 
-pingvingotchiScene.placeItem = function(pointer, localX, localY){
+pingvingotchiScene.placeItem = function(pointer){
     //console.log(pointer);
     //console.log(localX, localY);
   
