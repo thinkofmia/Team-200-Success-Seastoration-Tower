@@ -648,6 +648,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.popupText.y = 150;
     this.healButton.y = 180;
     this.headerBar.y = 0;
+    this.minigameButton.y = 90;
     return;
   }
   this.arrowUp.y += travel;
@@ -665,6 +666,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.popup.y += travel;
   this.healButton.y += travel;
   this.headerBar.y += travel;
+  this.minigameButton.y += travel;
 }
 
 gameScene.gainExp = function(exp = 30){
