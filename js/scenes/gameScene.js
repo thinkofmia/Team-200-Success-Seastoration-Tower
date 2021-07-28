@@ -424,12 +424,14 @@ gameScene.setupTower = function(){
       fill: '#ffffff',
       fontWeight: 'bold',
     });
+    this.floorLevelTexts[i].depth = 44;
     this.floorIncomeTexts[i] = this.add.text(147, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
       fontFamily: this.titleFont,
       fontSize: '15px',
       fill: '#ffffff',
       fontWeight: 'bold',
     });
+    this.floorIncomeTexts[i].depth = 44;
     //Add Upgrade Icon
     if (!shop.locked){
       this.floorUpgradeButtons[i] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
