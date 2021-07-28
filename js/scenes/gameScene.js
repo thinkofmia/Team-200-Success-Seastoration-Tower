@@ -86,7 +86,7 @@ gameScene.init = function(data) {
       },
       //Shop 5
       {
-        room: 'floor_qualle',
+        room: 'floor_clinic',
         locked: true,
         shopkeeper: 'pingvin',
         level: 1,
@@ -398,6 +398,10 @@ gameScene.setupTower = function(){
           this.addProp("Beanbag L",shop.room, i);
           this.addProp("Beanbag R",shop.room, i);
           break;
+        case "floor_clinic":
+          this.addProp("Poster",shop.room, i);
+          this.addProp("Table",shop.room, i);
+          break;
       }
           //Add Props
           this.addProp("Door",shop.room, i);
@@ -556,6 +560,10 @@ gameScene.unlockShop = function(){
         this.addProp("Beanbag L",shopName, shop);
         this.addProp("Beanbag R",shopName, shop);
         break;
+      case "floor_clinic": 
+        this.addProp("Poster",shopName, shop);
+        this.addProp("Table",shopName, shop);
+        break;
     }
         //Add Props
         this.addProp("Door",shopName, shop);
@@ -609,6 +617,10 @@ gameScene.addProp = function(objectKey, room, floor){
     case "floor_qualle":
       if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagL_qualle");
       if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagR_qualle");
+      break;
+    case "floor_clinic":
+      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
+      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist + 50 + Math.random()*50, propHeight, "poster_clinic");
       break;
   }
   

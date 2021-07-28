@@ -156,6 +156,7 @@ loadingScene.preload = function(){
     this.load.image('floor_camera', 'assets/images/basic floor/cameraroom.png');
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
     this.load.image('floor_kitchen', 'assets/images/basic floor/kitchenroom.png');
+    this.load.image('floor_clinic', 'assets/images/basic floor/basic_floor.png');
 
     this.load.image('floor_locked', 'assets/images/basic floor/darkroom.png');
 
@@ -166,6 +167,8 @@ loadingScene.preload = function(){
     
     this.load.image('beanbagL_qualle','assets/images/Qualle/beanbagL.png');
     this.load.image('beanbagR_qualle','assets/images/Qualle/beanbagR.png');
+
+    this.load.image('poster_clinic','assets/images/basic floor/firstaidposter.png');
     
     //Profiles
     this.load.image('profile_pic_front','assets/images/profile/FrontFrame.png');
