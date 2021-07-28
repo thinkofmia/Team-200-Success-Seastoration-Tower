@@ -145,10 +145,11 @@ pingvingotchiScene.placeItem = function(pointer){
   
     //Block UI
     this.uiBlocked = true;
-  
     
     //Add pingvin move
     this.pingvin.play('walking_pingvin');
+    //Save current item
+    let currSelectedItem = this.selectedItem;
     //Pingvin movement
     let pingvinTween = this.tweens.add({
       targets: this.pingvin,
@@ -169,7 +170,7 @@ pingvingotchiScene.placeItem = function(pointer){
           this.pingvin.setFrame(0);
   
           //Clear UI
-          //this.uiReady();
+          this.uiReady();
   
           //Refresh HUD
           this.refreshHud();
@@ -180,7 +181,7 @@ pingvingotchiScene.placeItem = function(pointer){
         this.pingvin.play('blushing_pingvin');
         
         //Update stats
-        this.updateStats(this.selectedItem.customStats);
+        this.updateStats(currSelectedItem.customStats);
         }
     });
     
