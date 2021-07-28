@@ -43,7 +43,7 @@ mgSelectionScene.create = function(){
     optionHeights = [game1H, game2H, game3H];
 
     //Add Logo pics
-    this.logo1 = this.physics.add.sprite(gameW/4, game1H+10, "icon_earth");
+    this.logo1 = this.physics.add.sprite(gameW/4, game1H+10, "icon_pingvingotchi");
     this.logo1.body.allowGravity = false;
     this.logo1.setScale(0.3);
     this.logo1.setInteractive();
