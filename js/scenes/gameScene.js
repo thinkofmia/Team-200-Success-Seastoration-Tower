@@ -374,10 +374,12 @@ gameScene.setupTower = function(){
 
     shop = this.gameStats.shopsData[i];
     if (shop.locked){
-      this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'floor_locked');
-      this.floorData[i].setScale(0.25*this.globalSpriteScale);
-      this.physics.add.existing(this.floorData[i], true);
-      this.floorData[i].body.allowGravity = false;
+      if (i==this.gameStats.nextShopToBuy){
+        this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'floor_locked');
+        this.floorData[i].setScale(0.25*this.globalSpriteScale);
+        this.physics.add.existing(this.floorData[i], true);
+        this.floorData[i].body.allowGravity = false;
+      }
     }
     else {
       this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), shop.room);
@@ -402,18 +404,20 @@ gameScene.setupTower = function(){
     }
     
     //Add Data
-    this.floorStatsData[i] = this.add.graphics();
+    if (i<=this.gameStats.nextShopToBuy){
+      this.floorStatsData[i] = this.add.graphics();
 
-    this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
-    this.floorStatsData[i].fillStyle(0x817a93, 1);
-    this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
-    
-    this.floorProgressBar[i] = this.add.graphics();
+      this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorStatsData[i].fillStyle(0x817a93, 1);
+      this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
+      
+      this.floorProgressBar[i] = this.add.graphics();
 
-    this.floorProgressBar[i].setPosition(220, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
-    this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
-    this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
-  
+      this.floorProgressBar[i].setPosition(220, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
+      this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+    }
+
     this.floorLevelTexts[i] = this.add.text(150, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `Lv. ${shop.level}`, {
       fontFamily: this.titleFont,
       fontSize: '15px',
@@ -446,6 +450,7 @@ gameScene.setupTower = function(){
     this.physics.add.existing(this.unlockIcon, true);
     this.unlockIcon.body.allowGravity = false;
     this.unlockIcon.setInteractive();
+    this.unlockIcon.depth = 44;
     this.unlockIcon.on('pointerdown', function(){
       gameScene.unlockShop();
     }, this);
@@ -518,6 +523,25 @@ gameScene.unlockShop = function(){
     //Reveal room
     this.floorData[shop].setTexture(this.gameStats.shopsData[shop].room);
 
+    //Show locked next room
+    if (shop+1<this.gameStats.shopsData.length){
+      this.floorData[shop+1] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH), 'floor_locked');
+      this.floorData[shop+1].setScale(0.25*this.globalSpriteScale);
+      this.physics.add.existing(this.floorData[shop+1], true);
+      this.floorData[shop+1].body.allowGravity = false;
+
+      this.floorStatsData[shop+1] = this.add.graphics();
+
+      this.floorStatsData[shop+1].setPosition(148, 172 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorStatsData[shop+1].fillStyle(0x817a93, 1);
+      this.floorStatsData[shop+1].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
+      
+      this.floorProgressBar[shop+1] = this.add.graphics();
+
+      this.floorProgressBar[shop+1].setPosition(220, 177 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorProgressBar[shop+1].fillStyle(0x50d9c8, 1);
+      this.floorProgressBar[shop+1].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+    }
     //Unlock Props
     this.floorProps[shop] = {};
     //Extra Props
