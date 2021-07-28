@@ -46,10 +46,12 @@ mgSelectionScene.create = function(){
     this.logo1 = this.physics.add.sprite(gameW/4, game1H+10, "icon_earth");
     this.logo1.body.allowGravity = false;
     this.logo1.setScale(0.3);
+    this.logo1.setInteractive();
 
     this.logo2 = this.physics.add.sprite(gameW/4*3, game1H+10, "icon_earth");
     this.logo2.body.allowGravity = false;
     this.logo2.setScale(0.3);
+    this.logo2.setInteractive();
     //Add Texts
     let game1 = this.add.text(gameW/4, game2H, 'Pingvingotchi', {
         font: '20px '+this.titleFont,
@@ -92,7 +94,13 @@ mgSelectionScene.create = function(){
         }
     };
 
+    //Add on touch listeners
     game1.on('pointerdown', function(){
+        mgSelectionScene.isAnimating = false;
+        this.scene.start('Pingvingotchi', this.gameStats);
+    }, this);
+
+    this.logo1.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
         this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
@@ -101,6 +109,12 @@ mgSelectionScene.create = function(){
         mgSelectionScene.isAnimating = false;
         this.scene.start('Minigame2', this.gameStats);
     }, this);
+
+    this.logo2.on('pointerdown', function(){
+        mgSelectionScene.isAnimating = false;
+        this.scene.start('Minigame2', this.gameStats);
+    }, this);
+
 
     game3.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
