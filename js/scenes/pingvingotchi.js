@@ -30,7 +30,7 @@ pingvingotchiScene.create = function(){
         let gameW = this.sys.game.config.width;
         let gameH = this.sys.game.config.height;
     
-        let text = this.add.text(gameW/2, gameH/8, 'Pingvingotchi', {
+        let text = this.add.text(gameW/8, gameH/10, 'Pingvingotchi', {
             font: "20px "+this.titleFont,
             fill: '#ffffff',
         });
@@ -46,7 +46,7 @@ pingvingotchiScene.create = function(){
         //Text background
         let textBg = this.add.graphics();
         textBg.fillStyle(0x000000, 0.7);
-        textBg.fillRect(gameW/2 - text.width/2 - 10, gameH/8 - text.height/2 -10, text.width+20, text.height+ 20);
+        textBg.fillRect(gameW/8 - text.width/2 - 10, gameH/10 - text.height/2 -10, text.width+20, text.height+ 20);
 
         //Back Button
         this.backButton = this.physics.add.sprite(gameW- 70, 280, "icon_back");
