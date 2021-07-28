@@ -77,7 +77,7 @@ pingvingotchiScene.create = function(){
         textBg.fillRect(gameW/8 - text.width/2 - 10, gameH/14 - text.height/2 -10, text.width+20, text.height+ 20);
         textBg.depth = 51;
         //Add Pingvin
-        this.pingvin = this.add.sprite(100,200,'sprite_pingvin',0).setInteractive();
+        this.pingvin = this.add.sprite(300,200,'sprite_pingvin',0).setInteractive();
         this.pingvin.setScale(0.3);
         this.pingvin.depth = 1;
 
@@ -253,8 +253,22 @@ pingvingotchiScene.createButtons = function(){
     this.sushiBtn.setScale(0.2);
     this.sushiBtn.depth = 51;
 
+    //Add Chips Button
+    this.chipsBtn = this.add.sprite(600,178,'sprite_chips').setInteractive();
+    this.chipsBtn.customStats = {health: -20, fun: 25};
+    this.chipsBtn.on('pointerdown', this.pickItem);
+    this.chipsBtn.setScale(0.2);
+    this.chipsBtn.depth = 51;
+
+    //Add Pillow Button
+    this.pillowBtn = this.add.sprite(50,100,'sprite_pillow').setInteractive();
+    this.pillowBtn.customStats = {health: -5, fun: 15};
+    this.pillowBtn.on('pointerdown', this.pickItem);
+    this.pillowBtn.setScale(0.2);
+    this.pillowBtn.depth = 51;
+
     //Array with all buttons
-    this.buttons = [this.sushiBtn];
+    this.buttons = [this.sushiBtn, this.chipsBtn, this.pillowBtn];
 
     //UI not blocked
     this.uiBlocked = false;
