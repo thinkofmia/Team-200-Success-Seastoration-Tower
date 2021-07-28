@@ -247,7 +247,7 @@ gameScene.setUpHUD = function(){
   this.arrowDown.depth = 90;
 
   //Earth Button
-  this.healButton = this.physics.add.sprite(gameW - 70, 160, "icon_earth");
+  this.healButton = this.physics.add.sprite(gameW - 70, 180, "icon_earth");
   this.healButton.body.allowGravity = false;
   this.healButton.setScale(0.2);
   this.healButton.setInteractive();
@@ -283,6 +283,7 @@ gameScene.setUpHUD = function(){
   }, this);
 
   this.backButton.depth = 90;
+  this.backButton.setScale(0.8);
 
   //Create Popup Modal
   this.popup = this.add.graphics();
@@ -634,7 +635,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.backButton.y = 280;
     this.popup.y = 20;
     this.popupText.y = 150;
-    this.healButton.y = 160;
+    this.healButton.y = 180;
     this.headerBar.y = 0;
     return;
   }
