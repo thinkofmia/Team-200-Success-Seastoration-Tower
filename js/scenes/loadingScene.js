@@ -218,5 +218,13 @@ loadingScene.create = function(){
         repeat: -1 //Repeat forever is -1
     });
 
+    this.anims.create({
+        key: 'blushing_pingvin',
+        frames: this.anims.generateFrameNames('sprite_pingvin', {frames: [0,3,4,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+
     this.scene.start('Home');
 }

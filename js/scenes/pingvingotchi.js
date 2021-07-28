@@ -35,6 +35,9 @@ pingvingotchiScene.create = function(){
         let bg = this.add.sprite(0,0,'background_title').setInteractive();
         bg.setOrigin(0,0);
         bg.setScale(0.25);
+
+        //Event listener for the bg
+        bg.on('pointerdown', this.placeItem, this);
         
         //Welcome Text
         let gameW = this.sys.game.config.width;
@@ -108,6 +111,61 @@ pingvingotchiScene.create = function(){
             callbackScope: this
         });
 }
+
+pingvingotchiScene.placeItem = function(pointer, localX, localY){
+    //console.log(pointer);
+    //console.log(localX, localY);
+  
+    //Check item selected
+    if (!this.selectedItem) return;
+  
+    //UI must be unblocked
+    if (this.uiBlocked) return;
+  
+    // Create new item in position
+    let newItem = this.add.sprite(localX, localY, this.selectedItem.texture.key);
+  
+    //Block UI
+    this.uiBlocked = true;
+  
+    //Pingvin movement
+    let pingvinTween = this.tweens.add({
+      targets: this.pet,
+      duration: 500,
+      x: newItem.x,
+      y: newItem.y,
+      paused: false,
+      callbackScope: this,
+      onComplete: function(tween, sprites){
+  
+        //Destroy Item
+        newItem.destroy();
+  
+        //Event listener when animation ends
+        this.pingvin.on('animationcomplete', function(){
+  
+          //Set pet back to neutral
+          this.pingvin.setFrame(0);
+  
+          //Clear UI
+          this.uiReady();
+  
+          //Refresh HUD
+          this.refreshHud();
+  
+        }, this);
+  
+        //Play spreadsheet animation
+        this.pingvin.play('blushing_pingvin');
+  
+        //Update stats
+        this.updateStats(this.selectedItem.customStats);
+        }
+    });
+}
+    
+  
+    
 
 pingvingotchiScene.returnToMGSelection = function(){
     this.isAnimating = false;
