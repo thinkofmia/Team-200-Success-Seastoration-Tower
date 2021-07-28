@@ -48,6 +48,11 @@ pingvingotchiScene.create = function(){
         textBg.fillStyle(0x000000, 0.7);
         textBg.fillRect(gameW/8 - text.width/2 - 10, gameH/10 - text.height/2 -10, text.width+20, text.height+ 20);
 
+        //Add Pingvin
+        this.pingvin = this.add.sprite(100,200,'sprite_pingvin',0).setInteractive();
+        this.pingvin.setScale(0.3);
+        this.pingvin.depth = 1;
+
         //Back Button
         this.backButton = this.physics.add.sprite(gameW- 70, 280, "icon_back");
         this.backButton.body.allowGravity = false;
