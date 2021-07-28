@@ -76,7 +76,7 @@ gameScene.init = function(data) {
       },
       //Shop 4
       {
-        room: 'floor_basic',
+        room: 'floor_kitchen',
         locked: true,
         shopkeeper: 'ky',
         level: 1,
