@@ -390,6 +390,7 @@ gameScene.setupTower = function(){
       switch (shop.room){
         case "floor_basic": 
           this.addProp("Poster",shop.room, i);
+          this.addProp("Table",shop.room, i);
           break;
         case "floor_qualle":
           this.addProp("Beanbag L",shop.room, i);
@@ -398,7 +399,6 @@ gameScene.setupTower = function(){
       }
           //Add Props
           this.addProp("Door",shop.room, i);
-          this.addProp("Table",shop.room, i);
     }
     
     //Add Data
@@ -523,6 +523,7 @@ gameScene.unlockShop = function(){
     switch (shopName){
       case "floor_basic": 
         this.addProp("Poster",shopName, shop);
+        this.addProp("Table",shopName, shop);
         break;
       case "floor_qualle":
         this.addProp("Beanbag L",shopName, shop);
@@ -531,7 +532,6 @@ gameScene.unlockShop = function(){
     }
         //Add Props
         this.addProp("Door",shopName, shop);
-        this.addProp("Table",shopName, shop);
 
     //Unlock Shopkeeper
     let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
@@ -576,6 +576,7 @@ gameScene.addProp = function(objectKey, room, floor){
   propDist = 300 + this.globalSpriteTranslate;
   switch (room){
     case "floor_basic":
+      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
       if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist + 50 + Math.random()*50, propHeight, "poster_basic");
       break;
     case "floor_qualle":
@@ -584,7 +585,6 @@ gameScene.addProp = function(objectKey, room, floor){
       break;
   }
   
-  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
   if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+50, propHeight, "door_basic");
   
   if (this.floorProps[floor][objectKey]){
