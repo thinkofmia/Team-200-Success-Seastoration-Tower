@@ -55,3 +55,8 @@ flippingMemoryScene.create = function(){
     this.backButton.depth = 50;
   
 }
+
+flippingMemoryScene.returnToMGSelection = function(){
+    this.isAnimating = false;
+    this.scene.start('MGSelection',this.gameStats);
+}
