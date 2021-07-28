@@ -258,7 +258,7 @@ this.minigameButton.on('pointerdown', function(){
 this.minigameButton.depth = 90;
 
   //Earth Button
-  this.healButton = this.physics.add.sprite(gameW - 70, 180, "icon_earth");
+  this.healButton = this.physics.add.sprite(gameW - 70, 180, "icon_heal");
   this.healButton.body.allowGravity = false;
   this.healButton.setScale(0.2);
   this.healButton.setInteractive();
