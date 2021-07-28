@@ -504,12 +504,13 @@ gameScene.earnGreenPoints = function(){
 }
 
 gameScene.unlockShop = function(){
-  if (this.gameStats.greenpoints<this.gameStats.unlockCost){
-    this.displayModal(`Insufficent Green Points! You need ${this.gameStats.unlockCost}♻️!`);
+  let shopCost = (this.gameStats.unlockCost+(this.gameStats.upgradeIncrement+this.gameStats.earningBase)*this.gameStats.nextShopToBuy)*this.gameStats.nextShopToBuy;
+  if (this.gameStats.greenpoints<shopCost){
+    this.displayModal(`Insufficent Green Points! You need ${shopCost}♻️!`);
     //alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
     return;
   } 
-  this.gameStats.greenpoints -= this.gameStats.unlockCost;
+  this.gameStats.greenpoints -= shopCost;
   var shop = this.gameStats.nextShopToBuy;
   var shopKeeperName = this.gameStats.shopsData[shop].shopkeeper;
   var shopName = this.gameStats.shopsData[shop].room;
