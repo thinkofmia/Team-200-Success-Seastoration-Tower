@@ -28,16 +28,16 @@ loadingScene.preload = function(){
     let barW = 500;
     let barH = 25;
 
-    bgBar.setPosition(gameW/2 - barW/2, gameH/8*7 - barH/2);
+    bgBar.setPosition(gameW/2 - barW/2, gameH/8*6.5 - barH/2);
     bgBar.fillStyle(0xF5F5F5, 1);
     bgBar.fillRect(0,0,barW, barH);
 
     //Progress Bar
     let progressBar = this.add.graphics();
-    progressBar.setPosition(gameW/2 - barW/2, gameH/8*7 - barH/2);
+    progressBar.setPosition(gameW/2 - barW/2, gameH/8*6.5 - barH/2);
 
     //Boot Text Description
-    let loadingText = this.add.text(gameW/8*2.5, gameH/12, 'Loading your Tower', {
+    let loadingText = this.add.text(gameW/8*2.25, gameH/12, 'Loading your Tower', {
         fontFamily: this.titleFont,
         fontSize: '30px',
         fill: '#ffffff',
@@ -45,7 +45,7 @@ loadingScene.preload = function(){
         fontWeight: 'bold',
     });
 
-    let infoText = this.add.text(gameW/8, gameH/8*5, 'Do you know the oceans provide 99% of the living space \non the planet containing 50-80% of all life?', {
+    let infoText = this.add.text(gameW/14, gameH/8*5, 'Do you know the oceans provide 99% of the living space \non the planet containing 50-80% of all life?', {
         fontFamily: this.titleFont,
         fontSize: '20px',
         fill: '#ffffff',
