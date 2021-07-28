@@ -140,7 +140,7 @@ gameScene.refreshHud = function(){
     }
     else{
       this.floorLevelTexts[i].setText(`Lv. ${shop.level}`);
-      this.floorIncomeTexts[i].setText(`♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`);
+      this.floorIncomeTexts[i].setText(`♻️ ${shop.level*(this.gameStats.earningIncrement*(i+1)) +this.gameStats.earningBase}`);
     } 
   }
 
@@ -481,7 +481,7 @@ gameScene.earnGreenPoints = function(){
     var shop = this.gameStats.shopsData[i];
     if (!shop.locked){
       if(shop.currentRate>=shop.completionRate){
-        this.gameStats.greenpoints += shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase;
+        this.gameStats.greenpoints += shop.level*(this.gameStats.earningIncrement*(i+1)) +this.gameStats.earningBase;
         shop.currentRate = 0;
       }
       else {
