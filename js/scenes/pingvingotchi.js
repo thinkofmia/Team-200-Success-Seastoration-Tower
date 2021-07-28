@@ -134,7 +134,7 @@ pingvingotchiScene.createHud = function(){
     });
 
     this.funText.depth = 51;
-  
+    pingvingotchiScene.createButtons();
   }
 
 //Show current value of Health and fun
@@ -162,12 +162,56 @@ pingvingotchiScene.gameOver = function(){
     });
 };
 
+pingvingotchiScene.createButtons = function(){
+    //Add Sushi Button
+    this.sushiBtn = this.add.sprite(600,100,'sprite_sushi').setInteractive();
+    this.sushiBtn.customStats = {health: 20, fun: 0};
+    this.sushiBtn.on('pointerdown', this.pickItem);
+    this.sushiBtn.setScale(0.2);
+    this.sushiBtn.depth = 51;
+
+    //Array with all buttons
+    this.buttons = [this.sushiBtn];
+
+    //UI not blocked
+    this.uiBlocked = false;
+
+    //Refresh UI
+    this.uiReady();
+}
+
+//Pick item
+pingvingotchiScene.pickItem = function(){
+    //console.log(this.customStats);
+    if (this.scene.uiBlocked) return;
+    
+    //Make sure UI is ready
+    this.scene.uiReady();
+  
+    //Select Item
+    this.scene.selectedItem = this;
+  
+    //Change transparency
+    this.alpha = 0.5;
+  
+    console.log('Picking ' + this.texture.key);
+  };
+
+pingvingotchiScene.uiReady = function(){
+    //Nothing selected
+    this.selectedItem = null;
+  
+    //Reset transparency
+    for (let i=0; i<this.buttons.length; i++){
+      this.buttons[i].alpha = 1;
+    }
+  
+    //Unblock scene
+    this.uiBlocked = false;
+  }
+
 //Stats Updater
 pingvingotchiScene.updateStats = function(statDiff){
-    //Pet stats
-    //this.stats.health += this.selectedItem.customStats.health;
-    //this.stats.fun += this.selectedItem.customStats.fun;
-    
     //Flag to see if game over
     let isGameOver = false;
 
