@@ -6,6 +6,18 @@ pingvingotchiScene.init = function(data){
         this.gameStats = data;
       }
     else this.gameStats = {};
+
+    //Game Stats
+    this.pingvinStats = {
+        health: 100,
+        fun: 100
+    }
+
+    //Decay Parameters
+    this.decayRates = {
+        health: -5,
+        fun: -2
+    }
 }
 
 pingvingotchiScene.create = function(){
