@@ -155,7 +155,7 @@ pingvingotchiScene.placeItem = function(pointer){
       targets: this.pingvin,
       duration: 500,
       x: newItem.x,
-      y: newItem.y,
+      y: newItem.y-100,
       paused: false,
       callbackScope: this,
       onComplete: function(tween, sprites){
