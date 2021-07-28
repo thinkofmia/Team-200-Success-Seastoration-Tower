@@ -24,7 +24,6 @@ gameScene.init = function(data) {
   this.floorStatsBarW = 350;
   this.floorStatsBarH = 50;
   //Variables
-  this.charactersSpeed = [-20,-15, -22, -17,-20];
   this.timeElapsed = 0;
   if(Object.keys(data).length != 0){
     this.gameStats = data;
@@ -52,7 +51,8 @@ gameScene.init = function(data) {
         shopkeeper: 'mia',
         level: 1,
         currentRate: 0,
-        completionRate: 100
+        completionRate: 100,
+        walkSpeed : -20,
       },
       //Shop 2
       {
@@ -61,7 +61,8 @@ gameScene.init = function(data) {
         shopkeeper: 'kj',
         level: 1,
         currentRate: 0,
-        completionRate: 500
+        completionRate: 500,
+        walkSpeed: -15,
       },
       //Shop 3
       {
@@ -70,7 +71,8 @@ gameScene.init = function(data) {
         shopkeeper: 'sy',
         level: 1,
         currentRate: 0,
-        completionRate: 1000
+        completionRate: 1000,
+        walkSpeed: -22,
       },
       //Shop 4
       {
@@ -79,7 +81,8 @@ gameScene.init = function(data) {
         shopkeeper: 'ky',
         level: 1,
         currentRate: 0,
-        completionRate: 5000
+        completionRate: 5000,
+        walkSpeed: -17,
       },
       //Shop 5
       {
@@ -88,7 +91,8 @@ gameScene.init = function(data) {
         shopkeeper: 'pingvin',
         level: 1,
         currentRate: 0,
-        completionRate: 10000
+        completionRate: 10000,
+        walkSpeed: -20,
       },
     ]
   };
@@ -712,15 +716,16 @@ gameScene.update = function(){
     //Random movement
     for (let i=0;i<this.shopKeepersData.length;i++){
       shopKeeperName = this.gameStats.shopsData[i].shopkeeper;
+      speed = this.gameStats.shopsData[i].walkSpeed;
       //Random Motion
       if (this.timeElapsed%5>3){
-        this.shopKeepersData[i].body.setVelocityX(-this.charactersSpeed[i]);
+        this.shopKeepersData[i].body.setVelocityX(-speed);
         this.shopKeepersData[i].flipX = false;
         //Check
         if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
       else if (this.timeElapsed%5>1){
-        this.shopKeepersData[i].body.setVelocityX(this.charactersSpeed[i]);
+        this.shopKeepersData[i].body.setVelocityX(speed);
         this.shopKeepersData[i].flipX = true;
         if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
