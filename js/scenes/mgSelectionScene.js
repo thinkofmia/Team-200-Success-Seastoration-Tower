@@ -42,12 +42,12 @@ mgSelectionScene.create = function(){
     game3H = gameH/4*3.5;
     optionHeights = [game1H, game2H, game3H];
 
-    let game1 = this.add.text(gameW/2, game1H, 'Minigame 1', {
+    let game1 = this.add.text(gameW/4, game2H, 'Minigame 1', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
 
-    let game2 = this.add.text(gameW/2, game2H, 'Mini Game 2', {
+    let game2 = this.add.text(gameW/4*3, game2H, 'Mini Game 2', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
@@ -66,13 +66,21 @@ mgSelectionScene.create = function(){
     for (var i=0;i<gameOptions.length;i++){
         gameOptions[i].setOrigin(0.5, 0.5);
         gameOptions[i].depth = 1;
+        gameOptions[i].setInteractive();
 
-        //Text background
+        //Text Background
         optionBg[i] = this.add.graphics();
         optionBg[i].setInteractive();
         optionBg[i].fillStyle(0xA01010, 0.7);
-        optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
-        gameOptions[i].setInteractive();
+        if (i==gameOptions.length-1){    
+            optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
+        }
+        else if(i==1) {
+            optionBg[i].fillRect(gameW/4 - gameOptions[i].width/2 - 10, optionHeights[1] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
+        }
+        else {
+            optionBg[i].fillRect(gameW/4*3 - gameOptions[i].width/2 - 10, optionHeights[1] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
+        }
     };
 
     game1.on('pointerdown', function(){
