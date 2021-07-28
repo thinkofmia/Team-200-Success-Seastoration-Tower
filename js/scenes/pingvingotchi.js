@@ -82,6 +82,8 @@ pingvingotchiScene.create = function(){
             });
         }, this);
 
+        //Make pet draggable
+        this.input.setDraggable(this.pingvin);
 
         //Add on drag features
         this.input.on('drag', function(pointer, gameObject, dragX, dragY){
