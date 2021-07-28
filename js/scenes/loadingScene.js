@@ -19,8 +19,8 @@ loadingScene.preload = function(){
     let gameH = this.sys.game.config.height;
 
     //Show Logo
-    let logo = this.add.sprite(gameW/2, gameH/8*3, 'logo');
-    logo.setScale(0.15);
+    let logo = this.add.sprite(gameW/2, gameH/8*1.5, 'sprite_pingvin');
+    logo.setScale(0.3);
 
     //Progress bar background
     let bgBar = this.add.graphics();
@@ -55,8 +55,11 @@ loadingScene.preload = function(){
 
     infoText.setShadow(0, 0, 'rgba(0, 0, 0, 1)', 0);
 
+    this.progressTime = 1;
     //Listen to progress event
     this.load.on('progress', function(value){
+        logo.anims.play('walking_pingvin');
+        logo.setFrame(Math.round(value*5)%2+1);
         //Clearing progress bar
         progressBar.clear();
 
@@ -165,6 +168,10 @@ loadingScene.preload = function(){
     //Sample Profile Pic
     this.load.image('profile_pic_sample','assets/images/profile/KingFish.png');
 
+    for (var i=0;i<200;i++){
+        this.load.image(`test${i}`,'assets/images/profile/KingFish.png');
+ 
+    }
 };
 
 loadingScene.create = function(){
@@ -209,8 +216,6 @@ loadingScene.create = function(){
         yoyo: true,
         repeat: -1 //Repeat forever is -1
     });
-
-    //Rubbish
 
     this.scene.start('Home');
 }
