@@ -51,7 +51,7 @@ mgSelectionScene.create = function(){
     this.logo2.body.allowGravity = false;
     this.logo2.setScale(0.3);
     //Add Texts
-    let game1 = this.add.text(gameW/4, game2H, 'Minigame 1', {
+    let game1 = this.add.text(gameW/4, game2H, 'Pingvingotchi', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
@@ -94,7 +94,7 @@ mgSelectionScene.create = function(){
 
     game1.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
-        this.scene.start('Minigame1', this.gameStats);
+        this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
 
     game2.on('pointerdown', function(){

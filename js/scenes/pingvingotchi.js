@@ -1,14 +1,14 @@
 // create a new scene
-let minigame1Scene = new Phaser.Scene('Minigame1');
+let pingvingotchiScene = new Phaser.Scene('Pingvingotchi');
 
-minigame1Scene.init = function(data){
+pingvingotchiScene.init = function(data){
     if(Object.keys(data).length != 0){
         this.gameStats = data;
       }
     else this.gameStats = {};
 }
 
-minigame1Scene.create = function(){
+pingvingotchiScene.create = function(){
         //Game background, with active input
         let bg = this.add.sprite(0,0,'background_title').setInteractive();
         bg.setOrigin(0,0);
@@ -18,7 +18,7 @@ minigame1Scene.create = function(){
         let gameW = this.sys.game.config.width;
         let gameH = this.sys.game.config.height;
     
-        let text = this.add.text(gameW/2, gameH/8, 'Mini Game 1', {
+        let text = this.add.text(gameW/2, gameH/8, 'Pingvingotchi', {
             font: "20px "+this.titleFont,
             fill: '#ffffff',
         });
