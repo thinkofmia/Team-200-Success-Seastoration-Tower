@@ -97,6 +97,7 @@ homeScene.create = function(){
     game3.on('pointerdown', function(){
         homeScene.isAnimating = false;
         //Display Settin Screen
+        this.scene.start('Settings', this.gameStats);
     }, this);
 
     //Text background
