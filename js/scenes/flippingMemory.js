@@ -149,6 +149,11 @@ flippingMemoryScene.prepareDeck = function(){
                 card.play('unflip_'+chosenCard);
                 card.setScale(0.2);
             } 
+            //If a card has been selected previously, match them
+            if (this.selectedCard!=-1){
+                console.log(flippingMemoryScene.matchCards(this.selectedCard,card));
+            }
+
             this.prevSelectedCard = this.selectedCard
             this.selectedCard = card;
             this.lastSelectedIndex = i;
@@ -164,6 +169,14 @@ flippingMemoryScene.prepareDeck = function(){
             });
         }, this);
     }
+}
+
+flippingMemoryScene.matchCards= function(card1, card2){
+    //If matches!
+    if (card1.texture.key==card2.texture.key){
+        return true;
+    }
+    else return false;
 }
 
 flippingMemoryScene.shuffleCards = function(cards){
