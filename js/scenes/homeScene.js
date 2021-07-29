@@ -44,8 +44,10 @@ homeScene.create = function(){
     let gameH = this.sys.game.config.height;
 
     let text = this.add.text(gameW/2, gameH/8, 'Seastoration Tower', {
-        font: "20px "+this.titleFont,
+        font: "30px "+this.titleFont,
         fill: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 10
     });
 
     game1H = gameH/4*1.5;
@@ -54,18 +56,24 @@ homeScene.create = function(){
     optionHeights = [game1H, game2H, game3H];
 
     let game1 = this.add.text(gameW/2, game1H, 'New Game', {
-        font: '20px '+this.titleFont,
-        fill: '#ffffff',
+        font: '25px '+this.titleFont,
+        fill: '#ffdf00',
+        stroke: '#000000',
+        strokeThickness: 5
     });
 
     let game2 = this.add.text(gameW/2, game2H, 'Continue', {
-        font: '20px '+this.titleFont,
-        fill: Object.keys(this.gameStats).length === 0 ? '#dddddd' : '#ffffff',
+        font: '25px '+this.titleFont,
+        fill: Object.keys(this.gameStats).length === 0 ? '#726512' : '#ffdf00',
+        stroke: '#000000',
+        strokeThickness: 5
     });
 
     let game3 = this.add.text(gameW/2, game3H, 'Settings', {
-        font: '20px '+this.titleFont,
-        fill: '#ffffff',
+        font: '25px '+this.titleFont,
+        fill: '#ffdf00',
+        stroke: '#000000',
+        strokeThickness: 5
     });
 
     gameOptions = [game1,game2,game3];
@@ -73,28 +81,11 @@ homeScene.create = function(){
     text.setOrigin(0.5, 0.5);
     text.depth = 1;
 
-    let optionBg = [];
     for (var i=0;i<gameOptions.length;i++){
         gameOptions[i].setOrigin(0.5, 0.5);
         gameOptions[i].depth = 1;
 
-        //Text background
-        optionBg[i] = this.add.graphics();
-        optionBg[i].setInteractive();
-        if(i==1 && Object.keys(this.gameStats).length === 0) optionBg[1].fillStyle(0x560404, 0.6);
-        else optionBg[i].fillStyle(0xA01010, 0.7);
-        optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
-        gameOptions[i].setInteractive();
     };
-
-    // if(Object.keys(this.gameStats).length === 0){
-    //     // game2.setVisible(false);
-    //     optionBg[1].fillStyle(0x7c0000, 0.5);
-    // }
-    // else {
-    //     // game2.setVisible(true);
-    //     optionBg[1].fillStyle(0xA01010, 0.7);
-    // }
 
     game1.on('pointerdown', function(){
         homeScene.isAnimating = false;
@@ -120,12 +111,6 @@ homeScene.create = function(){
         //Display Settin Screen
         this.scene.start('Settings', this.gameStats);
     }, this);
-
-    //Text background
-    let textBg = this.add.graphics();
-    textBg.fillStyle(0x000000, 0.7);
-    textBg.fillRect(gameW/2 - text.width/2 - 10, gameH/8 - text.height/2 -10, text.width+20, text.height+ 20);
-  
 };
 
 homeScene.setupSprites = function(){
