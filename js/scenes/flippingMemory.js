@@ -136,12 +136,6 @@ flippingMemoryScene.prepareDeck = function(){
             callbackScope: this,
             onComplete: function(tween, sprites){
 
-            //Event listener when animation ends
-            card.on('animationcomplete', function(){
-                //Set card back to neutral
-                //this.card.setFrame(0);
-            }, this);
-
             //Play spreadsheet animation
             if(!this.cardsFlip[i]){
                 card.play('flip_'+chosenCard);
@@ -152,6 +146,12 @@ flippingMemoryScene.prepareDeck = function(){
                 card.setScale(0.2);
             } 
 
+            //Event listener when animation ends
+            card.on('animationcomplete', function(){
+                //Set card back to neutral
+                //this.card.setFrame(0);
+            }, this);
+            
             this.cardsFlip[i] = true;
 
             //Update cards
@@ -182,6 +182,7 @@ flippingMemoryScene.prepareDeck = function(){
                     this.prevSelectedIndex = -1;
                     this.selectedIndex = -1;
                     this.totalMatches += 1;
+                    this.updateHUD();
                 }
                 else{
                     console.log(flippingMemoryScene.cardPositions[this.selectedIndex]);
@@ -232,4 +233,8 @@ flippingMemoryScene.shuffleCards = function(cards){
 flippingMemoryScene.returnToMGSelection = function(){
     this.isAnimating = false;
     this.scene.start('MGSelection',this.gameStats);
+}
+
+flippingMemoryScene.updateHUD = function(){
+    this.matchedText.setText(`Total Matched: ${this.totalMatches}`);
 }
