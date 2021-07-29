@@ -156,13 +156,24 @@ gameScene.checkGoals = function(){
           break;
         //Count total points generated
         case 'countPoints':
+          if (this.gameStats.greenpoints>=goal.count) goal.complete = true;
           break;
         //Count Highest level of shops
         case 'lvShop':
+          if (this.countHighestShopLevel()>=goal.count) goal.complete = true;
           break;
       }
     }
   }
+}
+
+gameScene.countHighestShopLevel = function(){
+  var highestLv = 0;
+  for (var i=0;i<this.gameStats.shopsData.length;i++){
+    let shop = this.gameStats.shopsData[i];
+    if (highestLv<shop.level) highestLv = shop.level; 
+  }
+  return highestLv;
 }
 
 gameScene.countShopkeepers = function(){
