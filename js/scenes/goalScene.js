@@ -90,8 +90,11 @@ goalScene.create = function(){
       let goal = this.gameStats.goals[i];
       this.goals[i] = this.add.text(gameW/3, gameH, goal.description, {
         font: "20px "+this.titleFont,
-        fill: '#000000',
+        fill: '#FFFFFF',
+        stroke: '#000000',
+        strokeThickness: 5
       });
+      if (goal.complete) this.goals[i].setColor('#55FFAA');
       this.goals[i].y = gameH/2 + this.goalDist*(i+1);
     }
 

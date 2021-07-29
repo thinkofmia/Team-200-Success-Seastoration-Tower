@@ -28,7 +28,7 @@ gameScene.init = function(data) {
         description: '• Unlock 4 Shopkeepers',
         type: 'countShopkeepers',
         count: 4,
-        complete: false
+        complete: true
       },
       {
         description: '• Get more than 50000♻️',
