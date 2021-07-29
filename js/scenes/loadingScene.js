@@ -274,6 +274,14 @@ loadingScene.create = function(){
 
     //Flipping Memory
     this.anims.create({
+        key: 'cards_pingvin',
+        frames: this.anims.generateFrameNames('sprite_pingvin', {frames: [6,7,6,7]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+
+    this.anims.create({
         key: 'flip_sun',
         frames: this.anims.generateFrameNames('fm_sun', {frames: [3,2,1,0]}),
         frameRate: 7,
