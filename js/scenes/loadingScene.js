@@ -170,6 +170,44 @@ loadingScene.preload = function(){
 
     this.load.image('poster_clinic','assets/images/basic floor/firstaidposter.png');
     
+    //Flipping Memory Minigame
+    this.load.spritesheet('fm_bar','assets/images/flippingMemory/card_bar.png', {
+        frameWidth: 500,
+        frameHeight: 800,
+        margin: 0,
+        spacing: 0
+    });
+    this.load.spritesheet('fm_diamond','assets/images/flippingMemory/card_diamond.png', {
+        frameWidth: 500,
+        frameHeight: 800,
+        margin: 0,
+        spacing: 0
+    });
+    this.load.spritesheet('fm_o','assets/images/flippingMemory/card_o.png', {
+        frameWidth: 500,
+        frameHeight: 800,
+        margin: 0,
+        spacing: 0
+    });
+    this.load.spritesheet('fm_star','assets/images/flippingMemory/card_star.png', {
+        frameWidth: 500,
+        frameHeight: 800,
+        margin: 0,
+        spacing: 0
+    });
+    this.load.spritesheet('fm_sun','assets/images/flippingMemory/card_sun.png', {
+        frameWidth: 500,
+        frameHeight: 800,
+        margin: 0,
+        spacing: 0
+    });
+    this.load.spritesheet('fm_triangle','assets/images/flippingMemory/card_triangle.png', {
+        frameWidth: 500,
+        frameHeight: 800,
+        margin: 0,
+        spacing: 0
+    });
+
     //Profiles
     this.load.image('profile_pic_front','assets/images/profile/FrontFrame.png');
     this.load.image('profile_pic_back','assets/images/profile/BackFrame.png');
