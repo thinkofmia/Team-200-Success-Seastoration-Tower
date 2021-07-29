@@ -48,7 +48,7 @@ mgSelectionScene.create = function(){
     this.logo1.setScale(0.3);
     this.logo1.setInteractive();
 
-    this.logo2 = this.physics.add.sprite(gameW/4*3, game1H+10, "icon_earth");
+    this.logo2 = this.physics.add.sprite(gameW/4*3, game1H+10, "icon_flippingmemory");
     this.logo2.body.allowGravity = false;
     this.logo2.setScale(0.3);
     this.logo2.setInteractive();
