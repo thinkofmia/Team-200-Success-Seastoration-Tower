@@ -152,15 +152,24 @@ gameScene.checkGoals = function(){
       switch(goal.type){
         //Count number of shopkeepers
         case 'countShopkeepers':
-          if (this.countShopkeepers()>=goal.count) goal.complete = true;
+          if (this.countShopkeepers()>=goal.count){
+            goal.complete = true;
+            this.gainExp();
+          } 
           break;
         //Count total points generated
         case 'countPoints':
-          if (this.gameStats.greenpoints>=goal.count) goal.complete = true;
+          if (this.gameStats.greenpoints>=goal.count){
+            goal.complete = true;
+            this.gainExp();
+          } 
           break;
         //Count Highest level of shops
         case 'lvShop':
-          if (this.countHighestShopLevel()>=goal.count) goal.complete = true;
+          if (this.countHighestShopLevel()>=goal.count){
+            goal.complete = true;
+            this.gainExp();
+          } 
           break;
       }
     }
