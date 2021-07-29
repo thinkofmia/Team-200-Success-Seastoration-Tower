@@ -108,6 +108,7 @@ flippingMemoryScene.prepareDeck = function(){
 
     this.shuffleCards(this.remainingCards);
     console.log(this.remainingCards);
+    this.cardPositions = this.remainingCards;
 
     this.selectedCard = -1;
     this.selectedIndex = -1;
@@ -151,10 +152,8 @@ flippingMemoryScene.prepareDeck = function(){
                 card.play('unflip_'+chosenCard);
                 card.setScale(0.2);
             } 
-            //If a card has been selected previously, match them
-            if (this.selectedCard!=-1){
-                console.log(flippingMemoryScene.matchCards(this.selectedCard,card));
-            }
+
+            this.cardsFlip[i] = true;
 
             //Update cards
             this.prevSelectedCard = this.selectedCard
@@ -162,19 +161,41 @@ flippingMemoryScene.prepareDeck = function(){
 
             //If its first card selected
             if (this.selectedIndex==-1) this.selectedIndex = i;
-            //else if second
+            //else if first card selected is same as second card
+            else if(this.selectedIndex==i) {
+                this.selectedIndex = -1;
+                this.prevSelectedIndex = -1;
+                this.selectedCard = -1;
+                this.prevSelectedCard = -1;
+                this.cardsFlip[i] = false;
+                card.play('unflip_'+chosenCard);
+                card.setScale(0.2);
+            }
+            //Else update second and first card
             else {
                 this.prevSelectedIndex = this.selectedIndex;
                 this.selectedIndex = i;
+                //Match them
+                let matched = flippingMemoryScene.matchCards(this.selectedCard,this.prevSelectedCard);
+                if (matched)console.log(`Cards are a match!`);
+                else{
+                    this.selectedCard.play('unflip_'+this.cardPositions[this.selectedIndex]);
+                    this.selectedCard.setScale(0.2);
+                    this.prevSelectedCard.play('unflip_'+this.cardPositions[this.prevSelectedIndex]);
+                    this.prevSelectedCard.setScale(0.2);
+                    this.cardsFlip[this.selectedIndex] = false;
+                    this.cardsFlip[this.prevSelectedIndex] = false;
+                } 
             }
 
+            if (this.selectedCard==-1) console.log(`No selected card!`);
+            else
             console.log(`Current Card Selected: ${this.selectedCard.texture.key} ${this.selectedIndex}`);
             if (this.prevSelectedCard==-1)
             console.log(`No previous selected card!`);
             else 
             console.log(`Previous Card Selected: ${this.prevSelectedCard.texture.key} ${this.prevSelectedIndex}`);
             //console.log(this.selectedCard.texture.key +" "+this.lastSelectedIndex);
-            this.cardsFlip[i] = !this.cardsFlip[i];
             
             }
             });
