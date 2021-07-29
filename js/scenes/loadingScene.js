@@ -222,6 +222,9 @@ loadingScene.preload = function(){
     //Sample Profile Pic
     this.load.image('profile_pic_sample','assets/images/profile/KingFish.png');
 
+    //Load Quotes
+    this.load.json('envQuotes', 'assets/json/quotes.json');
+
     for (var i=0;i<200;i++){
         this.load.image(`test${i}`,'assets/images/profile/KingFish.png');
  

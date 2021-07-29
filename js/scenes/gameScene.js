@@ -19,6 +19,8 @@ gameScene.init = function(data) {
   this.floorStatsBarH = 50;
   //Variables
   this.timeElapsed = 0;
+  //Load Json data
+  this.envQuotes = this.cache.json.get('envQuotes');
   if(Object.keys(data).length != 0){
     this.gameStats = data;
   }
@@ -174,6 +176,12 @@ gameScene.checkGoals = function(){
       }
     }
   }
+}
+
+gameScene.environmentalQuote = function(characterName){
+  let quotes = this.envQuotes[characterName];
+  let selectedQuote = quotes[Math.floor(Math.random()*quotes.length)];
+  console.log(`${characterName}: ${selectedQuote}`);
 }
 
 gameScene.countHighestShopLevel = function(){
@@ -575,6 +583,10 @@ gameScene.setupTower = function(){
           break;
       }
       shopkeeper.body.allowGravity = false;
+      shopkeeper.setInteractive();
+      shopkeeper.on('pointerdown', function(){
+        this.environmentalQuote(shopKeeperName);
+      }, this);
     
       //Add to data
       this.shopKeepersData.push(shopkeeper);
@@ -681,6 +693,10 @@ gameScene.unlockShop = function(){
               break;
           }
     shopkeeper.body.allowGravity = false;
+    shopkeeper.setInteractive();
+    shopkeeper.on('pointerdown', function(){
+      this.environmentalQuote(shopKeeperName);
+    }, this);
     this.shopKeepersData.push(shopkeeper);
     
     //Add Upgrade button
