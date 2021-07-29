@@ -107,8 +107,7 @@ flippingMemoryScene.prepareDeck = function(){
     this.deckSize = this.remainingCards.length;
 
     this.shuffleCards(this.remainingCards);
-    console.log(this.remainingCards);
-    this.cardPositions = this.remainingCards;
+    this.cardPositions = [].concat(this.remainingCards);
 
     this.selectedCard = -1;
     this.selectedIndex = -1;
@@ -177,14 +176,24 @@ flippingMemoryScene.prepareDeck = function(){
                 this.selectedIndex = i;
                 //Match them
                 let matched = flippingMemoryScene.matchCards(this.selectedCard,this.prevSelectedCard);
-                if (matched)console.log(`Cards are a match!`);
+                if (matched){
+                    this.selectedCard.destroy();
+                    this.prevSelectedCard.destroy();
+                    this.prevSelectedIndex = -1;
+                    this.selectedIndex = -1;
+                    this.totalMatches += 1;
+                }
                 else{
+                    console.log(flippingMemoryScene.cardPositions[this.selectedIndex]);
                     this.selectedCard.play('unflip_'+this.cardPositions[this.selectedIndex]);
                     this.selectedCard.setScale(0.2);
                     this.prevSelectedCard.play('unflip_'+this.cardPositions[this.prevSelectedIndex]);
                     this.prevSelectedCard.setScale(0.2);
                     this.cardsFlip[this.selectedIndex] = false;
                     this.cardsFlip[this.prevSelectedIndex] = false;
+                    
+                    this.prevSelectedIndex = -1;
+                    this.selectedIndex = -1;
                 } 
             }
 
