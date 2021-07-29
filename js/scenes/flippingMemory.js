@@ -208,7 +208,7 @@ flippingMemoryScene.prepareDeck = function(){
                     this.updateHUD();
                 }
                 else{
-                    console.log(flippingMemoryScene.cardPositions[this.selectedIndex]);
+                    //console.log(flippingMemoryScene.cardPositions[this.selectedIndex]);
                     this.selectedCard.play('unflip_'+this.cardPositions[this.selectedIndex]);
                     this.selectedCard.setScale(0.2);
                     this.prevSelectedCard.play('unflip_'+this.cardPositions[this.prevSelectedIndex]);
@@ -221,6 +221,7 @@ flippingMemoryScene.prepareDeck = function(){
                 } 
             }
 
+            /*
             if (this.selectedCard==-1) console.log(`No selected card!`);
             else
             console.log(`Current Card Selected: ${this.selectedCard.texture.key} ${this.selectedIndex}`);
@@ -228,6 +229,7 @@ flippingMemoryScene.prepareDeck = function(){
             console.log(`No previous selected card!`);
             else 
             console.log(`Previous Card Selected: ${this.prevSelectedCard.texture.key} ${this.prevSelectedIndex}`);
+            */
             //console.log(this.selectedCard.texture.key +" "+this.lastSelectedIndex);
             
             }
