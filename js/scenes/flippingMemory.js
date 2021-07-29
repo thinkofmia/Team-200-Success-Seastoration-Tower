@@ -61,12 +61,23 @@ flippingMemoryScene.create = function(){
 }
 
 flippingMemoryScene.prepareDeck = function(){
-    this.deckSize = 12;
     this.cardDeck = [];
     this.cardsFlip = [];
     this.remainingCards = [].concat(this.baseCards, this.baseCards);
+    this.deckSize = this.remainingCards.length;
+
+    this.shuffleCards(this.remainingCards);
     console.log(this.remainingCards);
 
+}
+
+flippingMemoryScene.shuffleCards = function(cards){
+    for (var i = cards.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
+    }
 }
 
 flippingMemoryScene.returnToMGSelection = function(){
