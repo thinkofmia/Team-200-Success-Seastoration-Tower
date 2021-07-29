@@ -84,7 +84,7 @@ homeScene.create = function(){
     for (var i=0;i<gameOptions.length;i++){
         gameOptions[i].setOrigin(0.5, 0.5);
         gameOptions[i].depth = 1;
-
+        gameOptions[i].setInteractive();
     };
 
     game1.on('pointerdown', function(){
