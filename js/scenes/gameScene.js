@@ -1,12 +1,6 @@
 // create a new scene
 let gameScene = new Phaser.Scene('Game');
 
-WebFont.load({
-  google: {
-    families: ['Grandstander', 'Averia Libre']
-  }
-});
-
 // some parameters for our scene
 gameScene.init = function(data) {
   // fonts
@@ -101,10 +95,7 @@ gameScene.init = function(data) {
 
 // load asset files for our game
 gameScene.preload = function() {
-  // load audio files
-  this.load.audio("upgrade",["sfx/Upgrade.ogg"]);
-  this.load.audio("unlock",["sfx/UnlockShop.ogg"]);
-  this.load.audio("click",["sfx/Click.ogg"]);
+  
 }; 
 
 // executed once, after assets were loaded
@@ -130,7 +121,7 @@ gameScene.create = function() {
   click = this.sound.add("click", {loop:false});
   upgrade = this.sound.add("upgrade", {loop:false});
   unlock = this.sound.add("unlock", {loop:false});
-
+  error = this.sound.add("error", {loop:false});
 };
 
 //Show current value of stats
@@ -146,8 +137,10 @@ gameScene.refreshHud = function(){
     if (shop.locked){
       this.floorLevelTexts[i].setText('');
       this.floorIncomeTexts[i].setText('');
+      this.floorUpgradeTexts[i].setText('');
     }
     else{
+      this.floorUpgradeTexts[i].setText(`♻️ ${this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level}`);
       this.floorLevelTexts[i].setText(`Lv. ${shop.level}`);
       this.floorIncomeTexts[i].setText(`♻️ ${shop.level*(this.gameStats.earningIncrement*(i+1)) +this.gameStats.earningBase}`);
     } 
@@ -283,6 +276,7 @@ this.minigameButton.depth = 90;
       this.gainExp();
     } 
     else {
+      error.play();
       this.displayModal(`Insufficient points. You need ${this.gameStats.restorationCost}♻️!`)
     }
   }, this);
@@ -381,6 +375,7 @@ gameScene.setupTower = function(){
   this.floorStatsData = [];
   this.floorLevelTexts = [];
   this.floorIncomeTexts = [];
+  this.floorUpgradeTexts = [];
   this.floorProgressBar = [];
   this.floorUpgradeButtons = [];
   //Create all floors
@@ -451,10 +446,19 @@ gameScene.setupTower = function(){
       fontWeight: 'bold',
     });
     this.floorIncomeTexts[i].depth = 44;
+
+    this.floorUpgradeTexts[i] = this.add.text(490+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH) + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level}`, {
+      fontFamily: this.titleFont,
+      fontSize: '15px',
+      fill: '#ffffff',
+      fontWeight: 'bold',
+    });
+    this.floorUpgradeTexts[i].depth = 44;
+
     //Add Upgrade Icon
     if (!shop.locked){
-      this.floorUpgradeButtons[i] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
-      this.floorUpgradeButtons[i].setScale(0.15*this.globalSpriteScale);
+      this.floorUpgradeButtons[i] = this.physics.add.sprite(525+this.globalSpriteTranslate, 190 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
+      this.floorUpgradeButtons[i].setScale(0.10*this.globalSpriteScale);
       this.physics.add.existing(this.floorUpgradeButtons[i], true);
       this.floorUpgradeButtons[i].body.allowGravity = false;
       this.floorUpgradeButtons[i].setInteractive();
@@ -466,12 +470,19 @@ gameScene.setupTower = function(){
 
   if (this.gameStats.nextShopToBuy>0){
     //Add Unlocking icon
-    this.unlockIcon = this.physics.add.sprite(370+this.globalSpriteTranslate, 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_recycle');
+    this.unlockIcon = this.physics.add.sprite(370+this.globalSpriteTranslate, 95+this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_recycle');
     this.unlockIcon.setScale(0.25*this.globalSpriteScale);
     this.physics.add.existing(this.unlockIcon, true);
     this.unlockIcon.body.allowGravity = false;
     this.unlockIcon.setInteractive();
     this.unlockIcon.depth = 44;
+    this.unlockText = this.add.text(320+this.globalSpriteTranslate, 135+this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH), `Unlock ♻️ ${(this.gameStats.unlockCost+(this.gameStats.upgradeIncrement+this.gameStats.earningBase)*this.gameStats.nextShopToBuy)*this.gameStats.nextShopToBuy}`, {
+      fontFamily: this.titleFont,
+      fontSize: '15px',
+      fill: '#ffffff',
+      fontWeight: 'bold',
+    });
+    this.unlockText.depth = 44;
     this.unlockIcon.on('pointerdown', function(){
       gameScene.unlockShop();
     }, this);
@@ -511,7 +522,10 @@ gameScene.upgradeShop = function(shopNo){
     shop.level +=1;
     this.gameStats.greenpoints -= amt;
   }
-  else this.displayModal(`Not enough green points! You need ${amt}♻️!`);
+  else {
+    error.play();
+    this.displayModal(`Not enough green points! You need ${amt}♻️!`);
+  }
   //else alert(`Not enough green points! You need ${amt}!`);
 }
 
@@ -533,7 +547,8 @@ gameScene.earnGreenPoints = function(){
 gameScene.unlockShop = function(){
   let shopCost = (this.gameStats.unlockCost+(this.gameStats.upgradeIncrement+this.gameStats.earningBase)*this.gameStats.nextShopToBuy)*this.gameStats.nextShopToBuy;
   if (this.gameStats.greenpoints<shopCost){
-    this.displayModal(`Insufficent Green Points! You need ${shopCost}♻️!`);
+    error.play();
+    this.displayModal(`Insufficent Green Points! You need ♻️${shopCost}!`);
     //alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
     return;
   } 
@@ -599,26 +614,35 @@ gameScene.unlockShop = function(){
     this.shopKeepersData.push(shopkeeper);
     
     //Add Upgrade button
-      this.floorUpgradeButtons[shop] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
-      this.floorUpgradeButtons[shop].setScale(0.15*this.globalSpriteScale);
+      this.floorUpgradeButtons[shop] = this.physics.add.sprite(525+this.globalSpriteTranslate, 190 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
+      this.floorUpgradeButtons[shop].setScale(0.10*this.globalSpriteScale);
       this.physics.add.existing(this.floorUpgradeButtons[shop], true);
       this.floorUpgradeButtons[shop].body.allowGravity = false;
       this.floorUpgradeButtons[shop].setInteractive();
       this.floorUpgradeButtons[shop].on('pointerdown', function(){
         gameScene.upgradeShop(shop);
       }, this);
+      this.floorUpgradeTexts[shop] = this.add.text(490+this.globalSpriteTranslate, 200 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level}`, {
+        fontFamily: this.titleFont,
+        fontSize: '15px',
+        fill: '#ffffff',
+        fontWeight: 'bold',
+      });
+      this.floorUpgradeTexts[shop].depth = 44;
 
     //Update status of shop
     this.gameStats.shopsData[shop].locked = false;
     //Update Unlock icon position and next shop to buy
     this.gameStats.nextShopToBuy +=1;
-    this.unlockIcon.y = 100 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
-
+    this.unlockIcon.y = 95 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
+    this.unlockText.setText(`Unlock ♻️ ${(this.gameStats.unlockCost+(this.gameStats.upgradeIncrement+this.gameStats.earningBase)*this.gameStats.nextShopToBuy)*this.gameStats.nextShopToBuy}`);
+    this.unlockText.y = 135 + this.gameStats.nextShopToBuy*(170*this.globalSpriteScale+this.floorStatsBarH);
   }
   if (this.gameStats.nextShopToBuy>=this.gameStats.shopsData.length){
     //Else destroy icon
     this.gameStats.nextShopToBuy = -1;
     this.unlockIcon.destroy();
+    this.unlockText.destroy();
   }
   
 }
