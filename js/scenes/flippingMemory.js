@@ -7,6 +7,7 @@ flippingMemoryScene.init = function(data){
       }
     else this.gameStats = {};
     this.baseCards = ["sun", "bar", "diamond","triangle","star", "o"];
+    this.selectedCard = -1;
 }
 
 flippingMemoryScene.create = function(){
@@ -69,6 +70,55 @@ flippingMemoryScene.prepareDeck = function(){
     this.shuffleCards(this.remainingCards);
     console.log(this.remainingCards);
 
+    this.selectedCard = -1;
+
+    for (let i=0;i<this.deckSize;i++){
+        this.cardsFlip[i] = false;
+        let chosenCard = this.remainingCards[0];
+        this.remainingCards.splice(0, 1);
+
+        //Create a Card
+        let card = this.add.sprite(0+(i%6)*80, 50+Math.floor(i/6)*100,'fm_'+chosenCard,3).setInteractive();
+        card.setOrigin(0,0);
+        card.depth = 1;
+        card.setScale(0.2);
+
+        //console.log(this.remainingCards);
+        this.cardDeck.push(card);
+        card.on('pointerdown', function(){
+        //Flip Movement
+        let flipTween = this.tweens.add({
+            targets: card,
+            duration: 500,
+            paused: false,
+            callbackScope: this,
+            onComplete: function(tween, sprites){
+
+            //Event listener when animation ends
+            card.on('animationcomplete', function(){
+                //Set card back to neutral
+                //this.card.setFrame(0);
+            }, this);
+
+            //Play spreadsheet animation
+            if(!this.cardsFlip[i]){
+                card.play('flip_'+chosenCard);
+                card.setScale(0.22);
+            } 
+            else {
+                card.play('unflip_'+chosenCard);
+                card.setScale(0.2);
+            } 
+
+            this.selectedCard = card;
+            this.lastSelectedIndex = i;
+            console.log(this.selectedCard.texture.key +" "+this.lastSelectedIndex);
+            this.cardsFlip[i] = !this.cardsFlip[i];
+            
+            }
+            });
+        }, this);
+    }
 }
 
 flippingMemoryScene.shuffleCards = function(cards){
