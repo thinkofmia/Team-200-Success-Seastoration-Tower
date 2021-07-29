@@ -1,6 +1,12 @@
 // create a new scene
 let flippingMemoryScene = new Phaser.Scene('Flipping Memory');
 
+WebFont.load({
+    google: {
+      families: ['Grandstander', 'Averia Libre']
+    }
+  });
+
 flippingMemoryScene.init = function(data){
     if(Object.keys(data).length != 0){
         this.gameStats = data;
@@ -8,6 +14,12 @@ flippingMemoryScene.init = function(data){
     else this.gameStats = {};
     this.baseCards = ["sun", "bar", "diamond","triangle","star", "o"];
     this.selectedCard = -1;
+    this.totalMatches = 0;
+
+    
+    //Fonts
+    this.titleFont = 'Grandstander';
+    this.bodyFont = 'Averia Libre';
 }
 
 flippingMemoryScene.create = function(){
@@ -70,6 +82,13 @@ flippingMemoryScene.createHUD = function(){
     this.headerBar.fillStyle(0x459eda, 1);
     this.headerBar.fillRect(0, 0, 1000, 50);
     this.headerBar.depth = 50;
+
+    //Match Pairs
+    this.matchedText = this.add.text(200,10,`Total Matched: ${this.totalMatches}`,{
+        font: '20px '+this.bodyFont,
+        fill: '#ffffff'
+      });
+    this.matchedText.depth = 51;
 }
 
 flippingMemoryScene.displayPingvin = function(){
@@ -91,6 +110,7 @@ flippingMemoryScene.prepareDeck = function(){
     console.log(this.remainingCards);
 
     this.selectedCard = -1;
+    this.prevSelectedCard = -1;
 
     for (let i=0;i<this.deckSize;i++){
         this.cardsFlip[i] = false;
@@ -129,7 +149,7 @@ flippingMemoryScene.prepareDeck = function(){
                 card.play('unflip_'+chosenCard);
                 card.setScale(0.2);
             } 
-
+            this.prevSelectedCard = this.selectedCard
             this.selectedCard = card;
             this.lastSelectedIndex = i;
             console.log(this.selectedCard.texture.key +" "+this.lastSelectedIndex);
