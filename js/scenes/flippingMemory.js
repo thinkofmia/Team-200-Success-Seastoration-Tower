@@ -59,6 +59,26 @@ flippingMemoryScene.create = function(){
 
     //Prepare deck
     this.prepareDeck();
+    this.displayPingvin();
+    this.createHUD();
+}
+
+flippingMemoryScene.createHUD = function(){
+    //Header Bar
+    this.headerBar = this.add.graphics();
+    this.headerBar.setPosition(0, 0);
+    this.headerBar.fillStyle(0x459eda, 1);
+    this.headerBar.fillRect(0, 0, 1000, 50);
+    this.headerBar.depth = 50;
+}
+
+flippingMemoryScene.displayPingvin = function(){
+    //Add Pingvin
+    this.pingvin = this.add.sprite(650,50,'sprite_pingvin',6).setInteractive();
+    this.pingvin.setScale(0.3);
+    this.pingvin.flipX = true;
+    this.pingvin.depth = 1;
+    this.pingvin.play('cards_pingvin');
 }
 
 flippingMemoryScene.prepareDeck = function(){

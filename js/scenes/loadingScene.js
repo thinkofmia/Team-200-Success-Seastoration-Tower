@@ -276,9 +276,9 @@ loadingScene.create = function(){
     this.anims.create({
         key: 'cards_pingvin',
         frames: this.anims.generateFrameNames('sprite_pingvin', {frames: [6,7,6,7]}),
-        frameRate: 7,
+        frameRate: 4,
         yoyo: true,
-        repeat: 0 //Repeat forever is -1
+        repeat: -1 //Repeat forever is -1
     });
 
     this.anims.create({
