@@ -86,22 +86,15 @@ goalScene.create = function(){
     });
 
     this.goals = [];
-    this.goals[0] = this.add.text(gameW/3, gameH, '• Unlock 4 Shopkeepers', {
+    for (var i=0;i<this.gameStats.goals.length;i++){
+      let goal = this.gameStats.goals[i];
+      this.goals[i] = this.add.text(gameW/3, gameH, goal.description, {
         font: "20px "+this.titleFont,
         fill: '#000000',
-    });
-    this.goals[1] = this.add.text(gameW/3, gameH, '• Get more than 50000♻️', {
-        font: "20px "+this.titleFont,
-        fill: '#000000',
-    });
-    this.goals[2] = this.add.text(gameW/3, gameH, '• Get to level 10 in a shop', {
-        font: "20px "+this.titleFont,
-        fill: '#000000',
-    });
-
-    for (var i=0;i<this.goals.length;i++){
-        this.goals[i].y = gameH/2 + this.goalDist*(i+1);
+      });
+      this.goals[i].y = gameH/2 + this.goalDist*(i+1);
     }
+
 
     //Back Button
   this.backButton = this.physics.add.sprite(gameW- 70, 280, "icon_back");
