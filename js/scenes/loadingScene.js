@@ -44,7 +44,14 @@ loadingScene.preload = function(){
         fontWeight: 'bold',
     });
 
-    let infoText = this.add.text(gameW/14, gameH/8*5, 'Do you know the oceans provide 99% of the living space \non the planet containing 50-80% of all life?', {
+    infoOptions = [
+        'Did you know the ocean provides 99% of the living \nspace on the planet containing 50-80% of all life?',
+        'It\'s estimated that over 80% of the ocean is still \nunexplored. That\'s one huge ocean!',
+        'Elkhorn corals, found in the Caribbean sea, can \nlive for up to 5,000 years!',
+        'The fastest fish in the ocean, the sailfish, can \ntravel at almost 110 km/h!',
+        'Carrageenan, made from red seaweed, is used to \nimprove the consistency and taste of ice cream.'
+    ]
+    let infoText = this.add.text(40+gameW/14, gameH/8*5, infoOptions[Math.floor(Math.random()*infoOptions.length)], {
         fontFamily: this.titleFont,
         fontSize: '20px',
         fill: '#ffffff',
