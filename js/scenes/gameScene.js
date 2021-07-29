@@ -23,6 +23,26 @@ gameScene.init = function(data) {
     this.gameStats = data;
   }
   else this.gameStats = {
+    goals: [
+      {
+        description: '• Unlock 4 Shopkeepers',
+        type: 'countShopkeepers',
+        count: 4,
+        complete: false
+      },
+      {
+        description: '• Get more than 50000♻️',
+        type: 'countPoints',
+        count: 50000,
+        complete: false
+      },
+      {
+        description: '• Get to level 10 in a shop',
+        type: 'lvShop',
+        count: 10,
+        complete: false
+      },
+    ],
     greenpoints: 0,
     pollution: 50,
     profileLv: 1,
