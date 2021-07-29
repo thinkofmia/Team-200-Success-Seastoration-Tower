@@ -6,6 +6,7 @@ flippingMemoryScene.init = function(data){
         this.gameStats = data;
       }
     else this.gameStats = {};
+    this.baseCards = ["sun", "bar", "diamond","triangle","star", "o"];
 }
 
 flippingMemoryScene.create = function(){
@@ -54,6 +55,18 @@ flippingMemoryScene.create = function(){
 
     this.backButton.depth = 50;
   
+
+    //Prepare deck
+    this.prepareDeck();
+}
+
+flippingMemoryScene.prepareDeck = function(){
+    this.deckSize = 12;
+    this.cardDeck = [];
+    this.cardsFlip = [];
+    this.remainingCards = [].concat(this.baseCards, this.baseCards);
+    console.log(this.remainingCards);
+
 }
 
 flippingMemoryScene.returnToMGSelection = function(){
