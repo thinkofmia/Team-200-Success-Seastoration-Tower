@@ -178,11 +178,21 @@ gameScene.checkGoals = function(){
   }
 }
 
-gameScene.environmentalQuote = function(characterName, character){
+gameScene.environmentalQuote = function(characterName, speechBubble){
+  //var characterName = character.shopkeeper;
   let quotes = this.envQuotes[characterName];
   let selectedQuote = quotes[Math.floor(Math.random()*quotes.length)];
   console.log(`${characterName}: ${selectedQuote}`);
-  
+  speechBubble.setText(selectedQuote);
+  //Keep game on for sometime
+  this.time.addEvent({
+    delay: 1000,
+    repeat: 0,
+    callback: function(){
+      speechBubble.setText(` `);
+    },
+    callbackScope: this
+  });
 
 }
 
@@ -587,21 +597,25 @@ gameScene.setupTower = function(){
       }
       shopkeeper.body.allowGravity = false;
       shopkeeper.setInteractive();
-      shopkeeper.on('pointerdown', function(){
-        this.environmentalQuote(shopKeeperName,shopkeeper);
-      }, this);
+      
     
       //Shopkeeper text
-      let shopkeeperText = this.add.text(360 + Math.random()* 40+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), ``, {
+      let shopkeeperText = this.add.text(360 + Math.random()* 40+this.globalSpriteTranslate, 75 + i*(170*this.globalSpriteScale+this.floorStatsBarH), ``, {
         fontFamily: this.titleFont,
         fontSize: '15px',
         fill: '#ffffff',
         stroke: '#000000',
-        strokeThickness: 3
+        strokeThickness: 3,
+        align: 'center'
       });
+
       //Add to data
       this.shopKeepersData.push(shopkeeper);
       this.shopKeepersTexts.push(shopkeeperText);
+
+      shopkeeper.on('pointerdown', function(){
+        this.environmentalQuote(this.gameStats.shopsData[i].shopkeeper,shopkeeperText);
+      }, this);
     }
   }
 
@@ -706,17 +720,20 @@ gameScene.unlockShop = function(){
           }
     shopkeeper.body.allowGravity = false;
     shopkeeper.setInteractive();
-    shopkeeper.on('pointerdown', function(){
-      this.environmentalQuote(shopKeeperName,shopkeeper);
-    }, this);
     //Add shopkeeperText
-    let shopkeeperText = this.add.text(360 + Math.random()* 40+this.globalSpriteTranslate, 100 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), ``, {
+    let shopkeeperText = this.add.text(360 + Math.random()* 40+this.globalSpriteTranslate, 75 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), ``, {
       fontFamily: this.titleFont,
       fontSize: '15px',
       fill: '#ffffff',
       stroke: '#000000',
-      strokeThickness: 3
+      strokeThickness: 3,
+      align: 'center'
     });
+
+    
+    shopkeeper.on('pointerdown', function(){
+      this.environmentalQuote(this.gameStats.shopsData[shop].shopkeeper,shopkeeperText);
+    }, this);
     //Add to data
     this.shopKeepersData.push(shopkeeper);
     this.shopKeepersTexts.push(shopkeeperText);
@@ -923,17 +940,20 @@ gameScene.update = function(){
       //Random Motion
       if (this.timeElapsed%5>3){
         this.shopKeepersData[i].body.setVelocityX(-speed);
+        this.shopKeepersTexts[i].x = this.shopKeepersData[i].x-100;
         this.shopKeepersData[i].flipX = false;
         //Check
         if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
       else if (this.timeElapsed%5>1){
         this.shopKeepersData[i].body.setVelocityX(speed);
+        this.shopKeepersTexts[i].x = this.shopKeepersData[i].x-100;
         this.shopKeepersData[i].flipX = true;
         if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
       else {
         this.shopKeepersData[i].body.setVelocityX(0);
+        this.shopKeepersTexts[i].x = this.shopKeepersData[i].x-100;
         this.shopKeepersData[i].anims.stop(`walking_${shopKeeperName}`);
   
         //Set default frame
