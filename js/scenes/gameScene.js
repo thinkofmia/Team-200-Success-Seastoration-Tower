@@ -178,10 +178,12 @@ gameScene.checkGoals = function(){
   }
 }
 
-gameScene.environmentalQuote = function(characterName){
+gameScene.environmentalQuote = function(characterName, character){
   let quotes = this.envQuotes[characterName];
   let selectedQuote = quotes[Math.floor(Math.random()*quotes.length)];
   console.log(`${characterName}: ${selectedQuote}`);
+  
+
 }
 
 gameScene.countHighestShopLevel = function(){
@@ -569,6 +571,7 @@ gameScene.setupTower = function(){
 
   //Character
   this.shopKeepersData = [];
+  this.shopKeepersTexts = [];
 
   for (let i=0;i<this.gameStats.shopsData.length;i++){
     shop = this.gameStats.shopsData[i];
@@ -585,11 +588,20 @@ gameScene.setupTower = function(){
       shopkeeper.body.allowGravity = false;
       shopkeeper.setInteractive();
       shopkeeper.on('pointerdown', function(){
-        this.environmentalQuote(shopKeeperName);
+        this.environmentalQuote(shopKeeperName,shopkeeper);
       }, this);
     
+      //Shopkeeper text
+      let shopkeeperText = this.add.text(360 + Math.random()* 40+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), ``, {
+        fontFamily: this.titleFont,
+        fontSize: '15px',
+        fill: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 3
+      });
       //Add to data
       this.shopKeepersData.push(shopkeeper);
+      this.shopKeepersTexts.push(shopkeeperText);
     }
   }
 
@@ -695,9 +707,19 @@ gameScene.unlockShop = function(){
     shopkeeper.body.allowGravity = false;
     shopkeeper.setInteractive();
     shopkeeper.on('pointerdown', function(){
-      this.environmentalQuote(shopKeeperName);
+      this.environmentalQuote(shopKeeperName,shopkeeper);
     }, this);
+    //Add shopkeeperText
+    let shopkeeperText = this.add.text(360 + Math.random()* 40+this.globalSpriteTranslate, 100 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), ``, {
+      fontFamily: this.titleFont,
+      fontSize: '15px',
+      fill: '#ffffff',
+      stroke: '#000000',
+      strokeThickness: 3
+    });
+    //Add to data
     this.shopKeepersData.push(shopkeeper);
+    this.shopKeepersTexts.push(shopkeeperText);
     
     //Add Upgrade button
       this.floorUpgradeButtons[shop] = this.physics.add.sprite(525+this.globalSpriteTranslate, 190 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
