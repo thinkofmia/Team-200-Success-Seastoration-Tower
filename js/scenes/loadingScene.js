@@ -13,7 +13,6 @@ loadingScene.init = function() {
 }
 
 loadingScene.preload = function(){
-
     //Get gameW and gameH
     let gameW = this.sys.game.config.width;
     let gameH = this.sys.game.config.height;
@@ -181,6 +180,12 @@ loadingScene.preload = function(){
         this.load.image(`test${i}`,'assets/images/profile/KingFish.png');
  
     }
+
+    // load audio files
+    this.load.audio("upgrade",["sfx/Upgrade.ogg"]);
+    this.load.audio("unlock",["sfx/UnlockShop.ogg"]);
+    this.load.audio("click",["sfx/Click.ogg"]);
+    this.load.audio("error",["sfx/Error.ogg"]);
 };
 
 loadingScene.create = function(){

@@ -9,6 +9,8 @@ WebFont.load({
 
 homeScene.preload = function() {
     this.load.audio("clicksplash",["sfx/ClickSplash.ogg"]);
+    this.load.audio("click",["sfx/Click.ogg"]);
+    this.load.audio("error",["sfx/Error.ogg"]);
 }
 
 homeScene.init = function(data) {
@@ -32,6 +34,8 @@ homeScene.create = function(){
 
     // set up audio
     clicksplash = this.sound.add("clicksplash", {loop:false});
+    click = this.sound.add("click", {loop:false});
+    error = this.sound.add("error", {loop:false});
 
     this.setupSprites();
     
@@ -56,7 +60,7 @@ homeScene.create = function(){
 
     let game2 = this.add.text(gameW/2, game2H, 'Continue', {
         font: '20px '+this.titleFont,
-        fill: '#ffffff',
+        fill: Object.keys(this.gameStats).length === 0 ? '#dddddd' : '#ffffff',
     });
 
     let game3 = this.add.text(gameW/2, game3H, 'Settings', {
@@ -77,10 +81,20 @@ homeScene.create = function(){
         //Text background
         optionBg[i] = this.add.graphics();
         optionBg[i].setInteractive();
-        optionBg[i].fillStyle(0xA01010, 0.7);
+        if(i==1 && Object.keys(this.gameStats).length === 0) optionBg[1].fillStyle(0x560404, 0.6);
+        else optionBg[i].fillStyle(0xA01010, 0.7);
         optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
         gameOptions[i].setInteractive();
     };
+
+    // if(Object.keys(this.gameStats).length === 0){
+    //     // game2.setVisible(false);
+    //     optionBg[1].fillStyle(0x7c0000, 0.5);
+    // }
+    // else {
+    //     // game2.setVisible(true);
+    //     optionBg[1].fillStyle(0xA01010, 0.7);
+    // }
 
     game1.on('pointerdown', function(){
         homeScene.isAnimating = false;
@@ -88,24 +102,21 @@ homeScene.create = function(){
         this.scene.start('Game', {});
     }, this);
 
+    
     game2.on('pointerdown', function(){
-        homeScene.isAnimating = false;
-        clicksplash.play();
-        this.scene.start('Game', this.gameStats);
+        if(Object.keys(this.gameStats).length > 0) {
+            homeScene.isAnimating = false;
+            clicksplash.play();
+            this.scene.start('Game', this.gameStats);
+        } 
+        else {
+            error.play();
+        }
     }, this);
 
-    if(Object.keys(this.gameStats).length === 0){
-        game2.setVisible(false);
-        optionBg[1].setVisible(false);
-    }
-    else {
-        game2.setVisible(true);
-        optionBg[1].setVisible(true);
-    }
-    
     game3.on('pointerdown', function(){
         homeScene.isAnimating = false;
-        clicksplash.play();
+        click.play();
         //Display Settin Screen
         this.scene.start('Settings', this.gameStats);
     }, this);
