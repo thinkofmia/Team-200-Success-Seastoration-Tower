@@ -34,7 +34,7 @@ flippingMemoryScene.create = function(){
     bg.setScale(0.25);
 
     //Header
-    let text = this.add.text(gameW/8, gameH/14, 'Flipping Memory', {
+    let text = this.add.text(gameW/8+10, gameH/14, 'Flipping Memory', {
         font: "20px "+this.titleFont,
         fill: '#ffffff',
     });
@@ -44,7 +44,7 @@ flippingMemoryScene.create = function(){
 
     let textBg = this.add.graphics();
     textBg.fillStyle(0x000000, 0.7);
-    textBg.fillRect(gameW/8 - text.width/2 - 10, gameH/14 - text.height/2 -10, text.width+20, text.height+ 20);
+    textBg.fillRect(gameW/8 - text.width/2 , gameH/14 - text.height/2 -10, text.width+20, text.height+ 20);
     textBg.depth = 51;
 
     //Back Button
