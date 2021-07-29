@@ -101,6 +101,10 @@ gameScene.init = function(data) {
 
 // load asset files for our game
 gameScene.preload = function() {
+  // load audio files
+  this.load.audio("upgrade",["sfx/Upgrade.ogg"]);
+  this.load.audio("unlock",["sfx/UnlockShop.ogg"]);
+  this.load.audio("click",["sfx/Click.ogg"]);
 }; 
 
 // executed once, after assets were loaded
@@ -121,6 +125,11 @@ gameScene.create = function() {
 
   //Enable cursor keys
   this.cursors = this.input.keyboard.createCursorKeys();
+
+  // set up audio
+  click = this.sound.add("click", {loop:false});
+  upgrade = this.sound.add("upgrade", {loop:false});
+  unlock = this.sound.add("unlock", {loop:false});
 
 };
 
@@ -179,6 +188,7 @@ gameScene.setUpHUD = function(){
   this.profilePicture.depth = 90;
   this.profilePicture.setInteractive();
   this.profilePicture.on('pointerdown', function(){
+    click.play();
     this.isPlaying = false;
     this.scene.start('Goal', this.gameStats);
   }, this);
@@ -233,6 +243,7 @@ gameScene.setUpHUD = function(){
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
   this.arrowUp.on('pointerdown', function(){
+    click.play();
     this.scrollScreen("Up", 50);
   }, this);
   this.arrowUp.depth = 90;
@@ -242,6 +253,7 @@ gameScene.setUpHUD = function(){
   this.arrowDown.body.allowGravity = false;
   this.arrowDown.setInteractive();
   this.arrowDown.on('pointerdown', function(){
+    click.play();
     this.scrollScreen("Down", 50);
   }, this);
   this.arrowDown.depth = 90;
@@ -252,6 +264,7 @@ this.minigameButton.body.allowGravity = false;
 this.minigameButton.setScale(0.2);
 this.minigameButton.setInteractive();
 this.minigameButton.on('pointerdown', function(){
+  click.play();
   gameScene.isPlaying = false;
   this.scene.start('MGSelection', this.gameStats);
 }, this);
@@ -264,6 +277,7 @@ this.minigameButton.depth = 90;
   this.healButton.setInteractive();
   this.healButton.on('pointerdown', function(){
     if (this.gameStats.greenpoints>= this.gameStats.restorationCost){
+      click.play();
       this.gameStats.pollution -= this.gameStats.pollutionDrop;
       this.gameStats.greenpoints -= this.gameStats.restorationCost;
       this.gainExp();
@@ -279,6 +293,7 @@ this.minigameButton.depth = 90;
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
+    click.play();
     this.backButton.setFrame(1);
     this.isPlaying = false;
     //Keep game on for sometime
@@ -492,6 +507,7 @@ gameScene.upgradeShop = function(shopNo){
   shop = this.gameStats.shopsData[shopNo];
   amt = this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level;
   if (this.gameStats.greenpoints>=amt){
+    upgrade.play();
     shop.level +=1;
     this.gameStats.greenpoints -= amt;
   }
@@ -526,6 +542,8 @@ gameScene.unlockShop = function(){
   var shopKeeperName = this.gameStats.shopsData[shop].shopkeeper;
   var shopName = this.gameStats.shopsData[shop].room;
   if (shop<this.gameStats.shopsData.length){
+    unlock.play();
+
     //Reveal room
     this.floorData[shop].setTexture(this.gameStats.shopsData[shop].room);
 

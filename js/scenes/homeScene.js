@@ -7,6 +7,10 @@ WebFont.load({
     }
   });
 
+homeScene.preload = function() {
+    this.load.audio("clicksplash",["sfx/ClickSplash.ogg"]);
+}
+
 homeScene.init = function(data) {
     this.titleFont = 'Grandstander';
     this.bodyFont = 'Averia Libre';
@@ -25,6 +29,9 @@ homeScene.create = function(){
     let bg = this.add.sprite(0,0,'background_title').setInteractive();
     bg.setOrigin(0,0);
     bg.setScale(0.25);
+
+    // set up audio
+    clicksplash = this.sound.add("clicksplash", {loop:false});
 
     this.setupSprites();
     
@@ -77,11 +84,13 @@ homeScene.create = function(){
 
     game1.on('pointerdown', function(){
         homeScene.isAnimating = false;
+        clicksplash.play();
         this.scene.start('Game', {});
     }, this);
 
     game2.on('pointerdown', function(){
         homeScene.isAnimating = false;
+        clicksplash.play();
         this.scene.start('Game', this.gameStats);
     }, this);
 
@@ -96,6 +105,7 @@ homeScene.create = function(){
     
     game3.on('pointerdown', function(){
         homeScene.isAnimating = false;
+        clicksplash.play();
         //Display Settin Screen
         this.scene.start('Settings', this.gameStats);
     }, this);
