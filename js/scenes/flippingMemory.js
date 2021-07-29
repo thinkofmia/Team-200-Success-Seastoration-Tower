@@ -152,7 +152,12 @@ flippingMemoryScene.prepareDeck = function(){
             this.prevSelectedCard = this.selectedCard
             this.selectedCard = card;
             this.lastSelectedIndex = i;
-            console.log(this.selectedCard.texture.key +" "+this.lastSelectedIndex);
+            console.log(`Current Card Selected: ${this.selectedCard.texture.key}`);
+            if (this.prevSelectedCard==-1)
+            console.log(`No previous selected card!`);
+            else 
+            console.log(`Previous Card Selected: ${this.prevSelectedCard.texture.key}`);
+            //console.log(this.selectedCard.texture.key +" "+this.lastSelectedIndex);
             this.cardsFlip[i] = !this.cardsFlip[i];
             
             }
