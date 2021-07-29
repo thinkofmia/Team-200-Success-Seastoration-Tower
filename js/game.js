@@ -3,7 +3,7 @@ let config = {
   type: Phaser.CANVAS, // Phaser will use WebGL if available, if not it will use Canvas
   width: 640,
   height: 360,
-  scene: [bootScene, loadingScene, homeScene, gameScene],
+  scene: [bootScene, loadingScene, homeScene, gameScene, goalScene, pingvingotchiScene, flippingMemoryScene, mgSelectionScene, settingsScene],
   title: 'Team 200 Success Presents\nEnv Tower',
   pixelArt: false,
   backgroundColor: '477899',

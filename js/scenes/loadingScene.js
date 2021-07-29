@@ -19,8 +19,8 @@ loadingScene.preload = function(){
     let gameH = this.sys.game.config.height;
 
     //Show Logo
-    let logo = this.add.sprite(gameW/2, gameH/8*3, 'logo');
-    logo.setScale(0.15);
+    let logo = this.add.sprite(gameW/2, gameH/8*1.5, 'sprite_pingvin');
+    logo.setScale(0.3);
 
     //Progress bar background
     let bgBar = this.add.graphics();
@@ -28,16 +28,16 @@ loadingScene.preload = function(){
     let barW = 500;
     let barH = 25;
 
-    bgBar.setPosition(gameW/2 - barW/2, gameH/8*7 - barH/2);
+    bgBar.setPosition(gameW/2 - barW/2, gameH/8*6.5 - barH/2);
     bgBar.fillStyle(0xF5F5F5, 1);
     bgBar.fillRect(0,0,barW, barH);
 
     //Progress Bar
     let progressBar = this.add.graphics();
-    progressBar.setPosition(gameW/2 - barW/2, gameH/8*7 - barH/2);
+    progressBar.setPosition(gameW/2 - barW/2, gameH/8*6.5 - barH/2);
 
     //Boot Text Description
-    let loadingText = this.add.text(gameW/8*2.5, gameH/12, 'Loading your Tower', {
+    let loadingText = this.add.text(gameW/8*2.25, gameH/12, 'Loading your Tower', {
         fontFamily: this.titleFont,
         fontSize: '30px',
         fill: '#ffffff',
@@ -45,7 +45,7 @@ loadingScene.preload = function(){
         fontWeight: 'bold',
     });
 
-    let infoText = this.add.text(gameW/8, gameH/8*5, 'Do you know the oceans provide 99% of the living space \non the planet containing 50-80% of all life?', {
+    let infoText = this.add.text(gameW/14, gameH/8*5, 'Do you know the oceans provide 99% of the living space \non the planet containing 50-80% of all life?', {
         fontFamily: this.titleFont,
         fontSize: '20px',
         fill: '#ffffff',
@@ -55,8 +55,11 @@ loadingScene.preload = function(){
 
     infoText.setShadow(0, 0, 'rgba(0, 0, 0, 1)', 0);
 
+    this.progressTime = 1;
     //Listen to progress event
     this.load.on('progress', function(value){
+        logo.anims.play('walking_pingvin');
+        logo.setFrame(Math.round(value*5)%2+1);
         //Clearing progress bar
         progressBar.clear();
 
@@ -93,8 +96,10 @@ loadingScene.preload = function(){
     this.load.image('icon_recycle', 'assets/images/icons/icon_recycle.png');
     this.load.image('icon_upgrade', 'assets/images/icons/icon_upgrade.png');
     this.load.image('icon_cross', 'assets/images/icons/icon_cross.png');
+    this.load.image('icon_heal', 'assets/images/icons/icon_heal.png');
     this.load.image('icon_earth', 'assets/images/icons/icon_earth.png');
-
+    this.load.image('icon_minigame', 'assets/images/icons/icon_minigame.png');
+    this.load.image('icon_pingvingotchi', 'assets/images/icons/icon_pingvingotchi.png');
 
     //Loading Sprites
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
@@ -128,6 +133,9 @@ loadingScene.preload = function(){
         margin: 0,
         spacing: 0
     });
+    this.load.image('sprite_sushi', 'assets/images/sprites/sprite_sushi.png');
+    this.load.image('sprite_pillow', 'assets/images/sprites/sprite_pillow.png');
+    this.load.image('sprite_chips', 'assets/images/sprites/sprite_chips.png');
 
     //Loading Trash
     this.load.image('trash_bluecan', 'assets/images/start screen/bluecan.png');
@@ -145,7 +153,10 @@ loadingScene.preload = function(){
 
     //Loading Floors
     this.load.image('floor_basic', 'assets/images/basic floor/basic_floor.png');
+    this.load.image('floor_camera', 'assets/images/basic floor/cameraroom.png');
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
+    this.load.image('floor_kitchen', 'assets/images/basic floor/kitchenroom.png');
+    this.load.image('floor_clinic', 'assets/images/basic floor/basic_floor.png');
 
     this.load.image('floor_locked', 'assets/images/basic floor/darkroom.png');
 
@@ -156,6 +167,8 @@ loadingScene.preload = function(){
     
     this.load.image('beanbagL_qualle','assets/images/Qualle/beanbagL.png');
     this.load.image('beanbagR_qualle','assets/images/Qualle/beanbagR.png');
+
+    this.load.image('poster_clinic','assets/images/basic floor/firstaidposter.png');
     
     //Profiles
     this.load.image('profile_pic_front','assets/images/profile/FrontFrame.png');
@@ -164,6 +177,10 @@ loadingScene.preload = function(){
     //Sample Profile Pic
     this.load.image('profile_pic_sample','assets/images/profile/KingFish.png');
 
+    for (var i=0;i<200;i++){
+        this.load.image(`test${i}`,'assets/images/profile/KingFish.png');
+ 
+    }
 };
 
 loadingScene.create = function(){
@@ -209,7 +226,13 @@ loadingScene.create = function(){
         repeat: -1 //Repeat forever is -1
     });
 
-    //Rubbish
+    this.anims.create({
+        key: 'blushing_pingvin',
+        frames: this.anims.generateFrameNames('sprite_pingvin', {frames: [0,3,4,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
 
     this.scene.start('Home');
 }

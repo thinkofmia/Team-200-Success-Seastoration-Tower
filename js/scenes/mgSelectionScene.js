@@ -7,13 +7,16 @@ WebFont.load({
     }
   });
 
-mgSelectionScene.init = function() {
+mgSelectionScene.init = function(data) {
     this.titleFont = 'Grandstander';
     this.bodyFont = 'Averia Libre';
     this.timeElapsed = 0;
     this.floatingSpeed = 5;
     this.isAnimating = true;
-    console.log('Opening mini games');
+    if(Object.keys(data).length != 0){
+        this.gameStats = data;
+        }
+    else this.gameStats = {};
 }
 
 //Create
@@ -29,7 +32,7 @@ mgSelectionScene.create = function(){
     let gameW = this.sys.game.config.width;
     let gameH = this.sys.game.config.height;
 
-    let text = this.add.text(gameW/2, gameH/8, 'Select your mini games', {
+    let text = this.add.text(gameW/2, gameH/8, 'Play mini games for extra rewards!', {
         font: "20px "+this.titleFont,
         fill: '#ffffff',
     });
@@ -39,12 +42,23 @@ mgSelectionScene.create = function(){
     game3H = gameH/4*3.5;
     optionHeights = [game1H, game2H, game3H];
 
-    let game1 = this.add.text(gameW/2, game1H, 'Minigame 1', {
+    //Add Logo pics
+    this.logo1 = this.physics.add.sprite(gameW/4, game1H+10, "icon_pingvingotchi");
+    this.logo1.body.allowGravity = false;
+    this.logo1.setScale(0.3);
+    this.logo1.setInteractive();
+
+    this.logo2 = this.physics.add.sprite(gameW/4*3, game1H+10, "icon_earth");
+    this.logo2.body.allowGravity = false;
+    this.logo2.setScale(0.3);
+    this.logo2.setInteractive();
+    //Add Texts
+    let game1 = this.add.text(gameW/4, game2H, 'Pingvingotchi', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
 
-    let game2 = this.add.text(gameW/2, game2H, 'Mini Game 2', {
+    let game2 = this.add.text(gameW/4*3, game2H, 'Flipping Memory', {
         font: '20px '+this.titleFont,
         fill: '#ffffff',
     });
@@ -63,28 +77,48 @@ mgSelectionScene.create = function(){
     for (var i=0;i<gameOptions.length;i++){
         gameOptions[i].setOrigin(0.5, 0.5);
         gameOptions[i].depth = 1;
+        gameOptions[i].setInteractive();
 
-        //Text background
+        //Text Background
         optionBg[i] = this.add.graphics();
         optionBg[i].setInteractive();
         optionBg[i].fillStyle(0xA01010, 0.7);
-        optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
-        gameOptions[i].setInteractive();
+        if (i==gameOptions.length-1){    
+            optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
+        }
+        else if(i==0) {
+            optionBg[i].fillRect(gameW/4 - gameOptions[i].width/2 - 10, optionHeights[1] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
+        }
+        else {
+            optionBg[i].fillRect(gameW/4*3 - gameOptions[i].width/2 - 10, optionHeights[1] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
+        }
     };
 
+    //Add on touch listeners
     game1.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
-        this.scene.start('Minigame1');
+        this.scene.start('Pingvingotchi', this.gameStats);
+    }, this);
+
+    this.logo1.on('pointerdown', function(){
+        mgSelectionScene.isAnimating = false;
+        this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
 
     game2.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
-        this.scene.start('Minigame2');
+        this.scene.start('Flipping Memory', this.gameStats);
     }, this);
+
+    this.logo2.on('pointerdown', function(){
+        mgSelectionScene.isAnimating = false;
+        this.scene.start('Flipping Memory', this.gameStats);
+    }, this);
+
 
     game3.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
-        this.scene.start('Home');
+        this.scene.start('Game', this.gameStats);
     }, this);
 
     //Text background

@@ -1,3 +1,9 @@
 canvas {
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+body {
+    background-image: url('assets/images/start\ screen/background1.png');
 }

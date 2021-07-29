@@ -24,7 +24,6 @@ gameScene.init = function(data) {
   this.floorStatsBarW = 350;
   this.floorStatsBarH = 50;
   //Variables
-  this.charactersSpeed = [-20,-15, -22, -17];
   this.timeElapsed = 0;
   if(Object.keys(data).length != 0){
     this.gameStats = data;
@@ -52,7 +51,8 @@ gameScene.init = function(data) {
         shopkeeper: 'mia',
         level: 1,
         currentRate: 0,
-        completionRate: 100
+        completionRate: 100,
+        walkSpeed : -20,
       },
       //Shop 2
       {
@@ -61,26 +61,39 @@ gameScene.init = function(data) {
         shopkeeper: 'kj',
         level: 1,
         currentRate: 0,
-        completionRate: 500
+        completionRate: 500,
+        walkSpeed: -15,
       },
       //Shop 3
       {
-        room: 'floor_basic',
-        locked: true,
-        shopkeeper: 'ky',
-        level: 1,
-        currentRate: 0,
-        completionRate: 1000
-      },
-      //Shop 4
-      {
-        room: 'floor_basic',
+        room: 'floor_camera',
         locked: true,
         shopkeeper: 'sy',
         level: 1,
         currentRate: 0,
-        completionRate: 5000
-      }
+        completionRate: 1000,
+        walkSpeed: -22,
+      },
+      //Shop 4
+      {
+        room: 'floor_kitchen',
+        locked: true,
+        shopkeeper: 'ky',
+        level: 1,
+        currentRate: 0,
+        completionRate: 5000,
+        walkSpeed: -17,
+      },
+      //Shop 5
+      {
+        room: 'floor_clinic',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 10000,
+        walkSpeed: -20,
+      },
     ]
   };
   this.isPlaying = true;
@@ -127,7 +140,7 @@ gameScene.refreshHud = function(){
     }
     else{
       this.floorLevelTexts[i].setText(`Lv. ${shop.level}`);
-      this.floorIncomeTexts[i].setText(`♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`);
+      this.floorIncomeTexts[i].setText(`♻️ ${shop.level*(this.gameStats.earningIncrement*(i+1)) +this.gameStats.earningBase}`);
     } 
   }
 
@@ -164,6 +177,11 @@ gameScene.setUpHUD = function(){
   this.profilePicture.setScale(0.25);
   this.profilePicture.body.allowGravity = false;
   this.profilePicture.depth = 90;
+  this.profilePicture.setInteractive();
+  this.profilePicture.on('pointerdown', function(){
+    this.isPlaying = false;
+    this.scene.start('Goal', this.gameStats);
+  }, this);
   //Front Frame
   this.frontFramePP = this.physics.add.sprite(25, 25, "profile_pic_front");
   this.frontFramePP.setScale(0.25);
@@ -211,7 +229,7 @@ gameScene.setUpHUD = function(){
   this.pollutionStatText.depth = 90;
 
   //Arrow Keys
-  this.arrowUp = this.physics.add.sprite(70, 140, "icon_arrow");
+  this.arrowUp = this.physics.add.sprite(70, 160, "icon_arrow");
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
   this.arrowUp.on('pointerdown', function(){
@@ -219,7 +237,7 @@ gameScene.setUpHUD = function(){
   }, this);
   this.arrowUp.depth = 90;
 
-  this.arrowDown = this.physics.add.sprite(70, 240, "icon_arrow");
+  this.arrowDown = this.physics.add.sprite(70, 280, "icon_arrow");
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
   this.arrowDown.setInteractive();
@@ -228,8 +246,19 @@ gameScene.setUpHUD = function(){
   }, this);
   this.arrowDown.depth = 90;
 
+//Minigame Button
+this.minigameButton = this.physics.add.sprite(gameW - 70, 90, "icon_minigame");
+this.minigameButton.body.allowGravity = false;
+this.minigameButton.setScale(0.2);
+this.minigameButton.setInteractive();
+this.minigameButton.on('pointerdown', function(){
+  gameScene.isPlaying = false;
+  this.scene.start('MGSelection', this.gameStats);
+}, this);
+this.minigameButton.depth = 90;
+
   //Earth Button
-  this.healButton = this.physics.add.sprite(gameW - 70, 140, "icon_earth");
+  this.healButton = this.physics.add.sprite(gameW - 70, 180, "icon_heal");
   this.healButton.body.allowGravity = false;
   this.healButton.setScale(0.2);
   this.healButton.setInteractive();
@@ -237,6 +266,7 @@ gameScene.setUpHUD = function(){
     if (this.gameStats.greenpoints>= this.gameStats.restorationCost){
       this.gameStats.pollution -= this.gameStats.pollutionDrop;
       this.gameStats.greenpoints -= this.gameStats.restorationCost;
+      this.gainExp();
     } 
     else {
       this.displayModal(`Insufficient points. You need ${this.gameStats.restorationCost}♻️!`)
@@ -245,7 +275,7 @@ gameScene.setUpHUD = function(){
   this.healButton.depth = 90;
 
   //Back Button
-  this.backButton = this.physics.add.sprite(gameW- 70, 240, "icon_back");
+  this.backButton = this.physics.add.sprite(gameW- 70, 280, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
   this.backButton.on('pointerdown', function(){
@@ -264,6 +294,7 @@ gameScene.setUpHUD = function(){
   }, this);
 
   this.backButton.depth = 90;
+  this.backButton.setScale(0.8);
 
   //Create Popup Modal
   this.popup = this.add.graphics();
@@ -343,10 +374,12 @@ gameScene.setupTower = function(){
 
     shop = this.gameStats.shopsData[i];
     if (shop.locked){
-      this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'floor_locked');
-      this.floorData[i].setScale(0.25*this.globalSpriteScale);
-      this.physics.add.existing(this.floorData[i], true);
-      this.floorData[i].body.allowGravity = false;
+      if (i==this.gameStats.nextShopToBuy){
+        this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'floor_locked');
+        this.floorData[i].setScale(0.25*this.globalSpriteScale);
+        this.physics.add.existing(this.floorData[i], true);
+        this.floorData[i].body.allowGravity = false;
+      }
     }
     else {
       this.floorData[i] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + i*(170*this.globalSpriteScale+this.floorStatsBarH), shop.room);
@@ -359,42 +392,50 @@ gameScene.setupTower = function(){
       switch (shop.room){
         case "floor_basic": 
           this.addProp("Poster",shop.room, i);
+          this.addProp("Table",shop.room, i);
           break;
         case "floor_qualle":
           this.addProp("Beanbag L",shop.room, i);
           this.addProp("Beanbag R",shop.room, i);
           break;
+        case "floor_clinic":
+          this.addProp("Poster",shop.room, i);
+          this.addProp("Table",shop.room, i);
+          break;
       }
           //Add Props
           this.addProp("Door",shop.room, i);
-          this.addProp("Table",shop.room, i);
     }
     
     //Add Data
-    this.floorStatsData[i] = this.add.graphics();
+    if (!shop.locked || i<=this.gameStats.nextShopToBuy){
+      this.floorStatsData[i] = this.add.graphics();
 
-    this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
-    this.floorStatsData[i].fillStyle(0x817a93, 1);
-    this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
-    
-    this.floorProgressBar[i] = this.add.graphics();
+      this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorStatsData[i].fillStyle(0x817a93, 1);
+      this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
+      
+      this.floorProgressBar[i] = this.add.graphics();
 
-    this.floorProgressBar[i].setPosition(220, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
-    this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
-    this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
-  
+      this.floorProgressBar[i].setPosition(220, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
+      this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+    }
+
     this.floorLevelTexts[i] = this.add.text(150, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `Lv. ${shop.level}`, {
       fontFamily: this.titleFont,
       fontSize: '15px',
       fill: '#ffffff',
       fontWeight: 'bold',
     });
+    this.floorLevelTexts[i].depth = 44;
     this.floorIncomeTexts[i] = this.add.text(147, 197 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase}`, {
       fontFamily: this.titleFont,
       fontSize: '15px',
       fill: '#ffffff',
       fontWeight: 'bold',
     });
+    this.floorIncomeTexts[i].depth = 44;
     //Add Upgrade Icon
     if (!shop.locked){
       this.floorUpgradeButtons[i] = this.physics.add.sprite(525+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH), 'icon_upgrade');
@@ -415,6 +456,7 @@ gameScene.setupTower = function(){
     this.physics.add.existing(this.unlockIcon, true);
     this.unlockIcon.body.allowGravity = false;
     this.unlockIcon.setInteractive();
+    this.unlockIcon.depth = 44;
     this.unlockIcon.on('pointerdown', function(){
       gameScene.unlockShop();
     }, this);
@@ -462,7 +504,7 @@ gameScene.earnGreenPoints = function(){
     var shop = this.gameStats.shopsData[i];
     if (!shop.locked){
       if(shop.currentRate>=shop.completionRate){
-        this.gameStats.greenpoints += shop.level*this.gameStats.earningIncrement +this.gameStats.earningBase;
+        this.gameStats.greenpoints += shop.level*(this.gameStats.earningIncrement*(i+1)) +this.gameStats.earningBase;
         shop.currentRate = 0;
       }
       else {
@@ -473,12 +515,13 @@ gameScene.earnGreenPoints = function(){
 }
 
 gameScene.unlockShop = function(){
-  if (this.gameStats.greenpoints<this.gameStats.unlockCost){
-    this.displayModal(`Insufficent Green Points! You need ${this.gameStats.unlockCost}♻️!`);
+  let shopCost = (this.gameStats.unlockCost+(this.gameStats.upgradeIncrement+this.gameStats.earningBase)*this.gameStats.nextShopToBuy)*this.gameStats.nextShopToBuy;
+  if (this.gameStats.greenpoints<shopCost){
+    this.displayModal(`Insufficent Green Points! You need ${shopCost}♻️!`);
     //alert(`Insufficent Green Points! You need ${this.gameStats.unlockCost}!`);
     return;
   } 
-  this.gameStats.greenpoints -= this.gameStats.unlockCost;
+  this.gameStats.greenpoints -= shopCost;
   var shop = this.gameStats.nextShopToBuy;
   var shopKeeperName = this.gameStats.shopsData[shop].shopkeeper;
   var shopName = this.gameStats.shopsData[shop].room;
@@ -486,21 +529,44 @@ gameScene.unlockShop = function(){
     //Reveal room
     this.floorData[shop].setTexture(this.gameStats.shopsData[shop].room);
 
+    //Show locked next room
+    if (shop+1<this.gameStats.shopsData.length){
+      this.floorData[shop+1] = this.physics.add.sprite(380+this.globalSpriteTranslate, 100 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH), 'floor_locked');
+      this.floorData[shop+1].setScale(0.25*this.globalSpriteScale);
+      this.physics.add.existing(this.floorData[shop+1], true);
+      this.floorData[shop+1].body.allowGravity = false;
+
+      this.floorStatsData[shop+1] = this.add.graphics();
+
+      this.floorStatsData[shop+1].setPosition(148, 172 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorStatsData[shop+1].fillStyle(0x817a93, 1);
+      this.floorStatsData[shop+1].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
+      
+      this.floorProgressBar[shop+1] = this.add.graphics();
+
+      this.floorProgressBar[shop+1].setPosition(220, 177 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH));
+      this.floorProgressBar[shop+1].fillStyle(0x50d9c8, 1);
+      this.floorProgressBar[shop+1].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+    }
     //Unlock Props
     this.floorProps[shop] = {};
     //Extra Props
     switch (shopName){
       case "floor_basic": 
         this.addProp("Poster",shopName, shop);
+        this.addProp("Table",shopName, shop);
         break;
       case "floor_qualle":
         this.addProp("Beanbag L",shopName, shop);
         this.addProp("Beanbag R",shopName, shop);
         break;
+      case "floor_clinic": 
+        this.addProp("Poster",shopName, shop);
+        this.addProp("Table",shopName, shop);
+        break;
     }
         //Add Props
         this.addProp("Door",shopName, shop);
-        this.addProp("Table",shopName, shop);
 
     //Unlock Shopkeeper
     let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + shop*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
@@ -545,15 +611,19 @@ gameScene.addProp = function(objectKey, room, floor){
   propDist = 300 + this.globalSpriteTranslate;
   switch (room){
     case "floor_basic":
+      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
       if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist + 50 + Math.random()*50, propHeight, "poster_basic");
       break;
     case "floor_qualle":
       if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagL_qualle");
       if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagR_qualle");
       break;
+    case "floor_clinic":
+      if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
+      if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist + 50 + Math.random()*50, propHeight, "poster_clinic");
+      break;
   }
   
-  if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
   if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+50, propHeight, "door_basic");
   
   if (this.floorProps[floor][objectKey]){
@@ -604,19 +674,20 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.cameras.main.scrollY = 0;
     this.greenPointText.y = 10;
     this.pollutionStatText.y = 10;
-    this.arrowUp.y = 140;
-    this.arrowDown.y = 240;   
+    this.arrowUp.y = 160;
+    this.arrowDown.y = 280;   
     this.backFramePP.setPosition(25, 25);
     this.frontFramePP.setPosition(25, 25);
     this.profilePicture.setPosition(25, 25);
     this.levelBg.y = 25;
     this.levelProgress.y = 27.5;
     this.levelText.y = 5;
-    this.backButton.y = 240;
+    this.backButton.y = 280;
     this.popup.y = 20;
     this.popupText.y = 150;
-    this.healButton.y = 140;
+    this.healButton.y = 180;
     this.headerBar.y = 0;
+    this.minigameButton.y = 90;
     return;
   }
   this.arrowUp.y += travel;
@@ -634,6 +705,16 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.popup.y += travel;
   this.healButton.y += travel;
   this.headerBar.y += travel;
+  this.minigameButton.y += travel;
+}
+
+gameScene.gainExp = function(exp = 30){
+  this.gameStats.profileExp += exp;
+  if (this.gameStats.profileExp>=this.gameStats.maxExp) {
+    this.gameStats.profileLv += 1;
+    this.gameStats.profileExp = 0;
+    this.gameStats.maxExp += 100*this.gameStats.profileLv;
+  }
 }
 
 gameScene.checkLevel = function(){
@@ -657,7 +738,7 @@ gameScene.countUnlockedShops = function(){
 //Run in update to monitor pollution level
 gameScene.checkPollution = function(){
   //Simualte increasing pts
-  this.gameStats.pollution += 0.001;
+  this.gameStats.pollution += 0.001*this.gameStats.profileLv;
   if (this.gameStats.pollution<0) this.gameStats.pollution = 0;
   else if (this.gameStats.pollution>100) this.gameStats.pollution = 100;
 
@@ -688,15 +769,16 @@ gameScene.update = function(){
     //Random movement
     for (let i=0;i<this.shopKeepersData.length;i++){
       shopKeeperName = this.gameStats.shopsData[i].shopkeeper;
+      speed = this.gameStats.shopsData[i].walkSpeed;
       //Random Motion
       if (this.timeElapsed%5>3){
-        this.shopKeepersData[i].body.setVelocityX(-this.charactersSpeed[i]);
+        this.shopKeepersData[i].body.setVelocityX(-speed);
         this.shopKeepersData[i].flipX = false;
         //Check
         if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
       else if (this.timeElapsed%5>1){
-        this.shopKeepersData[i].body.setVelocityX(this.charactersSpeed[i]);
+        this.shopKeepersData[i].body.setVelocityX(speed);
         this.shopKeepersData[i].flipX = true;
         if (!this.shopKeepersData[i].anims.isPlaying) this.shopKeepersData[i].anims.play(`walking_${shopKeeperName}`);
       }
@@ -715,8 +797,7 @@ gameScene.update = function(){
     
     //Earn Some MONEUH
     this.earnGreenPoints();
-  
-    this.checkLevel();
+
     gameScene.refreshHud();
     this.timeElapsed+=0.01;
   }
