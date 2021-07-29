@@ -28,7 +28,7 @@ gameScene.init = function(data) {
         description: '• Unlock 4 Shopkeepers',
         type: 'countShopkeepers',
         count: 4,
-        complete: true
+        complete: false
       },
       {
         description: '• Get more than 50000♻️',
@@ -37,7 +37,7 @@ gameScene.init = function(data) {
         complete: false
       },
       {
-        description: '• Get to level 10 in a shop',
+        description: '• Get level 10 in a shop',
         type: 'lvShop',
         count: 10,
         complete: false
@@ -143,6 +143,36 @@ gameScene.create = function() {
   unlock = this.sound.add("unlock", {loop:false});
   error = this.sound.add("error", {loop:false});
 };
+
+gameScene.checkGoals = function(){
+  for (var i=0;i<this.gameStats.goals.length;i++){
+    let goal = this.gameStats.goals[i];
+    //Only runs if goal is completed
+    if (!goal.complete){
+      switch(goal.type){
+        //Count number of shopkeepers
+        case 'countShopkeepers':
+          if (this.countShopkeepers()>=goal.count) goal.complete = true;
+          break;
+        //Count total points generated
+        case 'countPoints':
+          break;
+        //Count Highest level of shops
+        case 'lvShop':
+          break;
+      }
+    }
+  }
+}
+
+gameScene.countShopkeepers = function(){
+  var count = 0;
+  for (var i=0;i<this.gameStats.shopsData.length;i++){
+    let shop = this.gameStats.shopsData[i];
+    if (!shop.locked) count +=1;
+  }
+  return count;
+}
 
 //Show current value of stats
 gameScene.refreshHud = function(){
@@ -860,7 +890,10 @@ gameScene.update = function(){
     //Earn Some MONEUH
     this.earnGreenPoints();
 
-    gameScene.refreshHud();
+    //Check goals
+    this.checkGoals();
+
+    this.refreshHud();
     this.timeElapsed+=0.01;
   }
   

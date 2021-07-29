@@ -33,8 +33,10 @@ mgSelectionScene.create = function(){
     let gameH = this.sys.game.config.height;
 
     let text = this.add.text(gameW/2, gameH/8, 'Play mini games for extra rewards!', {
-        font: "20px "+this.titleFont,
+        font: "30px "+this.titleFont,
         fill: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 10
     });
 
     game1H = gameH/4*1.5;
@@ -55,17 +57,23 @@ mgSelectionScene.create = function(){
     //Add Texts
     let game1 = this.add.text(gameW/4, game2H, 'Pingvingotchi', {
         font: '20px '+this.titleFont,
-        fill: '#ffffff',
+        fill: '#ffdf00',
+        stroke: '#000000',
+        strokeThickness: 5
     });
 
     let game2 = this.add.text(gameW/4*3, game2H, 'Flipping Memory', {
         font: '20px '+this.titleFont,
-        fill: '#ffffff',
+        fill: '#ffdf00',
+        stroke: '#000000',
+        strokeThickness: 5
     });
 
     let game3 = this.add.text(gameW/2, game3H, 'Back', {
         font: '20px '+this.titleFont,
-        fill: '#ffffff',
+        fill: '#ffdf00',
+        stroke: '#000000',
+        strokeThickness: 5
     });
 
     gameOptions = [game1,game2,game3];
@@ -78,20 +86,6 @@ mgSelectionScene.create = function(){
         gameOptions[i].setOrigin(0.5, 0.5);
         gameOptions[i].depth = 1;
         gameOptions[i].setInteractive();
-
-        //Text Background
-        optionBg[i] = this.add.graphics();
-        optionBg[i].setInteractive();
-        optionBg[i].fillStyle(0xA01010, 0.7);
-        if (i==gameOptions.length-1){    
-            optionBg[i].fillRect(gameW/2 - gameOptions[i].width/2 - 10, optionHeights[i] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
-        }
-        else if(i==0) {
-            optionBg[i].fillRect(gameW/4 - gameOptions[i].width/2 - 10, optionHeights[1] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
-        }
-        else {
-            optionBg[i].fillRect(gameW/4*3 - gameOptions[i].width/2 - 10, optionHeights[1] - gameOptions[i].height/2 -10, gameOptions[i].width+20, gameOptions[i].height+ 20);
-        }
     };
 
     //Add on touch listeners
@@ -121,11 +115,6 @@ mgSelectionScene.create = function(){
         this.scene.start('Game', this.gameStats);
     }, this);
 
-    //Text background
-    let textBg = this.add.graphics();
-    textBg.fillStyle(0x000000, 0.7);
-    textBg.fillRect(gameW/2 - text.width/2 - 10, gameH/8 - text.height/2 -10, text.width+20, text.height+ 20);
-  
 };
 
 mgSelectionScene.setupSprites = function(){
