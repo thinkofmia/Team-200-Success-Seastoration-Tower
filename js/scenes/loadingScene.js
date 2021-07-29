@@ -272,5 +272,92 @@ loadingScene.create = function(){
         repeat: 0 //Repeat forever is -1
     });
 
+    //Flipping Memory
+    this.anims.create({
+        key: 'flip_sun',
+        frames: this.anims.generateFrameNames('fm_sun', {frames: [3,2,1,0]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'unflip_sun',
+        frames: this.anims.generateFrameNames('fm_sun', {frames: [0,1,2,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'flip_bar',
+        frames: this.anims.generateFrameNames('fm_bar', {frames: [3,2,1,0]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'unflip_bar',
+        frames: this.anims.generateFrameNames('fm_bar', {frames: [0,1,2,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'flip_diamond',
+        frames: this.anims.generateFrameNames('fm_diamond', {frames: [3,2,1,0]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'unflip_diamond',
+        frames: this.anims.generateFrameNames('fm_diamond', {frames: [0,1,2,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'flip_triangle',
+        frames: this.anims.generateFrameNames('fm_triangle', {frames: [3,2,1,0]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'unflip_triangle',
+        frames: this.anims.generateFrameNames('fm_triangle', {frames: [0,1,2,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'flip_star',
+        frames: this.anims.generateFrameNames('fm_star', {frames: [3,2,1,0]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'unflip_star',
+        frames: this.anims.generateFrameNames('fm_star', {frames: [0,1,2,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'flip_o',
+        frames: this.anims.generateFrameNames('fm_o', {frames: [3,2,1,0]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+    this.anims.create({
+        key: 'unflip_o',
+        frames: this.anims.generateFrameNames('fm_o', {frames: [0,1,2,3]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: 0 //Repeat forever is -1
+    });
+
+
     this.scene.start('Home');
 }
