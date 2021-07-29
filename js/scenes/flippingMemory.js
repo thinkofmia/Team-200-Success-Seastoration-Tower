@@ -110,7 +110,9 @@ flippingMemoryScene.prepareDeck = function(){
     console.log(this.remainingCards);
 
     this.selectedCard = -1;
+    this.selectedIndex = -1;
     this.prevSelectedCard = -1;
+    this.prevSelectedIndex = -1;
 
     for (let i=0;i<this.deckSize;i++){
         this.cardsFlip[i] = false;
@@ -154,14 +156,23 @@ flippingMemoryScene.prepareDeck = function(){
                 console.log(flippingMemoryScene.matchCards(this.selectedCard,card));
             }
 
+            //Update cards
             this.prevSelectedCard = this.selectedCard
             this.selectedCard = card;
-            this.lastSelectedIndex = i;
-            console.log(`Current Card Selected: ${this.selectedCard.texture.key}`);
+
+            //If its first card selected
+            if (this.selectedIndex==-1) this.selectedIndex = i;
+            //else if second
+            else {
+                this.prevSelectedIndex = this.selectedIndex;
+                this.selectedIndex = i;
+            }
+
+            console.log(`Current Card Selected: ${this.selectedCard.texture.key} ${this.selectedIndex}`);
             if (this.prevSelectedCard==-1)
             console.log(`No previous selected card!`);
             else 
-            console.log(`Previous Card Selected: ${this.prevSelectedCard.texture.key}`);
+            console.log(`Previous Card Selected: ${this.prevSelectedCard.texture.key} ${this.prevSelectedIndex}`);
             //console.log(this.selectedCard.texture.key +" "+this.lastSelectedIndex);
             this.cardsFlip[i] = !this.cardsFlip[i];
             
