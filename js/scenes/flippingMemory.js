@@ -98,6 +98,29 @@ flippingMemoryScene.displayPingvin = function(){
     this.pingvin.flipX = true;
     this.pingvin.depth = 1;
     this.pingvin.play('cards_pingvin');
+    this.pingvin.on('pointerdown', function(){
+        this.pingvin.setFrame(8);
+        this.isPlaying = false;
+        
+        flippingMemoryScene.destroyDeck();
+        flippingMemoryScene.prepareDeck();
+        //Keep game on for sometime
+        this.time.addEvent({
+        delay: 1000,
+        repeat: 0,
+        callback: function(){
+            this.pingvin.setFrame(6);
+        },
+        callbackScope: this
+        });
+    }, this);
+}
+
+flippingMemoryScene.destroyDeck= function(){
+    for (var i=0;i<this.cardDeck.length;i++){
+        this.cardDeck[i].destroy();
+    }
+    this.cardDeck = [];
 }
 
 flippingMemoryScene.prepareDeck = function(){
