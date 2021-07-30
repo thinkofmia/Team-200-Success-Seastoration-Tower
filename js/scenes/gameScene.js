@@ -616,7 +616,7 @@ gameScene.setupTower = function(){
     });
     this.floorIncomeTexts[i].depth = 44;
 
-    this.floorUpgradeTexts[i] = this.add.text(490+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH) + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level}`, {
+    this.floorUpgradeTexts[i] = this.add.text(490+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level}`, {
       fontFamily: this.titleFont,
       fontSize: '15px',
       fill: '#ffffff',
