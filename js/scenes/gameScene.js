@@ -8,7 +8,7 @@ gameScene.init = function(data) {
   this.bodyFont = 'Averia Libre';
   //UIs
   this.popupW = 600;
-  this.popupH = 150;
+  this.popupH = 200;
   
   this.barW = 100;
   this.barH = 10;
