@@ -117,7 +117,7 @@ gameScene.init = function(data) {
 
 // load asset files for our game
 gameScene.preload = function() {
-  
+  this.load.audio("bgm",["sfx/MarineParadise.mp3"]);
 }; 
 
 // executed once, after assets were loaded
@@ -144,6 +144,8 @@ gameScene.create = function() {
   upgrade = this.sound.add("upgrade", {loop:false});
   unlock = this.sound.add("unlock", {loop:false});
   error = this.sound.add("error", {loop:false});
+  bgm = this.sound.add("bgm", {loop:true});
+  hover = this.sound.add("hover", {loop:false});
 };
 
 gameScene.checkGoals = function(){
@@ -254,6 +256,7 @@ gameScene.refreshHud = function(){
 };
 
 gameScene.setUpHUD = function(){
+  if(!bgm.isPlaying) bgm.play();
   
   let gameW = this.sys.game.config.width;
   let gameH = this.sys.game.config.height;
@@ -325,6 +328,13 @@ gameScene.setUpHUD = function(){
   this.arrowUp = this.physics.add.sprite(70, 160, "icon_arrow");
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
+  this.arrowUp.on('pointerover', function(){
+    hover.play();
+    this.arrowUp.setScale(1.1);
+  }, this);
+  this.arrowUp.on('pointerout', function(){
+    this.arrowUp.setScale(1.0);
+  }, this);
   this.arrowUp.on('pointerdown', function(){
     click.play();
     this.scrollScreen("Up", 50);
@@ -335,6 +345,13 @@ gameScene.setUpHUD = function(){
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
   this.arrowDown.setInteractive();
+  this.arrowDown.on('pointerover', function(){
+    hover.play();
+    this.arrowDown.setScale(1.1);
+  }, this);
+  this.arrowDown.on('pointerout', function(){
+    this.arrowDown.setScale(1.0);
+  }, this);
   this.arrowDown.on('pointerdown', function(){
     click.play();
     this.scrollScreen("Down", 50);
@@ -346,6 +363,13 @@ this.minigameButton = this.physics.add.sprite(gameW - 70, 90, "icon_minigame");
 this.minigameButton.body.allowGravity = false;
 this.minigameButton.setScale(0.2);
 this.minigameButton.setInteractive();
+this.minigameButton.on('pointerover', function(){
+  hover.play();
+  this.minigameButton.setScale(0.25);
+}, this);
+this.minigameButton.on('pointerout', function(){
+  this.minigameButton.setScale(0.2);
+}, this);
 this.minigameButton.on('pointerdown', function(){
   click.play();
   gameScene.isPlaying = false;
@@ -358,6 +382,13 @@ this.minigameButton.depth = 90;
   this.healButton.body.allowGravity = false;
   this.healButton.setScale(0.2);
   this.healButton.setInteractive();
+  this.healButton.on('pointerover', function(){
+    hover.play();
+    this.healButton.setScale(0.25);
+  }, this);
+  this.healButton.on('pointerout', function(){
+    this.healButton.setScale(0.2);
+  }, this);
   this.healButton.on('pointerdown', function(){
     if (this.gameStats.greenpoints>= this.gameStats.restorationCost){
       click.play();
@@ -376,10 +407,23 @@ this.minigameButton.depth = 90;
   this.backButton = this.physics.add.sprite(gameW- 70, 280, "icon_back");
   this.backButton.body.allowGravity = false;
   this.backButton.setInteractive();
+  this.backButton.on('pointerover', function(){
+    hover.play();
+    this.backButton.setScale(1.1);
+  }, this);
+  this.backButton.on('pointerout', function(){
+    this.backButton.setScale(1.0);
+  }, this);
+  this.backButton.on('pointerover', function() {
+    hover.play();
+  }, this);
   this.backButton.on('pointerdown', function(){
     click.play();
     this.backButton.setFrame(1);
     this.isPlaying = false;
+    // placeholder stop audio till i can get bgm.stop() to work
+    this.sound.stopAll();
+
     //Keep game on for sometime
     this.time.addEvent({
       delay: 500,

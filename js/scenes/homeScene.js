@@ -11,6 +11,8 @@ homeScene.preload = function() {
     this.load.audio("clicksplash",["sfx/ClickSplash.ogg"]);
     this.load.audio("click",["sfx/Click.ogg"]);
     this.load.audio("error",["sfx/Error.ogg"]);
+    this.load.audio("bgm",["sfx/MarineParadise.mp3"]);
+    this.load.audio("hover",["sfx/Hover.ogg"]);
 }
 
 homeScene.init = function(data) {
@@ -36,6 +38,8 @@ homeScene.create = function(){
     clicksplash = this.sound.add("clicksplash", {loop:false});
     click = this.sound.add("click", {loop:false});
     error = this.sound.add("error", {loop:false});
+    bgm = this.sound.add("bgm", {loop:true});
+    hover = this.sound.add("hover", {loop:false});
 
     this.setupSprites();
     
@@ -92,14 +96,13 @@ homeScene.create = function(){
         clicksplash.play();
         this.scene.start('Game', {});
     }, this);
-
     
     game2.on('pointerdown', function(){
         if(Object.keys(this.gameStats).length > 0) {
             homeScene.isAnimating = false;
             clicksplash.play();
             this.scene.start('Game', this.gameStats);
-        } 
+        }
         else {
             error.play();
         }
@@ -110,6 +113,43 @@ homeScene.create = function(){
         click.play();
         //Display Settin Screen
         this.scene.start('Settings', this.gameStats);
+    }, this);
+
+    game1.on('pointerover', function(){
+        game1.setFont('28px '+this.titleFont);
+        game1.setOrigin(0.5);
+        hover.play();
+    }, this);
+
+    if(Object.keys(this.gameStats).length > 0) {
+        game2.on('pointerover', function(){
+            game2.setFont('28px '+this.titleFont);
+            game2.setOrigin(0.5);
+            hover.play();
+        }, this);
+    }
+
+    game3.on('pointerover', function(){
+        game3.setFont('28px '+this.titleFont);
+        game3.setOrigin(0.5);
+        hover.play();
+    }, this);
+
+    game1.on('pointerout', function(){
+        game1.setFont('25px '+this.titleFont);
+        game1.setOrigin(0.5);
+    }, this);
+
+    if(Object.keys(this.gameStats).length > 0) {
+        game2.on('pointerout', function(){
+            game3.setFont('25px '+this.titleFont);
+            game3.setOrigin(0.5);
+        }, this);
+    }
+
+    game3.on('pointerout', function(){
+        game3.setFont('25px '+this.titleFont);
+        game3.setOrigin(0.5);
     }, this);
 };
 

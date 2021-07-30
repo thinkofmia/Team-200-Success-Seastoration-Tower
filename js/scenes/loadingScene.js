@@ -235,6 +235,7 @@ loadingScene.preload = function(){
     this.load.audio("unlock",["sfx/UnlockShop.ogg"]);
     this.load.audio("click",["sfx/Click.ogg"]);
     this.load.audio("error",["sfx/Error.ogg"]);
+    this.load.audio("bgm",["sfx/MarineParadise.mp3"]);
 };
 
 loadingScene.create = function(){
