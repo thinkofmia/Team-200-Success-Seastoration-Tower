@@ -94,12 +94,16 @@ mgSelectionScene.create = function(){
         click.play();
         this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
+    
 
     this.logo1.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
         click.play();
         this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
+    // this.logo1.on('pointerover', function(){
+    //     this.logo1.setScale()
+    // }, this);
 
     game2.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;

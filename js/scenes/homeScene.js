@@ -35,11 +35,11 @@ homeScene.create = function(){
     bg.setScale(0.25);
 
     // set up audio
-    clicksplash = this.sound.add("clicksplash", {loop:false});
-    click = this.sound.add("click", {loop:false});
-    error = this.sound.add("error", {loop:false});
-    bgm = this.sound.add("bgm", {loop:true});
-    hover = this.sound.add("hover", {loop:false});
+    clicksplash = this.sound.add("clicksplash", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
+    click = this.sound.add("click", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
+    error = this.sound.add("error", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
+    bgm = this.sound.add("bgm", {loop:true,volume:Object.keys(this.gameStats).length>0?1-this.gameStats.bgmVol:0.5});
+    hover = this.sound.add("hover", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
 
     this.setupSprites();
     
@@ -103,9 +103,7 @@ homeScene.create = function(){
             clicksplash.play();
             this.scene.start('Game', this.gameStats);
         }
-        else {
-            error.play();
-        }
+        else error.play();
     }, this);
 
     game3.on('pointerdown', function(){
@@ -121,13 +119,13 @@ homeScene.create = function(){
         hover.play();
     }, this);
 
-    if(Object.keys(this.gameStats).length > 0) {
-        game2.on('pointerover', function(){
+    game2.on('pointerover', function(){
+        if(Object.keys(this.gameStats).length > 0) {
             game2.setFont('28px '+this.titleFont);
             game2.setOrigin(0.5);
             hover.play();
-        }, this);
-    }
+        }
+    }, this);
 
     game3.on('pointerover', function(){
         game3.setFont('28px '+this.titleFont);
@@ -140,12 +138,12 @@ homeScene.create = function(){
         game1.setOrigin(0.5);
     }, this);
 
-    if(Object.keys(this.gameStats).length > 0) {
-        game2.on('pointerout', function(){
-            game3.setFont('25px '+this.titleFont);
-            game3.setOrigin(0.5);
-        }, this);
-    }
+    game2.on('pointerout', function(){
+        if(Object.keys(this.gameStats).length > 0) {
+            game2.setFont('25px '+this.titleFont);
+            game2.setOrigin(0.5);
+        }
+    }, this);
 
     game3.on('pointerout', function(){
         game3.setFont('25px '+this.titleFont);

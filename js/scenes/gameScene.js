@@ -8,7 +8,7 @@ gameScene.init = function(data) {
   this.bodyFont = 'Averia Libre';
   //UIs
   this.popupW = 600;
-  this.popupH = 300;
+  this.popupH = 150;
   
   this.barW = 100;
   this.barH = 10;
@@ -45,6 +45,8 @@ gameScene.init = function(data) {
         complete: false
       },
     ],
+    sfxVol: 0.5,
+    bgmVol: 0.5,
     greenpoints: 0,
     pollution: 50,
     profileLv: 1,
@@ -140,12 +142,12 @@ gameScene.create = function() {
   this.cursors = this.input.keyboard.createCursorKeys();
 
   // set up audio
-  click = this.sound.add("click", {loop:false});
-  upgrade = this.sound.add("upgrade", {loop:false});
-  unlock = this.sound.add("unlock", {loop:false});
-  error = this.sound.add("error", {loop:false});
-  bgm = this.sound.add("bgm", {loop:true});
-  hover = this.sound.add("hover", {loop:false});
+  click = this.sound.add("click", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
+  upgrade = this.sound.add("upgrade", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
+  unlock = this.sound.add("unlock", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
+  error = this.sound.add("error", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
+  bgm = this.sound.add("bgm", {loop:true,volume:Object.keys(this.gameStats).length>0?1-this.gameStats.bgmVol:0.5});
+  hover = this.sound.add("hover", {loop:false,volume:Object.keys(this.gameStats).length>0?this.gameStats.sfxVol:0.5});
 };
 
 gameScene.checkGoals = function(){
@@ -222,6 +224,7 @@ gameScene.refreshHud = function(){
   this.levelText.setText(`Level: ${this.gameStats.profileLv}`);
   this.greenPointText.setText(`♻️: ${this.gameStats.greenpoints.toFixed(0)}`);
   this.pollutionStatText.setText(`💀: ${this.gameStats.pollution.toFixed(2)}%`);
+  // this.settingsText.setText(`🔧`);
 
   //Update shop
   for (var i=0;i<this.gameStats.shopsData.length;i++){
@@ -273,9 +276,13 @@ gameScene.setUpHUD = function(){
   this.profilePicture.body.allowGravity = false;
   this.profilePicture.depth = 90;
   this.profilePicture.setInteractive();
+  this.profilePicture.on('pointerover', function() {
+    hover.play();
+  }, this);
   this.profilePicture.on('pointerdown', function(){
     click.play();
     this.isPlaying = false;
+    bgm.isPlaying = true;
     this.scene.start('Goal', this.gameStats);
   }, this);
   //Front Frame
@@ -311,18 +318,25 @@ gameScene.setUpHUD = function(){
   this.levelText.depth = 90;
 
   //Money Stat
-  this.greenPointText = this.add.text(500,10,'♻️: ',{
+  this.greenPointText = this.add.text(450,10,'♻️: ',{
     font: '26px '+this.titleFont,
     fill: '#ffffff'
   });
   this.greenPointText.depth = 90;
 
   //Pollution stat
-  this.pollutionStatText = this.add.text(300,10,'💀: ',{
+  this.pollutionStatText = this.add.text(250,10,'💀: ',{
     font: '26px '+this.titleFont,
     fill: '#ffffff'
   });
   this.pollutionStatText.depth = 90;
+
+  //Settings
+  // this.settingsText = this.add.text(500,10,'🔧: ',{
+  //   font: '26px '+this.titleFont,
+  //   fill: '#ffffff'
+  // });
+  // this.settingsText.depth = 90;
 
   //Arrow Keys
   this.arrowUp = this.physics.add.sprite(70, 160, "icon_arrow");
@@ -358,6 +372,26 @@ gameScene.setUpHUD = function(){
   }, this);
   this.arrowDown.depth = 90;
 
+// Settings icon
+this.settingsButton = this.physics.add.sprite(600, 23, "settings");
+this.settingsButton.setScale(0.4);
+this.settingsButton.setInteractive();
+this.settingsButton.body.allowGravity = false;
+this.settingsButton.on('pointerover', function(){
+  hover.play();
+  this.settingsButton.setScale(0.45);
+}, this);
+this.settingsButton.on('pointerout', function(){
+  this.settingsButton.setScale(0.4);
+}, this);
+this.settingsButton.on('pointerdown', function(){
+  click.play();
+  gameScene.isPlaying = false;
+  bgm.isPlaying = true;
+  this.scene.start('Settings', this.gameStats);
+}, this);
+this.settingsButton.depth = 90;
+
 //Minigame Button
 this.minigameButton = this.physics.add.sprite(gameW - 70, 90, "icon_minigame");
 this.minigameButton.body.allowGravity = false;
@@ -373,6 +407,7 @@ this.minigameButton.on('pointerout', function(){
 this.minigameButton.on('pointerdown', function(){
   click.play();
   gameScene.isPlaying = false;
+  bgm.isPlaying = true;
   this.scene.start('MGSelection', this.gameStats);
 }, this);
 this.minigameButton.depth = 90;
@@ -442,7 +477,7 @@ this.minigameButton.depth = 90;
   //Create Popup Modal
   this.popup = this.add.graphics();
 
-  this.popup.setPosition(20, 20);
+  this.popup.setPosition(20, 110);
   this.popup.fillStyle(0xcddbf5, 1);
   this.popup.fillRect(0,0,this.popupW, this.popupH);
   this.popup.depth = 100;
@@ -458,7 +493,7 @@ this.minigameButton.depth = 90;
   this.closePopup.depth = 101;
 */
   //Pollution stat
-  this.popupText = this.add.text(50,150,'This is a fake modal. Please close me! :3 ',{
+  this.popupText = this.add.text(50,170,'This is a fake modal. Please close me! :3 ',{
     font: '26px '+this.titleFont,
     fill: '#000000',
     align: 'center'
@@ -885,6 +920,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.cameras.main.scrollY = 0;
     this.greenPointText.y = 10;
     this.pollutionStatText.y = 10;
+    this.settingsButton.y = 23;
     this.arrowUp.y = 160;
     this.arrowDown.y = 280;   
     this.backFramePP.setPosition(25, 25);
@@ -895,7 +931,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.levelText.y = 5;
     this.backButton.y = 280;
     this.popup.y = 20;
-    this.popupText.y = 150;
+    this.popupText.y = 170;
     this.healButton.y = 180;
     this.headerBar.y = 0;
     this.minigameButton.y = 90;
@@ -905,6 +941,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.arrowDown.y += travel;
   this.greenPointText.y += travel;
   this.pollutionStatText.y += travel;
+  this.settingsButton.y += travel;
   this.backFramePP.y += travel;
   this.frontFramePP.y += travel;
   this.profilePicture.y += travel;
