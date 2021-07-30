@@ -91,27 +91,32 @@ mgSelectionScene.create = function(){
     //Add on touch listeners
     game1.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
+        click.play();
         this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
 
     this.logo1.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
+        click.play();
         this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
 
     game2.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
+        click.play();
         this.scene.start('Flipping Memory', this.gameStats);
     }, this);
 
     this.logo2.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
+        click.play();
         this.scene.start('Flipping Memory', this.gameStats);
     }, this);
 
 
     game3.on('pointerdown', function(){
         mgSelectionScene.isAnimating = false;
+        click.play();
         this.scene.start('Game', this.gameStats);
     }, this);
 
