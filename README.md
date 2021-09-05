@@ -2,7 +2,7 @@
 Source code of our submission for Green Game Jam 2021.
 
 ## Demo
-Game can be run by clicking the link [here](https://thinkofmia.github.io/Team-200-Success-Seastoration-Tower/).
+Run the game by clicking this [link](https://thinkofmia.github.io/Team-200-Success-Seastoration-Tower/).
 
 Otherwise you can run the game locally by running index.html using a Live Server.
 
