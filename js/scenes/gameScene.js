@@ -861,8 +861,8 @@ gameScene.addProp = function(objectKey, room, floor){
       if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist + 50 + Math.random()*50, propHeight, "poster_basic");
       break;
     case "floor_qualle":
-      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagL_qualle");
-      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist, propHeight, "beanbagR_qualle");
+      if (objectKey=="Beanbag L") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+25, propHeight, "beanbagL_qualle");
+      if (objectKey=="Beanbag R") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+25, propHeight, "beanbagR_qualle");
       break;
     case "floor_clinic":
       if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
@@ -870,7 +870,7 @@ gameScene.addProp = function(objectKey, room, floor){
       break;
   }
   
-  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+50, propHeight, "door_basic");
+  if (objectKey=="Door") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+25, propHeight, "door_basic");
   
   if (this.floorProps[floor][objectKey]){
     this.floorProps[floor][objectKey].setScale(0.25*this.globalSpriteScale);
