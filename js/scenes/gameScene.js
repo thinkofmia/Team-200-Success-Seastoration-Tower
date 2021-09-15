@@ -74,47 +74,47 @@ gameScene.init = function(data) {
       },
       //Shop 2
       {
+        room: 'floor_museum',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 500,
+        walkSpeed: -20,
+      },
+      //Shop 3
+      {
         room: 'floor_qualle',
         locked: true,
         shopkeeper: 'kj',
         level: 1,
         currentRate: 0,
-        completionRate: 500,
+        completionRate: 1000,
         walkSpeed: -15,
       },
-      //Shop 3
+      //Shop 4
+      {
+        room: 'floor_crop',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 2500,
+        walkSpeed: -20,
+      },
+      //Shop 5
       {
         room: 'floor_camera',
         locked: true,
         shopkeeper: 'sy',
         level: 1,
         currentRate: 0,
-        completionRate: 1000,
-        walkSpeed: -22,
-      },
-      //Shop 4
-      {
-        room: 'floor_kitchen',
-        locked: true,
-        shopkeeper: 'ky',
-        level: 1,
-        currentRate: 0,
-        completionRate: 2500,
-        walkSpeed: -17,
-      },
-      //Shop 5
-      {
-        room: 'floor_clinic',
-        locked: true,
-        shopkeeper: 'pingvin',
-        level: 1,
-        currentRate: 0,
         completionRate: 5000,
-        walkSpeed: -20,
+        walkSpeed: -22,
       },
       //Shop 6
       {
-        room: 'floor_crop',
+        room: 'floor_clinic',
         locked: true,
         shopkeeper: 'pingvin',
         level: 1,
@@ -124,13 +124,13 @@ gameScene.init = function(data) {
       },
       //Shop 7
       {
-        room: 'floor_museum',
+        room: 'floor_kitchen',
         locked: true,
-        shopkeeper: 'pingvin',
+        shopkeeper: 'ky',
         level: 1,
         currentRate: 0,
         completionRate: 25000,
-        walkSpeed: -20,
+        walkSpeed: -17,
       },
       //Shop 8
       {
@@ -1044,15 +1044,15 @@ gameScene.checkPollution = function(){
 
   if (this.gameStats.pollution<33){
     this.bg.setTexture('background_clean');
-    this.cameras.main.setBackgroundColor('#467698');
+    this.cameras.main.setBackgroundColor('#173F5D');
   }
   else if (this.gameStats.pollution<66){
     this.bg.setTexture('background_unclean');
-    this.cameras.main.setBackgroundColor('#2c495e');
+    this.cameras.main.setBackgroundColor('#2C495D');
   }
   else {
     this.bg.setTexture('background_dirty');
-    this.cameras.main.setBackgroundColor('#562c37');
+    this.cameras.main.setBackgroundColor('#3B505D');
   }
 }
 
