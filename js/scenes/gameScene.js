@@ -633,6 +633,40 @@ gameScene.setupTower = function(){
           this.addProp("Poster",shop.room, i);
           this.addProp("Table",shop.room, i);
           break;
+        case "floor_crop":
+          this.addProp("Banner",shop.room, i);
+          this.addProp("Brinjal",shop.room, i);
+          this.addProp("Carrot",shop.room, i);
+          this.addProp("Melon",shop.room, i);
+          break;
+        case "floor_greenhouse":
+          this.addProp("Beady Plant",shop.room, i);
+          this.addProp("Bicolour",shop.room, i);
+          this.addProp("Fancy Bowl",shop.room, i);
+          this.addProp("Flowering Air Plant",shop.room, i);
+          this.addProp("Hagrid",shop.room, i);
+          this.addProp("Orchid",shop.room, i);
+          this.addProp("Watering Can",shop.room, i);
+          break;
+        case "floor_lab":
+          this.addProp("Blue Flask",shop.room, i);
+          this.addProp("Desk",shop.room, i);
+          this.addProp("Desk 2",shopName, shop);
+          this.addProp("Green Flask",shop.room, i);
+          this.addProp("Microscope",shop.room, i);
+          this.addProp("Orange Flask",shop.room, i);
+          this.addProp("Test Tube Rack",shop.room, i);
+          break;
+        case "floor_library":
+          this.addProp("Shelf 2",shop.room, i);
+          this.addProp("Shelf 3",shop.room, i);
+          this.addProp("Shelf 4",shop.room, i);
+          break;
+        case "floor_museum":
+          this.addProp("Headphones",shop.room, i);
+          this.addProp("Fish",shop.room, i);
+          this.addProp("Plaque",shop.room, i);
+          break;
       }
           //Add Props
           this.addProp("Door",shop.room, i);
@@ -836,6 +870,40 @@ gameScene.unlockShop = function(){
         this.addProp("Poster",shopName, shop);
         this.addProp("Table",shopName, shop);
         break;
+      case "floor_crop":
+        this.addProp("Banner",shopName, shop);
+        this.addProp("Brinjal",shopName, shop);
+        this.addProp("Carrot",shopName, shop);
+        this.addProp("Melon",shopName, shop);
+        break;
+      case "floor_greenhouse":
+        this.addProp("Beady Plant",shopName, shop);
+        this.addProp("Bicolour",shopName, shop);
+        this.addProp("Fancy Bowl",shopName, shop);
+        this.addProp("Flowering Air Plant",shopName, shop);
+        this.addProp("Hagrid",shopName, shop);
+        this.addProp("Orchid",shopName, shop);
+        this.addProp("Watering Can",shopName, shop);
+        break;
+      case "floor_lab":
+        this.addProp("Blue Flask",shopName, shop);
+        this.addProp("Desk",shopName, shop);
+        this.addProp("Desk 2",shopName, shop);
+        this.addProp("Green Flask",shopName, shop);
+        this.addProp("Microscope",shopName, shop);
+        this.addProp("Orange Flask",shopName, shop);
+        this.addProp("Test Tube Rack",shopName, shop);
+        break;
+      case "floor_library":
+        this.addProp("Shelf 2",shopName, shop);
+        this.addProp("Shelf 3",shopName, shop);
+        this.addProp("Shelf 4",shopName, shop);
+        break;
+      case "floor_museum":
+        this.addProp("Headphones",shopName, shop);
+        this.addProp("Fish",shopName, shop);
+        this.addProp("Plaque",shopName, shop);
+        break;
     }
         //Add Props
         this.addProp("Door",shopName, shop);
@@ -919,6 +987,41 @@ gameScene.addProp = function(objectKey, room, floor){
     case "floor_clinic":
       if (objectKey=="Table") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, "table_basic");
       if (objectKey=="Poster") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist + 50 + Math.random()*50, propHeight, "poster_clinic");
+      break;
+    case "floor_crop":
+      if (objectKey=="Banner") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'banner_crop');
+      if (objectKey=="Brinjal") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+140, propHeight, 'brinjal_crop');
+      if (objectKey=="Carrot") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+140, propHeight, 'carrot_crop');
+      if (objectKey=="Melon") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+140, propHeight, 'melon_crop');
+      break;
+    case "floor_greenhouse":
+      if (objectKey=="Beady Plant") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'beadyplant_greenhouse');
+      if (objectKey=="Bicolour") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'bicolour_greenhouse');
+      if (objectKey=="Fancy Bowl") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'fancybowl_greenhouse');
+      if (objectKey=="Flowering Air Plant") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'floweringairplant_greenhouse');
+      if (objectKey=="Hagrid") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'hagrid_greenhouse');
+      if (objectKey=="Orchid") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'orchid_greenhouse');
+      if (objectKey=="Watering Can") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight+10, 'wateringcan_greenhouse');
+      break;
+    case "floor_lab":
+      if (objectKey=="Blue Flask") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'blueflask_lab');
+      if (objectKey=="Desk") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'desk_lab');
+      if (objectKey=="Desk 2") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist-20, propHeight, 'desk_lab');
+      if (objectKey=="Green Flask") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'greenflask_lab');
+      if (objectKey=="Microscope") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'microscope_lab');
+      if (objectKey=="Orange Flask") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'orangeflask_lab');
+      if (objectKey=="Test Tube Rack") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+100, propHeight, 'testtuberack_lab');
+      break;
+    case "floor_library":
+      if (objectKey=="Shelf 1") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+80, propHeight, 'shelf1_library');
+      if (objectKey=="Shelf 2") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+90, propHeight, 'shelf2_library');
+      if (objectKey=="Shelf 3") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+80, propHeight, 'shelf3_library');
+      if (objectKey=="Shelf 4") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+80, propHeight, 'shelf4_library');
+      break;
+    case "floor_museum":
+      if (objectKey=="Headphones") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+10, propHeight, 'headphones_museum');
+      if (objectKey=="Fish") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+75, propHeight, 'fish_museum');
+      if (objectKey=="Plaque") this.floorProps[floor][objectKey] = this.physics.add.sprite(propDist+75, propHeight, 'plaque_museum');
       break;
   }
   
