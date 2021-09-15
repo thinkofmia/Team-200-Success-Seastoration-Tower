@@ -88,8 +88,8 @@ loadingScene.preload = function(){
 
     //Loading Icons
     this.load.spritesheet('icon_arrow','assets/images/icons/icon_arrow.png', {
-        frameWidth: 100,
-        frameHeight: 100,
+        frameWidth: 500,
+        frameHeight: 456,
         margin: 0,
         spacing: 0
     });

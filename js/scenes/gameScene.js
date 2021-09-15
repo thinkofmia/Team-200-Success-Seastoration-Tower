@@ -342,12 +342,13 @@ gameScene.setUpHUD = function(){
   this.arrowUp = this.physics.add.sprite(70, 160, "icon_arrow");
   this.arrowUp.body.allowGravity = false;
   this.arrowUp.setInteractive();
+  this.arrowUp.setScale(0.2);
   this.arrowUp.on('pointerover', function(){
     hover.play();
-    this.arrowUp.setScale(1.1);
+    this.arrowUp.setScale(0.3);
   }, this);
   this.arrowUp.on('pointerout', function(){
-    this.arrowUp.setScale(1.0);
+    this.arrowUp.setScale(0.2);
   }, this);
   this.arrowUp.on('pointerdown', function(){
     click.play();
@@ -359,12 +360,13 @@ gameScene.setUpHUD = function(){
   this.arrowDown.flipY = true;
   this.arrowDown.body.allowGravity = false;
   this.arrowDown.setInteractive();
+  this.arrowDown.setScale(0.2);
   this.arrowDown.on('pointerover', function(){
     hover.play();
-    this.arrowDown.setScale(1.1);
+    this.arrowDown.setScale(0.3);
   }, this);
   this.arrowDown.on('pointerout', function(){
-    this.arrowDown.setScale(1.0);
+    this.arrowDown.setScale(0.2);
   }, this);
   this.arrowDown.on('pointerdown', function(){
     click.play();
