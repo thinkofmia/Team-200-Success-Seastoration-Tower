@@ -99,7 +99,7 @@ gameScene.init = function(data) {
         shopkeeper: 'ky',
         level: 1,
         currentRate: 0,
-        completionRate: 5000,
+        completionRate: 2500,
         walkSpeed: -17,
       },
       //Shop 5
@@ -109,7 +109,57 @@ gameScene.init = function(data) {
         shopkeeper: 'pingvin',
         level: 1,
         currentRate: 0,
+        completionRate: 5000,
+        walkSpeed: -20,
+      },
+      //Shop 6
+      {
+        room: 'floor_crop',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
         completionRate: 10000,
+        walkSpeed: -20,
+      },
+      //Shop 7
+      {
+        room: 'floor_museum',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 25000,
+        walkSpeed: -20,
+      },
+      //Shop 8
+      {
+        room: 'floor_lab',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 50000,
+        walkSpeed: -20,
+      },
+      //Shop 9
+      {
+        room: 'floor_greenhouse',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 100000,
+        walkSpeed: -20,
+      },
+      //Shop 10
+      {
+        room: 'floor_library',
+        locked: true,
+        shopkeeper: 'pingvin',
+        level: 1,
+        currentRate: 0,
+        completionRate: 250000,
         walkSpeed: -20,
       },
     ]
@@ -998,7 +1048,7 @@ gameScene.checkPollution = function(){
   }
   else if (this.gameStats.pollution<66){
     this.bg.setTexture('background_unclean');
-    this.cameras.main.setBackgroundColor('#707e51');
+    this.cameras.main.setBackgroundColor('#2c495e');
   }
   else {
     this.bg.setTexture('background_dirty');

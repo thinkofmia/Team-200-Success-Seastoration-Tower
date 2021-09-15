@@ -165,6 +165,11 @@ loadingScene.preload = function(){
     this.load.image('floor_qualle', 'assets/images/Qualle/qualle_floor.png');
     this.load.image('floor_kitchen', 'assets/images/basic floor/kitchenroom.png');
     this.load.image('floor_clinic', 'assets/images/basic floor/basic_floor.png');
+    this.load.image('floor_crop', 'assets/images/croproom/crop_bg.png');
+    this.load.image('floor_museum', 'assets/images/museumfloor/museum_bg.png');
+    this.load.image('floor_lab', 'assets/images/labfloor/lab_bg.png');
+    this.load.image('floor_greenhouse', 'assets/images/greenhouse/greenhouse_bg.png');
+    this.load.image('floor_library', 'assets/images/library/librarybg.png');
 
     this.load.image('floor_locked', 'assets/images/basic floor/darkroom.png');
 
@@ -178,6 +183,35 @@ loadingScene.preload = function(){
 
     this.load.image('poster_clinic','assets/images/basic floor/firstaidposter.png');
     
+    this.load.image('banner_crop','assets/images/croproom/crop_banner.png');
+    this.load.image('brinjal_crop','assets/images/croproom/crop_brinjal.png');
+    this.load.image('carrot_crop','assets/images/croproom/crop_carrot.png');
+    this.load.image('melon_crop','assets/images/croproom/crop_melon.png');
+
+    this.load.image('headphones_museum','assets/images/museumfloor/headphones.png');
+    this.load.image('fish_museum','assets/images/museumfloor/mainexhibit_fish.png');
+    this.load.image('plaque_museum','assets/images/museumfloor/plaque.png');
+
+    this.load.image('blueflask_lab', 'assets/images/labfloor/blueflask.png');
+    this.load.image('desk_lab', 'assets/images/labfloor/desk.png');
+    this.load.image('greenflask_lab', 'assets/images/labfloor/greenflask.png');
+    this.load.image('microscope_lab', 'assets/images/labfloor/microscope.png');
+    this.load.image('orangeflask_lab', 'assets/images/labfloor/orangeflask.png');
+    this.load.image('testtuberack_lab', 'assets/images/labfloor/testtuberack.png');
+
+    this.load.image('beadyplant_greenhouse', 'assets/images/greenhouse/beadyplant.png');
+    this.load.image('bicolour_greenhouse', 'assets/images/greenhouse/bicolour.png');
+    this.load.image('fancybowl_greenhouse', 'assets/images/greenhouse/fancybowl.png');
+    this.load.image('floweringairplant_greenhouse', 'assets/images/greenhouse/floweringairplant.png');
+    this.load.image('hagrid_greenhouse', 'assets/images/greenhouse/hagrid.png');
+    this.load.image('orchid_greenhouse', 'assets/images/greenhouse/orchid.png');
+    this.load.image('wateringcan_greenhouse', 'assets/images/greenhouse/wateringcan.png');
+
+    this.load.image('shelf1_library', 'assets/images/library/shelf1.png');
+    this.load.image('shelf2_library', 'assets/images/library/shelf2.png');
+    this.load.image('shelf3_library', 'assets/images/library/shelf3.png');
+    this.load.image('shelf4_library', 'assets/images/library/shelf4.png');
+
     //Flipping Memory Minigame
     this.load.spritesheet('fm_bar','assets/images/flippingMemory/card_bar.png', {
         frameWidth: 500,
