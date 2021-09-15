@@ -345,7 +345,7 @@ gameScene.setUpHUD = function(){
   this.arrowUp.setScale(0.2);
   this.arrowUp.on('pointerover', function(){
     hover.play();
-    this.arrowUp.setScale(0.3);
+    this.arrowUp.setScale(0.25);
   }, this);
   this.arrowUp.on('pointerout', function(){
     this.arrowUp.setScale(0.2);
@@ -363,7 +363,7 @@ gameScene.setUpHUD = function(){
   this.arrowDown.setScale(0.2);
   this.arrowDown.on('pointerover', function(){
     hover.play();
-    this.arrowDown.setScale(0.3);
+    this.arrowDown.setScale(0.25);
   }, this);
   this.arrowDown.on('pointerout', function(){
     this.arrowDown.setScale(0.2);
