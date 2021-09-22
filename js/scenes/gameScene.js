@@ -460,9 +460,12 @@ this.saveButton.on('pointerdown', function(){
   click.play();
   this.saveToCloud();
   this.saveButton.setTexture("savesuccess");
-  setTimeout(function(){saveButton.setTexture("save");},3000);
 }, this);
 this.saveButton.depth = 90;
+
+function changeSaveIcon() {
+  this.saveButton.setTexture("save");
+}
 
 //Minigame Button
 this.minigameButton = this.physics.add.sprite(gameW - 70, 90, "icon_minigame");
@@ -1212,13 +1215,14 @@ gameScene.checkPollution = function(){
   }
 }
 
-// save the game locally in php session
+// save the game locally in php session and cookie
 gameScene.saveGame = function(){
+  document.cookie = "gameStats="+this.gameStats;
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       // result
-      console.log(this.responseText);
+      //console.log(this.responseText);
     }
   };
   xhttp.open("GET", `savelocalgame.php?gamestats=${this.gameStats}`, true);
@@ -1227,18 +1231,20 @@ gameScene.saveGame = function(){
 // upload the game to the server
 var email = "";
 gameScene.saveToCloud = function(){
+  /*
   if(email=="") {
     var player = prompt("Please enter your email to save game data online.","email");
     localStorage.setItem("playeremail",player);
   }
+  */
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       // result
-      console.log(this.responseText);
+      //console.log(this.responseText);
     }
   };
-  xhttp.open("GET", `savegame.php?player=${localStorage.getItem("playeremail")}&gamestats=${this.gameStats}`, true);
+  xhttp.open("GET", `savegame.php?player=${email}&gamestats=${this.gameStats}`, true);
   xhttp.send();
 }
 

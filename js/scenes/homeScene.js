@@ -29,6 +29,27 @@ homeScene.init = function(data) {
 
 //Create
 homeScene.create = function(){
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    // load existing game
+    /*if(getCookie("gameStats")!=="") {
+        console.log(Object.keys(getCookie("gameStats")).length);
+        this.gameStats = getCookie("gameStats");
+    }*/
+
     //Game background, with active input
     let bg = this.add.sprite(0,0,'background_title').setInteractive();
     bg.setOrigin(0,0);
