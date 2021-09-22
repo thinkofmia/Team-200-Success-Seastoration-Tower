@@ -368,7 +368,7 @@ gameScene.setUpHUD = function(){
   this.levelText.depth = 90;
 
   //Money Stat
-  this.greenPointText = this.add.text(450,10,'♻️: ',{
+  this.greenPointText = this.add.text(425,10,'♻️: ',{
     font: '26px '+this.titleFont,
     fill: '#ffffff'
   });
@@ -443,6 +443,26 @@ this.settingsButton.on('pointerdown', function(){
   this.scene.start('Settings', this.gameStats);
 }, this);
 this.settingsButton.depth = 90;
+
+// Save button
+this.saveButton = this.physics.add.sprite(560, 23, "save");
+this.saveButton.setScale(0.4);
+this.saveButton.setInteractive();
+this.saveButton.body.allowGravity = false;
+this.saveButton.on('pointerover', function(){
+  hover.play();
+  this.saveButton.setScale(0.45);
+}, this);
+this.saveButton.on('pointerout', function(){
+  this.saveButton.setScale(0.4);
+}, this);
+this.saveButton.on('pointerdown', function(){
+  click.play();
+  this.saveToCloud();
+  this.saveButton.setTexture("savesuccess");
+  setTimeout(function(){saveButton.setTexture("save");},3000);
+}, this);
+this.saveButton.depth = 90;
 
 //Minigame Button
 this.minigameButton = this.physics.add.sprite(gameW - 70, 90, "icon_minigame");
@@ -1192,6 +1212,36 @@ gameScene.checkPollution = function(){
   }
 }
 
+// save the game locally in php session
+gameScene.saveGame = function(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // result
+      console.log(this.responseText);
+    }
+  };
+  xhttp.open("GET", `savelocalgame.php?gamestats=${this.gameStats}`, true);
+  xhttp.send();
+}
+// upload the game to the server
+var email = "";
+gameScene.saveToCloud = function(){
+  if(email=="") {
+    var player = prompt("Please enter your email to save game data online.","email");
+    localStorage.setItem("playeremail",player);
+  }
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // result
+      console.log(this.responseText);
+    }
+  };
+  xhttp.open("GET", `savegame.php?player=${localStorage.getItem("playeremail")}&gamestats=${this.gameStats}`, true);
+  xhttp.send();
+}
+
 //Executed on every frame
 gameScene.update = function(){
   if (this.isPlaying){
@@ -1242,6 +1292,9 @@ gameScene.update = function(){
 
     this.refreshHud();
     this.timeElapsed+=0.01;
+
+    // save to the server 
+    this.saveGame();
   }
   
 };

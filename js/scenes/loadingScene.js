@@ -108,6 +108,8 @@ loadingScene.preload = function(){
     this.load.image('icon_pingvingotchi', 'assets/images/icons/icon_pingvingotchi.png');
     this.load.image('icon_flippingmemory', 'assets/images/icons/icon_flippingmemory.png');
     this.load.image('settings', 'assets/images/icons/settings.png');
+    this.load.image('save', 'assets/images/icons/save.png');
+    this.load.image('savesuccess', 'assets/images/icons/savesuccess.png');
 
     //Loading Sprites
     this.load.spritesheet('sprite_mia','assets/images/sprites/sprite_mia.png', {
