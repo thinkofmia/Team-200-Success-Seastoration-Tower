@@ -1138,6 +1138,9 @@ gameScene.countUnlockedShops = function(){
   return count;
 }
 
+var swimmingSharkClean = false;
+var swimmingSharkBag = false;
+var swimmingTurtleClean = false;
 //Run in update to monitor pollution level
 gameScene.checkPollution = function(){
   //Simualte increasing pts
@@ -1148,10 +1151,40 @@ gameScene.checkPollution = function(){
   if (this.gameStats.pollution<33){
     this.bg.setTexture('background_clean');
     this.cameras.main.setBackgroundColor('#173F5D');
+    // add clean shark
+    if(!swimmingSharkClean) {  
+      swimmingSharkClean = true;  
+      this.shark = this.add.sprite(100 + Math.random()* 40, Math.random()*200+100 , `shark_clean`);
+      this.physics.add.existing(this.shark);
+      this.shark.setScale(0.1);
+      this.shark.body.allowGravity = false;
+      this.shark.body.setVelocityX(40);
+      if (!this.shark.anims.isPlaying) this.shark.anims.play(`swimming_shark`);
+    }
+    // add clean turtle
+    if(!swimmingTurtleClean) {    
+      swimmingTurtleClean = true;
+      this.turtle = this.add.sprite(40 + Math.random()* 40, Math.random()*200+100 , `turtle_clean`);
+      this.physics.add.existing(this.turtle);
+      this.turtle.setScale(0.1);
+      this.turtle.body.allowGravity = false;
+      this.turtle.body.setVelocityX(20);
+      if (!this.turtle.anims.isPlaying) this.turtle.anims.play(`swimming_shark`);
+    }
   }
   else if (this.gameStats.pollution<66){
     this.bg.setTexture('background_unclean');
     this.cameras.main.setBackgroundColor('#2C495D');
+    // add bag shark
+    if(!swimmingSharkBag) {  
+      swimmingSharkBag = true;  
+      this.shark = this.add.sprite(100 + Math.random()* 40, Math.random()*200+100 , `sprite_shark`);
+      this.physics.add.existing(this.shark);
+      this.shark.setScale(0.1);
+      this.shark.body.allowGravity = false;
+      this.shark.body.setVelocityX(20);
+      if (!this.shark.anims.isPlaying) this.shark.anims.play(`swimming_shark`);
+    }
   }
   else {
     this.bg.setTexture('background_dirty');

@@ -141,6 +141,21 @@ loadingScene.preload = function(){
         margin: 0,
         spacing: 0
     });
+
+    this.load.spritesheet('shark_clean','assets/images/animals/shark_clean.png', {
+        frameWidth: 860,
+        frameHeight: 400,
+        margin: 0,
+        spacing: 0
+    })
+
+    this.load.spritesheet('turtle_clean','assets/images/animals/turtle_clean.png', {
+        frameWidth: 860,
+        frameHeight: 400,
+        margin: 0,
+        spacing: 0
+    })
+
     this.load.image('sprite_sushi', 'assets/images/sprites/sprite_sushi.png');
     this.load.image('sprite_pillow', 'assets/images/sprites/sprite_pillow.png');
     this.load.image('sprite_chips', 'assets/images/sprites/sprite_chips.png');
@@ -311,6 +326,22 @@ loadingScene.create = function(){
     this.anims.create({
         key: 'swimming_shark',
         frames: this.anims.generateFrameNames('sprite_shark', {frames: [0,1,2,1]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: -1 //Repeat forever is -1
+    });
+
+    this.anims.create({
+        key: 'swimming_shark_clean',
+        frames: this.anims.generateFrameNames('shark_clean', {frames: [0,1,2,1]}),
+        frameRate: 7,
+        yoyo: true,
+        repeat: -1 //Repeat forever is -1
+    });
+
+    this.anims.create({
+        key: 'swimming_turtle_clean',
+        frames: this.anims.generateFrameNames('turtle_clean', {frames: [0,1,2,1]}),
         frameRate: 7,
         yoyo: true,
         repeat: -1 //Repeat forever is -1
