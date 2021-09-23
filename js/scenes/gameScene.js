@@ -1130,6 +1130,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
     this.healButton.y = 180;
     this.headerBar.y = 0;
     this.minigameButton.y = 90;
+    this.saveButton.y = 23;
     return;
   }
   this.arrowUp.y += travel;
@@ -1149,6 +1150,7 @@ gameScene.scrollScreen = function(dir, dist = 10){
   this.healButton.y += travel;
   this.headerBar.y += travel;
   this.minigameButton.y += travel;
+  this.saveButton.y += travel;
 }
 
 gameScene.gainExp = function(exp = 30){
