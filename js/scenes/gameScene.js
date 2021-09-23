@@ -14,6 +14,9 @@ gameScene.init = function(data) {
   this.barH = 10;
   this.globalSpriteScale = 0.75;
   this.globalSpriteTranslate = -50;
+  this.animalsDepth = 0;
+  this.bgDepth = -1;
+  this.roomDepth = 1;
 
   this.floorStatsBarW = 350;
   this.floorStatsBarH = 50;
@@ -72,7 +75,7 @@ gameScene.init = function(data) {
         completionRate: 100,
         walkSpeed : -20,
       },
-      //Shop 2
+      /*Shop 2
       {
         room: 'floor_museum',
         locked: true,
@@ -82,6 +85,7 @@ gameScene.init = function(data) {
         completionRate: 500,
         walkSpeed: -20,
       },
+      */
       //Shop 3
       {
         room: 'floor_qualle',
@@ -180,6 +184,7 @@ gameScene.create = function() {
   //Game BG
   this.bg = this.add.sprite(0,0,'background_unclean').setInteractive();
   this.bg.setOrigin(0,0);
+  this.bg.depth = this.bgDepth;
 
   //Add all tower elements
   this.setupTower();
@@ -633,6 +638,7 @@ gameScene.setupTower = function(){
         this.floorData[i].setScale(0.25*this.globalSpriteScale);
         this.physics.add.existing(this.floorData[i], true);
         this.floorData[i].body.allowGravity = false;
+        this.floorData[i].depth = this.roomDepth;
       }
     }
     else {
@@ -640,6 +646,8 @@ gameScene.setupTower = function(){
       this.floorData[i].setScale(0.25*this.globalSpriteScale);
       this.physics.add.existing(this.floorData[i], true);
       this.floorData[i].body.allowGravity = false;
+      
+      this.floorData[i].depth = this.roomDepth;
   
       this.floorProps[i] = {};
       //Extra Props
@@ -702,12 +710,14 @@ gameScene.setupTower = function(){
       this.floorStatsData[i].setPosition(148, 172 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
       this.floorStatsData[i].fillStyle(0x817a93, 1);
       this.floorStatsData[i].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
+      this.floorStatsData[i].depth = this.roomDepth;
       
       this.floorProgressBar[i] = this.add.graphics();
 
       this.floorProgressBar[i].setPosition(220, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH));
       this.floorProgressBar[i].fillStyle(0x50d9c8, 1);
       this.floorProgressBar[i].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+      this.floorProgressBar[i].depth = this.roomDepth;
     }
 
     this.floorLevelTexts[i] = this.add.text(150, 177 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `Lv. ${shop.level}`, {
@@ -743,6 +753,7 @@ gameScene.setupTower = function(){
       this.floorUpgradeButtons[i].on('pointerdown', function(){
         gameScene.upgradeShop(i);
       }, this);
+      this.floorUpgradeButtons[i].depth = this.roomDepth+43;
     }
   }
 
@@ -777,6 +788,7 @@ gameScene.setupTower = function(){
     if (!shop.locked && shopKeeperName.length>0){
       let shopkeeper = this.add.sprite(360 + Math.random()* 40+this.globalSpriteTranslate, 130 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `sprite_${shopKeeperName}`);
       this.physics.add.existing(shopkeeper)
+      shopkeeper.depth = this.roomDepth+25;
       shopkeeper.setScale(0.1*this.globalSpriteScale);
       switch(shopKeeperName){
         case "kj":
@@ -864,18 +876,21 @@ gameScene.unlockShop = function(){
       this.floorData[shop+1].setScale(0.25*this.globalSpriteScale);
       this.physics.add.existing(this.floorData[shop+1], true);
       this.floorData[shop+1].body.allowGravity = false;
+      
+      this.floorData[shop+1].depth = this.roomDepth;
 
       this.floorStatsData[shop+1] = this.add.graphics();
 
       this.floorStatsData[shop+1].setPosition(148, 172 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH));
       this.floorStatsData[shop+1].fillStyle(0x817a93, 1);
       this.floorStatsData[shop+1].fillRect(0,0,this.floorStatsBarW, this.floorStatsBarH);
-      
+      this.floorStatsData[shop+1].depth = this.roomDepth;
       this.floorProgressBar[shop+1] = this.add.graphics();
-
       this.floorProgressBar[shop+1].setPosition(220, 177 + (shop+1)*(170*this.globalSpriteScale+this.floorStatsBarH));
       this.floorProgressBar[shop+1].fillStyle(0x50d9c8, 1);
       this.floorProgressBar[shop+1].fillRect(0,0,(this.floorStatsBarW-110)*shop.currentRate/shop.completionRate, this.floorStatsBarH-10);
+      
+      this.floorProgressBar[shop+1].depth = this.roomDepth;
     }
     //Unlock Props
     this.floorProps[shop] = {};
@@ -940,6 +955,7 @@ gameScene.unlockShop = function(){
               shopkeeper.setScale(0.12*this.globalSpriteScale);
               break;
           }
+    shopkeeper.depth = this.roomDepth+25;
     shopkeeper.body.allowGravity = false;
     shopkeeper.setInteractive();
     //Add shopkeeperText
@@ -975,7 +991,7 @@ gameScene.unlockShop = function(){
         fill: '#ffffff',
         fontWeight: 'bold',
       });
-      this.floorUpgradeTexts[shop].depth = 44;
+      this.floorUpgradeButtons[shop].depth = 43+ this.roomDepth;
 
     //Update status of shop
     this.gameStats.shopsData[shop].locked = false;
@@ -1053,7 +1069,8 @@ gameScene.addProp = function(objectKey, room, floor){
   if (this.floorProps[floor][objectKey]){
     this.floorProps[floor][objectKey].setScale(0.25*this.globalSpriteScale);
     this.physics.add.existing(this.floorProps[floor][objectKey]);
-    this.floorProps[floor][objectKey].body.allowGravity = false;  
+    this.floorProps[floor][objectKey].body.allowGravity = false;    
+    this.floorProps[floor][objectKey].depth = this.roomDepth+20;
   }
   
 }
@@ -1174,7 +1191,7 @@ gameScene.checkPollution = function(){
   if (this.gameStats.pollution<33){
     this.bg.setTexture('background_clean');
     this.cameras.main.setBackgroundColor('#173F5D');
-    // add clean shark
+    // add clean shark 
     if(!swimmingSharkClean) {  
       swimmingSharkClean = true;  
       this.shark = this.add.sprite(100 + Math.random()* 40, Math.random()*200+100 , `shark_clean`);
@@ -1182,6 +1199,7 @@ gameScene.checkPollution = function(){
       this.shark.setScale(0.1);
       this.shark.body.allowGravity = false;
       this.shark.body.setVelocityX(40);
+      this.shark.depth = this.animalsDepth;
       if (!this.shark.anims.isPlaying) this.shark.anims.play(`swimming_shark`);
     }
     // add clean turtle
@@ -1192,6 +1210,7 @@ gameScene.checkPollution = function(){
       this.turtle.setScale(0.1);
       this.turtle.body.allowGravity = false;
       this.turtle.body.setVelocityX(20);
+      this.turtle.depth = this.animalsDepth;
       if (!this.turtle.anims.isPlaying) this.turtle.anims.play(`swimming_shark`);
     }
   }
@@ -1206,6 +1225,7 @@ gameScene.checkPollution = function(){
       this.shark.setScale(0.1);
       this.shark.body.allowGravity = false;
       this.shark.body.setVelocityX(20);
+      this.shark.depth = this.animalsDepth;
       if (!this.shark.anims.isPlaying) this.shark.anims.play(`swimming_shark`);
     }
   }
