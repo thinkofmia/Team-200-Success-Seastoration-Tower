@@ -102,7 +102,10 @@ mgSelectionScene.create = function(){
         this.scene.start('Pingvingotchi', this.gameStats);
     }, this);
     this.logo1.on('pointerover', function(){
-        this.logo1.setScale(1.1);
+        this.logo1.setScale(0.4);
+    }, this);
+    this.logo1.on('pointerout', function(){
+        this.logo1.setScale(0.3);
     }, this);
 
     game2.on('pointerdown', function(){
@@ -115,6 +118,14 @@ mgSelectionScene.create = function(){
         mgSelectionScene.isAnimating = false;
         click.play();
         this.scene.start('Flipping Memory', this.gameStats);
+    }, this);
+    
+    this.logo2.on('pointerover', function(){
+        this.logo2.setScale(0.4);
+    }, this);
+    
+    this.logo2.on('pointerout', function(){
+        this.logo2.setScale(0.3);
     }, this);
 
 
