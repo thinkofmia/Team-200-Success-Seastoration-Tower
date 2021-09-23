@@ -733,7 +733,7 @@ gameScene.setupTower = function(){
       fill: '#ffffff',
       fontWeight: 'bold',
     });
-    this.floorIncomeTexts[i].depth = 44;
+    this.floorIncomeTexts[i].depth = 43+this.roomDepth;
 
     this.floorUpgradeTexts[i] = this.add.text(490+this.globalSpriteTranslate, 200 + i*(170*this.globalSpriteScale+this.floorStatsBarH), `♻️ ${this.gameStats.upgradeBase+this.gameStats.upgradeIncrement*shop.level}`, {
       fontFamily: this.titleFont,
@@ -741,7 +741,7 @@ gameScene.setupTower = function(){
       fill: '#ffffff',
       fontWeight: 'bold',
     });
-    this.floorUpgradeTexts[i].depth = 44;
+    this.floorUpgradeTexts[i].depth = 43+this.roomDepth;
 
     //Add Upgrade Icon
     if (!shop.locked){
@@ -991,6 +991,8 @@ gameScene.unlockShop = function(){
         fill: '#ffffff',
         fontWeight: 'bold',
       });
+      
+      this.floorUpgradeTexts[shop].depth = 43 + this.roomDepth;
       this.floorUpgradeButtons[shop].depth = 43+ this.roomDepth;
 
     //Update status of shop
